@@ -59,25 +59,11 @@ public class Email {
     public static boolean isValidEmail(String test) {
         List<String> paramsAndLabels = parseParametersAndLabels(test);
 
-        if (!isEmailsAndLabelsSizeValid(paramsAndLabels)) {
+        if (paramsAndLabels.isEmpty()) {
             return false;
         }
 
         return isEmailsAndLabelsValid(paramsAndLabels);
-    }
-
-    /**
-     * Check if the size of the parameters and labels of an Email is valid.
-     *
-     * @param list The {@code List<String>} of the parameters and labels of an Email.
-     * @return A boolean indicating if the size of the parameters and labels of an Email is valid.
-     */
-    private static boolean isEmailsAndLabelsSizeValid(List<String> list) {
-        if (list.isEmpty() || (list.size() >= 2 && list.size() % 2 == 1)) {
-            return false;
-        }
-
-        return true;
     }
 
     /**
