@@ -100,7 +100,7 @@ public class AddressBookParserTest {
     public void parseCommand_addMeeting() throws Exception {
         final String meetingName = "Some meeting";
         final String venue = "Some venue";
-        final String datetime = "Some datetime";
+        final String datetime = "2025-10-11 1400";
         final Meeting meeting = new Meeting(meetingName, venue, datetime);
         AddMeetingCommand command = (AddMeetingCommand) parser.parseCommand(AddMeetingCommand.COMMAND_WORD
                 + " " + INDEX_FIRST_PERSON.getOneBased() + " " + PREFIX_MEETING + meetingName

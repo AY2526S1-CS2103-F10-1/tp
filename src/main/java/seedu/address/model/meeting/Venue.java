@@ -1,0 +1,66 @@
+package seedu.address.model.meeting;
+
+import static java.util.Objects.requireNonNull;
+import static seedu.address.commons.util.AppUtil.checkArgument;
+
+/**
+ * Represents a Meeting's venue.
+ * Guarantees: immutable; is valid as declared in {@link #isValidVenue(String)}
+ */
+public class Venue {
+    public static final String MESSAGE_CONSTRAINTS =
+            "Venue should only contain alphanumeric characters and spaces, and it should not be blank and not contain"
+                    + " weird symbols (@, $ etc.)";
+
+    /*
+     * The first character of the address must not be a whitespace,
+     * otherwise " " (a blank string) becomes a valid input.
+     */
+    public static final String VALIDATION_REGEX = "^(?=.*[\\p{L}\\d])[\\p{L}\\p{M}\\d ,.'()#\\-/]+$";
+
+    public final String value;
+
+    /**
+     * Constructs a {@code Venue}.
+     *
+     * @param venue A valid venue.
+     */
+    public Venue(String venue) {
+        requireNonNull(venue);
+        checkArgument(isValidVenue(venue), MESSAGE_CONSTRAINTS);
+        value = venue;
+    }
+
+    /**
+     * Returns true if a given string is a valid venue.
+     */
+    public static boolean isValidVenue(String test) {
+        return test.matches(VALIDATION_REGEX);
+    }
+
+
+    @Override
+    public String toString() {
+        return value;
+    }
+
+    @Override
+    public boolean equals(Object other) {
+        if (other == this) {
+            return true;
+        }
+
+        // instanceof handles nulls
+        if (!(other instanceof seedu.address.model.meeting.Venue)) {
+            return false;
+        }
+
+        seedu.address.model.meeting.Venue otherVenue = (seedu.address.model.meeting.Venue) other;
+        return value.equals(otherVenue.value);
+    }
+
+    @Override
+    public int hashCode() {
+        return value.hashCode();
+    }
+}

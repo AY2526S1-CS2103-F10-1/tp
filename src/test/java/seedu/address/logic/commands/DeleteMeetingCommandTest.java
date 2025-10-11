@@ -15,6 +15,7 @@ import org.junit.jupiter.api.Test;
 
 import seedu.address.commons.core.index.Index;
 import seedu.address.logic.Messages;
+import seedu.address.logic.parser.exceptions.ParseException;
 import seedu.address.model.Model;
 import seedu.address.model.ModelManager;
 import seedu.address.model.UserPrefs;
@@ -29,17 +30,23 @@ import seedu.address.testutil.PersonBuilder;
 public class DeleteMeetingCommandTest {
 
     private Model model = new ModelManager(getTypicalAddressBook(), new UserPrefs());
-    private Meeting firstMeetingStub = new Meeting(
-            "Some meeting 1",
-            "Some venue 1",
-            "Some datetime 1");
-    private Meeting secondMeetingStub2 = new Meeting(
-            "Some meeting 2",
-            "Some venue 2",
-            "Some datetime 2");
+    private Meeting firstMeetingStub;
+    private Meeting secondMeetingStub2;
 
     @BeforeEach
     public void setUp() {
+        try {
+            firstMeetingStub = new Meeting(
+                    "Some meeting 1",
+                    "Some venue 1",
+                    "2025-10-11 1400");
+            secondMeetingStub2 = new Meeting(
+                    "Some meeting 2",
+                    "Some venue 2",
+                    "2025-12-12 1800");
+        } catch (ParseException ignored) {
+            // This exception is expected and can be safely ignored
+        }
         Person firstPerson = model.getFilteredPersonList()
                 .get(INDEX_FIRST_PERSON.getZeroBased());
         Person editedPerson = new PersonBuilder(firstPerson)

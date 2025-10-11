@@ -63,15 +63,15 @@ public class AddMeetingCommand extends Command {
             throw new CommandException(Messages.MESSAGE_INVALID_PERSON_DISPLAYED_INDEX);
         }
 
-        if (meeting.meetingName.isBlank()) {
+        if (meeting.meetingName.meetingName.isBlank()) {
             throw new CommandException(MESSAGE_BLANK_MEETING_NAME);
         }
 
-        if (meeting.venue.isBlank()) {
+        if (meeting.venue.value.isBlank()) {
             throw new CommandException(MESSAGE_BLANK_VENUE);
         }
 
-        if (meeting.when.isBlank()) {
+        if (meeting.when.value == null) {
             throw new CommandException(MESSAGE_BLANK_DATETIME);
         }
 
@@ -87,7 +87,8 @@ public class AddMeetingCommand extends Command {
     }
 
     private String generateSuccessMessage(Person personToEdit) {
-        String message = !(meeting.meetingName.isBlank() || meeting.venue.isBlank() || meeting.when.isBlank())
+        String message = !(meeting.meetingName.meetingName.isBlank() || meeting.venue.value.isBlank()
+                || meeting.when.value == null)
                 ? MESSAGE_ADD_MEETING_SUCCESS : MESSAGE_ADD_MEETING_FAILURE;
         return String.format(message, Messages.format(personToEdit));
     }

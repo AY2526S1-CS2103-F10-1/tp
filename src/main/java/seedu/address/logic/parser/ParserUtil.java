@@ -11,6 +11,9 @@ import java.util.Set;
 import seedu.address.commons.core.index.Index;
 import seedu.address.commons.util.StringUtil;
 import seedu.address.logic.parser.exceptions.ParseException;
+import seedu.address.model.meeting.MeetingName;
+import seedu.address.model.meeting.Venue;
+import seedu.address.model.meeting.When;
 import seedu.address.model.person.Address;
 import seedu.address.model.person.Email;
 import seedu.address.model.person.Name;
@@ -167,5 +170,50 @@ public class ParserUtil {
             tagSet.add(parseTag(tagName));
         }
         return tagSet;
+    }
+
+    /**
+     * Parses a {@code String meetingName} into a {@code MeetingName}.
+     * Leading and trailing whitespaces will be trimmed.
+     *
+     * @throws ParseException if the given {@code meetingName} is invalid.
+     */
+    public static MeetingName parseMeetingName(String meetingName) throws ParseException {
+        requireNonNull(meetingName);
+        String trimmedMeetingName = meetingName.trim();
+        if (!MeetingName.isValidMeetingName(trimmedMeetingName)) {
+            throw new ParseException(MeetingName.MESSAGE_CONSTRAINTS);
+        }
+        return new MeetingName(trimmedMeetingName);
+    }
+
+    /**
+     * Parses a {@code String venue} into a {@code Venue}.
+     * Leading and trailing whitespaces will be trimmed.
+     *
+     * @throws ParseException if the given {@code venue} is invalid.
+     */
+    public static Venue parseVenue(String venue) throws ParseException {
+        requireNonNull(venue);
+        String trimmedVenue = venue.trim();
+        if (!Venue.isValidVenue(trimmedVenue)) {
+            throw new ParseException(Venue.MESSAGE_CONSTRAINTS);
+        }
+        return new Venue(trimmedVenue);
+    }
+
+    /**
+     * Parses a {@code String when} into a {@code When}.
+     * Leading and trailing whitespaces will be trimmed.
+     *
+     * @throws ParseException if the given {@code when} is invalid.
+     */
+    public static When parseWhen(String when) throws ParseException {
+        requireNonNull(when);
+        String trimmedWhen = when.trim();
+        if (!When.isValidWhen(trimmedWhen)) {
+            throw new ParseException(When.MESSAGE_CONSTRAINTS);
+        }
+        return new When(trimmedWhen);
     }
 }

@@ -18,7 +18,8 @@ public class Messages {
     public static final String MESSAGE_PERSONS_LISTED_OVERVIEW = "%1$d persons listed!";
     public static final String MESSAGE_DUPLICATE_FIELDS =
                 "Multiple values specified for the following single-valued field(s): ";
-
+    public static final String MESSAGE_INVALID_DATETIME_FORMAT = "Invalid datetime format. "
+            + "Accepted formats: dd/MM/yyyy HH[:]mm, yyyy-MM-dd HH[:]mm";
     /**
      * Returns an error message indicating the duplicate prefixes.
      */
