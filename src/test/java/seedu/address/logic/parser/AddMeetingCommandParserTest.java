@@ -2,6 +2,7 @@ package seedu.address.logic.parser;
 
 import static seedu.address.logic.Messages.MESSAGE_INVALID_COMMAND_FORMAT;
 import static seedu.address.logic.parser.CliSyntax.PREFIX_MEETING;
+import static seedu.address.logic.parser.CliSyntax.PREFIX_PERSON_INDEX;
 import static seedu.address.logic.parser.CliSyntax.PREFIX_VENUE;
 import static seedu.address.logic.parser.CliSyntax.PREFIX_WHEN;
 import static seedu.address.logic.parser.CommandParserTestUtil.assertParseFailure;
@@ -23,10 +24,7 @@ public class AddMeetingCommandParserTest {
     private final String nonEmptyMeeting = "Some meeting";
     private final String nonEmptyVenue = "Some venue";
     private final String nonEmptyWhen = "2025-10-11 1400";
-
-    private final String emptyMeeting = "";
-    private final String emptyVenue = "";
-    private final String emptyWhen = "";
+    private final String nonEmptyPreamble = "Some preamble";
 
     @Test
     public void parse_indexSpecified_success() throws ParseException {
@@ -34,11 +32,35 @@ public class AddMeetingCommandParserTest {
         Venue venue = new Venue(nonEmptyVenue);
         When when = new When(nonEmptyWhen);
         Index targetIndex = INDEX_FIRST_PERSON;
-        String userInput = targetIndex.getOneBased() + " " + PREFIX_MEETING + nonEmptyMeeting + " " + PREFIX_VENUE
-                + nonEmptyVenue + " " + PREFIX_WHEN + nonEmptyWhen;
+        String userInput = " " + PREFIX_PERSON_INDEX + targetIndex.getOneBased() + " " + PREFIX_MEETING
+                + nonEmptyMeeting + " " + PREFIX_VENUE + nonEmptyVenue + " " + PREFIX_WHEN + nonEmptyWhen;
         AddMeetingCommand expectedCommand = new AddMeetingCommand(INDEX_FIRST_PERSON,
                 new Meeting(meetingName, venue, when));
         assertParseSuccess(parser, userInput, expectedCommand);
+    }
+
+    @Test
+    public void parse_nonEmptyPreamble_failure() {
+        String expectedMessage = String.format(MESSAGE_INVALID_COMMAND_FORMAT, AddMeetingCommand.MESSAGE_USAGE);
+        Index targetIndex = INDEX_FIRST_PERSON;
+        String userInput = " " + nonEmptyPreamble + " " + PREFIX_PERSON_INDEX + targetIndex.getOneBased() + " "
+                + PREFIX_MEETING + nonEmptyMeeting + " " + PREFIX_VENUE + nonEmptyVenue + " " + PREFIX_WHEN
+                + nonEmptyWhen;
+        assertParseFailure(parser, userInput, expectedMessage);
+    }
+
+    @Test
+    public void parse_invalidIndex_failure() {
+        String expectedMessage = String.format(MESSAGE_INVALID_COMMAND_FORMAT, AddMeetingCommand.MESSAGE_USAGE);
+        String targetIndex = "-1";
+        String userInput = " " + PREFIX_PERSON_INDEX + targetIndex + " " + PREFIX_MEETING
+                + nonEmptyMeeting + " " + PREFIX_VENUE + nonEmptyVenue + " " + PREFIX_WHEN + nonEmptyWhen;
+        assertParseFailure(parser, userInput, expectedMessage);
+
+        targetIndex = "0";
+        userInput = " " + PREFIX_PERSON_INDEX + targetIndex + " " + PREFIX_MEETING + nonEmptyMeeting + " "
+                + PREFIX_VENUE + nonEmptyVenue + " " + PREFIX_WHEN + nonEmptyWhen;
+        assertParseFailure(parser, userInput, expectedMessage);
     }
 
     @Test
@@ -47,18 +69,18 @@ public class AddMeetingCommandParserTest {
         Index targetIndex = INDEX_FIRST_PERSON;
 
         // missing m= prefix
-        String userInput = targetIndex.getOneBased() + " " + PREFIX_VENUE + nonEmptyVenue + " " + PREFIX_WHEN
-                + nonEmptyWhen;
+        String userInput = " " + PREFIX_PERSON_INDEX + targetIndex.getOneBased() + " " + PREFIX_VENUE + nonEmptyVenue
+                + " " + PREFIX_WHEN + nonEmptyWhen;
         assertParseFailure(parser, userInput, expectedMessage);
 
         // missing v= prefix
-        userInput = targetIndex.getOneBased() + " " + PREFIX_MEETING + nonEmptyMeeting + " " + PREFIX_WHEN
-                + nonEmptyWhen;
+        userInput = " " + PREFIX_PERSON_INDEX + targetIndex.getOneBased() + " " + PREFIX_MEETING + nonEmptyMeeting
+                + " " + PREFIX_WHEN + nonEmptyWhen;
         assertParseFailure(parser, userInput, expectedMessage);
 
         // missing w= prefix
-        userInput = targetIndex.getOneBased() + " " + PREFIX_MEETING + nonEmptyMeeting + " " + PREFIX_VENUE
-                + nonEmptyVenue;
+        userInput = " " + PREFIX_PERSON_INDEX + targetIndex.getOneBased() + " " + PREFIX_MEETING + nonEmptyMeeting
+                + " " + PREFIX_VENUE + nonEmptyVenue;
         assertParseFailure(parser, userInput, expectedMessage);
 
         // no parameters

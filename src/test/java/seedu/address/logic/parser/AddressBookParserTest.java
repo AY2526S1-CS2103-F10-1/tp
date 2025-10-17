@@ -104,7 +104,7 @@ public class AddressBookParserTest {
         final String datetime = "2025-10-11 1400";
         final Meeting meeting = new Meeting(meetingName, venue, datetime);
         AddMeetingCommand command = (AddMeetingCommand) parser.parseCommand(AddMeetingCommand.COMMAND_WORD
-                + " " + INDEX_FIRST_PERSON.getOneBased() + " " + PREFIX_MEETING + meetingName
+                + " " + PREFIX_PERSON_INDEX + INDEX_FIRST_PERSON.getOneBased() + " " + PREFIX_MEETING + meetingName
                 + " " + PREFIX_VENUE + venue + " " + PREFIX_WHEN + datetime);
         assertEquals(new AddMeetingCommand(INDEX_FIRST_PERSON, meeting), command);
     }

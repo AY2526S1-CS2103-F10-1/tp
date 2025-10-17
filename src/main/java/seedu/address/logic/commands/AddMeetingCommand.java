@@ -2,6 +2,7 @@ package seedu.address.logic.commands;
 
 import static seedu.address.commons.util.CollectionUtil.requireAllNonNull;
 import static seedu.address.logic.parser.CliSyntax.PREFIX_MEETING;
+import static seedu.address.logic.parser.CliSyntax.PREFIX_PERSON_INDEX;
 import static seedu.address.logic.parser.CliSyntax.PREFIX_VENUE;
 import static seedu.address.logic.parser.CliSyntax.PREFIX_WHEN;
 import static seedu.address.model.Model.PREDICATE_SHOW_ALL_PERSONS;
@@ -25,11 +26,13 @@ public class AddMeetingCommand extends Command {
     public static final String MESSAGE_USAGE = COMMAND_WORD + ": Adds a meeting for the person identified "
             + "by the index number used in the last person listing. "
             + "A new meeting would be added to the person's list of current meetings.\n"
-            + "Parameters: INDEX (must be a positive integer) "
+            + "Parameters: "
+            + PREFIX_PERSON_INDEX + "INDEX (must be a positive integer) "
             + PREFIX_MEETING + "MEETING "
             + PREFIX_VENUE + "VENUE "
             + PREFIX_WHEN + "WHEN\n"
-            + "Example: " + COMMAND_WORD + " 1 "
+            + "Example: " + COMMAND_WORD + " "
+            + PREFIX_PERSON_INDEX + "1 "
             + PREFIX_MEETING + "Financial advice sharing "
             + PREFIX_VENUE + "AMK Hub "
             + PREFIX_WHEN + "2025-11-01 1600";
