@@ -18,4 +18,10 @@ Person *--> Name
 Person *--> Phone
 Person *--> Email
 Person *--> Address
+Person *--> "*" Meeting
+Person *--> "1" FlagStatus
+Meeting *--> MeetingName
+Meeting *--> Venue
+Meeting *--> When
+
 @enduml

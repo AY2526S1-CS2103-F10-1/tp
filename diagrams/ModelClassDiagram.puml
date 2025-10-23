@@ -23,6 +23,7 @@ Class Meeting
 Class MeetingName
 Class Venue
 Class When
+Class FlagStatus
 
 Class I #FFFFFF
 }
@@ -47,6 +48,7 @@ Person *--> Email
 Person *--> Address
 Person *--> "*" Tag
 Person *--> "*" Meeting
+Person *--> "1" FlagStatus
 Meeting *--> MeetingName
 Meeting *--> Venue
 Meeting *--> When
