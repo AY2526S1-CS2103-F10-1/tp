@@ -43,7 +43,8 @@ UserPrefs .up.|> ReadOnlyUserPrefs
 AddressBook *--> "1" UniquePersonList
 UniquePersonList --> "~* all" Person
 Person *--> Name
-Person *--> Phone
+Person *--> "1" MainPhone
+Person *--> "*" OtherPhones
 Person *--> Email
 Person *--> Address
 Person *--> "*" Tag
@@ -52,6 +53,8 @@ Person *--> "1" FlagStatus
 Meeting *--> MeetingName
 Meeting *--> Venue
 Meeting *--> When
+OtherPhones *--> Number
+OtherPhones *--> PhoneTag
 
 Person -[hidden]up--> I
 UniquePersonList -[hidden]right-> I
