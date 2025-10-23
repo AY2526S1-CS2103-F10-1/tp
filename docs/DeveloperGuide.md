@@ -187,9 +187,6 @@ How the `Multi-value fields` logic works:
 1. After `ParserUtil` is called upon to parse the XYZField it calls upon the `XYZField` class to validate that fields argument that was passed.
 1. The `XYZField` class needs to call upon `ParserUtil` to help parse the arguments for that fields into a list of the parameters and labels before it can validate them.
 
-#### Implementation
-
-
 ### \[Proposed\] Undo/redo feature
 
 #### Proposed Implementation
