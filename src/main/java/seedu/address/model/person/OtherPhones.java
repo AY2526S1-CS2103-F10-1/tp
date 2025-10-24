@@ -16,7 +16,7 @@ import seedu.address.logic.parser.exceptions.ParseException;
  */
 public class OtherPhones {
     public static final String MESSAGE_DUPLICATE_CONSTRAINTS =
-            "The main number already exists. Do not key in duplicate numbers";
+            "The other numbers should not be a duplicate of the main number.";
 
     public static final String MESSAGE_CONSTRAINTS =
             "Phone numbers should only contain numbers, and it should be at "
