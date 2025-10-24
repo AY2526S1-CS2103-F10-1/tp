@@ -168,7 +168,7 @@ Take for example, email, which is entered into the add command arguments as e=jo
 For the most part the sequence diagram for the add command will look like the [Delete Sequence Diagram](#delete-sequence-diagram) that we have seen above just that we need to change all the delete operations/classes to add.
 Instead, we will now be focusing on the classes/objects for the validation of multi-value fields which the sequence diagram below will show. The main differences can be seen in the AddCommandParser.
 
-<puml src="diagrams/MultiValueFieldSequenceDiagram.puml" width="450"/>
+<puml src="diagrams/MultiValueFieldSequenceDiagram.puml" width="900" height="500"/>
 
 <box type="info" seamless>
 **Note:** The XYZField that is mentioned in the sequence diagram refers to a person's field which supports storing multiple values.
