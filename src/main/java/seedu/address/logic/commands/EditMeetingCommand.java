@@ -108,7 +108,7 @@ public class EditMeetingCommand extends Command {
 
         model.updatePersonListFilter(PREDICATE_SHOW_ALL_PERSONS);
 
-        return new CommandResult(String.format(MESSAGE_EDIT_MEETING_SUCCESS, Messages.format(personToEdit)));
+        return new CommandResult(String.format(MESSAGE_EDIT_MEETING_SUCCESS, Messages.format(editedMeeting)));
     }
 
     /**

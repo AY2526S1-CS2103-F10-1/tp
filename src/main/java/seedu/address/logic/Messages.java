@@ -5,6 +5,7 @@ import java.util.stream.Collectors;
 import java.util.stream.Stream;
 
 import seedu.address.logic.parser.Prefix;
+import seedu.address.model.meeting.Meeting;
 import seedu.address.model.person.Person;
 
 /**
@@ -50,4 +51,16 @@ public class Messages {
         return builder.toString();
     }
 
+    /**
+     * Formats the {@code meeting} for display to the user.
+     */
+    public static String format(Meeting meeting) {
+        final StringBuilder builder = new StringBuilder();
+        builder.append(meeting.getMeetingName())
+                .append("; Venue: ")
+                .append(meeting.getVenue())
+                .append("; When: ")
+                .append(meeting.getWhen());
+        return builder.toString();
+    }
 }
