@@ -20,7 +20,7 @@ public class OtherPhones {
 
     public static final String MESSAGE_CONSTRAINTS =
             "Phone numbers should only contain numbers, and it should be at "
-                   + "least 3 digits long and numbers should be separared by a tag e.g. 9999 (work) 8888 (office)";
+                   + "least 3 digits long and numbers should be separated by a tag e.g. 9999 (work) 8888 (office)";
 
     // Single phone number pattern
     private static final String SINGLE_PHONE_REGEX =
