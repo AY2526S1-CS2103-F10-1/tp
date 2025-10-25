@@ -2,6 +2,7 @@ package seedu.address.model.meeting;
 
 import static org.junit.jupiter.api.Assertions.assertFalse;
 import static org.junit.jupiter.api.Assertions.assertTrue;
+import static org.junit.jupiter.api.Assertions.fail;
 import static seedu.address.testutil.Assert.assertThrows;
 
 import java.time.LocalDateTime;
@@ -24,21 +25,27 @@ public class WhenTest {
 
     @Test
     public void isValidWhen() {
-        // invalid name
-        assertFalse(When.isValidWhen("")); // empty string
-        assertFalse(When.isValidWhen(" ")); // spaces only
-        assertFalse(When.isValidWhen("^")); // only non-alphanumeric characters
-        assertFalse(When.isValidWhen("peter*")); // contains non-alphanumeric characters
+        try {
+            // invalid name
+            assertThrows(ParseException.class, () -> When.isValidWhen("")); // empty string
+            assertThrows(ParseException.class, () -> When.isValidWhen(" ")); // spaces only
+            assertThrows(ParseException.class, () -> When.isValidWhen("^")); // only non-alphanumeric characters
 
-        // valid date
-        assertTrue(When.isValidWhen("12-01-2025 1400"));
-        assertTrue(When.isValidWhen("2025-01-12 14:00"));
-        assertTrue(When.isValidWhen("2025-01-12 1400"));
-        assertTrue(When.isValidWhen("2025/01/12 14:00"));
-        assertTrue(When.isValidWhen("2025/01/12 1400"));
-        assertTrue(When.isValidWhen("12/01/2025 14:00"));
-        assertTrue(When.isValidWhen("12/01/2025 1400"));
-        assertTrue(When.isValidWhen("12-01-2025 14:00"));
+            // contains non-alphanumeric characters
+            assertThrows(ParseException.class, () -> When.isValidWhen("peter*"));
+
+            // valid date
+            assertTrue(When.isValidWhen("12-01-2025 1400"));
+            assertTrue(When.isValidWhen("2025-01-12 14:00"));
+            assertTrue(When.isValidWhen("2025-01-12 1400"));
+            assertTrue(When.isValidWhen("2025/01/12 14:00"));
+            assertTrue(When.isValidWhen("2025/01/12 1400"));
+            assertTrue(When.isValidWhen("12/01/2025 14:00"));
+            assertTrue(When.isValidWhen("12/01/2025 1400"));
+            assertTrue(When.isValidWhen("12-01-2025 14:00"));
+        } catch (ParseException ignored) {
+            fail();
+        }
     }
 
     @Test
