@@ -40,7 +40,6 @@ public class PersonList {
     }
 
     /**
-     *
      * @param predicates a list of predicates
      * @return predicate combining all predicates into a single statement
      */

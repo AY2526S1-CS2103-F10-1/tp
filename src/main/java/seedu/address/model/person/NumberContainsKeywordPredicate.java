@@ -1,15 +1,13 @@
 package seedu.address.model.person;
 
-import seedu.address.commons.util.StringUtil;
-import seedu.address.commons.util.ToStringBuilder;
-
-import java.util.List;
 import java.util.function.Predicate;
+
+import seedu.address.commons.util.ToStringBuilder;
 
 /**
  * Checks a {@code Person}'s {@code Phone} matches any of the keywords given.
  */
-public class NumberContainsKeywordPredicate implements Predicate<Person>{
+public class NumberContainsKeywordPredicate implements Predicate<Person> {
     private final String keyword;
 
     public NumberContainsKeywordPredicate(String keywords) {
@@ -17,7 +15,6 @@ public class NumberContainsKeywordPredicate implements Predicate<Person>{
     }
 
     /**
-     *
      * @param person the input argument
      * @return boolean on whether the person's phone contains the keyword
      */

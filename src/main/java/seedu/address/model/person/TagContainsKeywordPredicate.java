@@ -1,17 +1,17 @@
 package seedu.address.model.person;
 
-import seedu.address.commons.util.StringUtil;
-import seedu.address.commons.util.ToStringBuilder;
-import seedu.address.model.tag.Tag;
-
 import java.util.List;
 import java.util.Set;
 import java.util.function.Predicate;
 
+import seedu.address.commons.util.StringUtil;
+import seedu.address.commons.util.ToStringBuilder;
+import seedu.address.model.tag.Tag;
+
 /**
  * Checks a {@code Person}'s {@code Tag} matches any of the keywords given.
  */
-public class TagContainsKeywordPredicate implements Predicate<Person>{
+public class TagContainsKeywordPredicate implements Predicate<Person> {
     private final List<String> keywords;
 
     public TagContainsKeywordPredicate(List<String> keywords) {
