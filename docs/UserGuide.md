@@ -218,7 +218,7 @@ _Details coming soon ..._
 |-----------------|-----------------------------------------------------------------------------------------------------------------------------------------------------------------------|
 | **Add**         | `add n/NAME p/PHONE_NUMBER e/EMAIL a/ADDRESS [t/TAG]…​` <br> e.g., `add n/James Ho p/22224444 e/jamesho@example.com a/123, Clementi Rd, 1234665 t/friend t/colleague` |
 | **Clear**       | `clear`                                                                                                                                                               |
-| **Add Meeting** | `addmt p=INDEX m=MEETING v=VENUE w=WHEN`                                                                                                                              |
+| **Add Meeting** | `addmt p=INDEX m=MEETING v=VENUE w=WHEN` <br> e.g. `addmt p=1 m=Financial advice sharing v=AMK Hub w=2025-11-01 1600`                                                                                                                   |
 | **Delete**      | `delete INDEX`<br> e.g., `delete 3`                                                                                                                                   |
 | **Edit**        | `edit INDEX [n/NAME] [p/PHONE_NUMBER] [e/EMAIL] [a/ADDRESS] [t/TAG]…​`<br> e.g.,`edit 2 n/James Lee e/jameslee@example.com`                                           |
 | **Find**        | `find KEYWORD [MORE_KEYWORDS]`<br> e.g., `find James Jake`                                                                                                            |
