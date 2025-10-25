@@ -74,6 +74,7 @@ public class AddMeetingCommandTest {
 
         Model expectedModel = new ModelManager(model.getAddressBook(), new UserPrefs());
         expectedModel.setPerson(firstPerson, editedPerson);
+        showPersonAtIndex(expectedModel, INDEX_FIRST_PERSON);
 
         assertCommandSuccess(addMeetingCommand, model, expectedMessage, expectedModel);
     }
