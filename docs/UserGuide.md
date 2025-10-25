@@ -132,6 +132,25 @@ Examples:
 * `find alex david` returns `Alex Yeoh`, `David Li`<br>
   ![result for 'find alex david'](images/findAlexDavidResult.png)
 
+### Adding a meeting : `addmt`
+
+Adds a meeting for the specified person from the address book.
+
+Format: `addmt p=INDEX m=MEETING v=VENUE w=WHEN`
+
+* Adds a meeting for the person identified by the `INDEX` number used in the displayed person list.
+* A new meeting would be added to the person's list of current meetings.
+* The index refers to the index number shown in the displayed person list.
+* The index **must be a positive integer** 1, 2, 3, …​
+* The `WHEN` value needs to be a valid datetime format of the form `yyyy/mm/dd HH[:]mm` or `dd-mm-yyyy HH[:]mm`.
+* `/` and `-` are interchangeable but the format needs to remain consistent (i.e. all `/` or all `-`)
+* The `:` in between `HH` and `mm` can be omitted i.e. (`1600` or `16:00`).
+
+Examples:
+* `addmt p=1 m=Financial advice sharing v=AMK Hub w=2025-11-01 1600` Adds a new Financial advice sharing meeting to the 
+1st person in the displayed person list, that is taking place at AMK Hub on 1st Nov 2025 at 4:00PM.<br>
+  ![result for 'addmt p=1 m=Financial advice sharing v=AMK Hub w=2025-11-01 1600'](images/addMeetingResult.png)
+
 ### Deleting a person : `delete`
 
 Deletes the specified person from the address book.
@@ -195,12 +214,13 @@ _Details coming soon ..._
 
 ## Command summary
 
-Action     | Format, Examples
------------|----------------------------------------------------------------------------------------------------------------------------------------------------------------------
-**Add**    | `add n/NAME p/PHONE_NUMBER e/EMAIL a/ADDRESS [t/TAG]…​` <br> e.g., `add n/James Ho p/22224444 e/jamesho@example.com a/123, Clementi Rd, 1234665 t/friend t/colleague`
-**Clear**  | `clear`
-**Delete** | `delete INDEX`<br> e.g., `delete 3`
-**Edit**   | `edit INDEX [n/NAME] [p/PHONE_NUMBER] [e/EMAIL] [a/ADDRESS] [t/TAG]…​`<br> e.g.,`edit 2 n/James Lee e/jameslee@example.com`
-**Find**   | `find KEYWORD [MORE_KEYWORDS]`<br> e.g., `find James Jake`
-**List**   | `list`
-**Help**   | `help`
+| Action          | Format, Examples                                                                                                                                                      |
+|-----------------|-----------------------------------------------------------------------------------------------------------------------------------------------------------------------|
+| **Add**         | `add n/NAME p/PHONE_NUMBER e/EMAIL a/ADDRESS [t/TAG]…​` <br> e.g., `add n/James Ho p/22224444 e/jamesho@example.com a/123, Clementi Rd, 1234665 t/friend t/colleague` |
+| **Clear**       | `clear`                                                                                                                                                               |
+| **Add Meeting** | `addmt p=INDEX m=MEETING v=VENUE w=WHEN`                                                                                                                              |
+| **Delete**      | `delete INDEX`<br> e.g., `delete 3`                                                                                                                                   |
+| **Edit**        | `edit INDEX [n/NAME] [p/PHONE_NUMBER] [e/EMAIL] [a/ADDRESS] [t/TAG]…​`<br> e.g.,`edit 2 n/James Lee e/jameslee@example.com`                                           |
+| **Find**        | `find KEYWORD [MORE_KEYWORDS]`<br> e.g., `find James Jake`                                                                                                            |
+| **List**        | `list`                                                                                                                                                                |
+| **Help**        | `help`                                                                                                                                                                |
