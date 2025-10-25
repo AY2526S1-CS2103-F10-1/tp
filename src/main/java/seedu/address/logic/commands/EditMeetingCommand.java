@@ -6,7 +6,6 @@ import static seedu.address.logic.parser.CliSyntax.PREFIX_MEETING_INDEX;
 import static seedu.address.logic.parser.CliSyntax.PREFIX_PERSON_INDEX;
 import static seedu.address.logic.parser.CliSyntax.PREFIX_VENUE;
 import static seedu.address.logic.parser.CliSyntax.PREFIX_WHEN;
-import static seedu.address.model.Model.PREDICATE_SHOW_ALL_PERSONS;
 
 import java.util.List;
 import java.util.Objects;
@@ -105,8 +104,6 @@ public class EditMeetingCommand extends Command {
 
         // Replaces the old person with the new person in the model to refresh the GUI
         model.setPerson(personToEdit, editedPerson);
-
-        model.updatePersonListFilter(PREDICATE_SHOW_ALL_PERSONS);
 
         return new CommandResult(String.format(MESSAGE_EDIT_MEETING_SUCCESS, Messages.format(editedMeeting)));
     }
