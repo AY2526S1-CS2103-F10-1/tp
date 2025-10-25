@@ -40,7 +40,7 @@ public class FindCommandParser implements Parser<FindCommand> {
         String nameKeywords = argMultimap.getValue(PREFIX_NAME).orElse("");
         if (!nameKeywords.equals("")) {
             listOfPredicates.add(
-                    new NameContainsKeywordsPredicate(Arrays.asList(nameKeywords)));
+                    new NameContainsKeywordsPredicate(Arrays.asList(nameKeywords.split("\\s+"))));
         }
         String phoneKeywords = argMultimap.getValue(PREFIX_MAIN_PHONE).orElse("");
         if (!phoneKeywords.equals("")) {
