@@ -40,6 +40,7 @@ public class AddMeetingCommandParser implements Parser<AddMeetingCommand> {
             throw new ParseException(String.format(MESSAGE_INVALID_COMMAND_FORMAT, AddMeetingCommand.MESSAGE_USAGE));
         }
 
+        argMultimap.verifyNoDuplicatePrefixesFor(PREFIX_PERSON_INDEX, PREFIX_MEETING, PREFIX_VENUE, PREFIX_WHEN);
 
         Index index;
         try {

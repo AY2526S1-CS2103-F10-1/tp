@@ -13,6 +13,7 @@ import java.util.stream.Stream;
 import seedu.address.commons.core.index.Index;
 import seedu.address.commons.exceptions.IllegalValueException;
 import seedu.address.logic.commands.EditMeetingCommand;
+import seedu.address.logic.commands.EditMeetingCommand.EditMeetingDescriptor;
 import seedu.address.logic.parser.exceptions.ParseException;
 
 /**
@@ -44,6 +45,9 @@ public class EditMeetingCommandParser implements Parser<EditMeetingCommand> {
             throw new ParseException(String.format(MESSAGE_INVALID_COMMAND_FORMAT, EditMeetingCommand.MESSAGE_USAGE));
         }
 
+        argMultimap.verifyNoDuplicatePrefixesFor(PREFIX_PERSON_INDEX, PREFIX_MEETING_INDEX, PREFIX_MEETING,
+                PREFIX_VENUE, PREFIX_WHEN);
+
         Index personIndex;
         Index meetingIndex;
 
@@ -55,10 +59,7 @@ public class EditMeetingCommandParser implements Parser<EditMeetingCommand> {
                     ive);
         }
 
-        argMultimap.verifyNoDuplicatePrefixesFor(PREFIX_PERSON_INDEX, PREFIX_MEETING_INDEX, PREFIX_MEETING,
-                PREFIX_VENUE, PREFIX_WHEN);
-
-        EditMeetingCommand.EditMeetingDescriptor editMeetingDescriptor = new EditMeetingCommand.EditMeetingDescriptor();
+        EditMeetingDescriptor editMeetingDescriptor = new EditMeetingCommand.EditMeetingDescriptor();
 
         if (argMultimap.getValue(PREFIX_MEETING).isPresent()) {
             editMeetingDescriptor.setMeetingName(ParserUtil.parseMeetingName(
