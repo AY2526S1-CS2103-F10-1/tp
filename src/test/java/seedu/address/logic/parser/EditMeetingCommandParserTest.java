@@ -95,6 +95,12 @@ public class EditMeetingCommandParserTest {
 
         assertParseFailure(parser, userInput, MESSAGE_INVALID_FORMAT);
 
+        // non-empty preamble after command
+        userInput = "abc " + PREFIX_PERSON_INDEX + personIndex.getOneBased() + " " + PREFIX_MEETING_INDEX
+                + meetingIndex.getOneBased() + MEETING_VENUE_AMY + MEETING_WHEN_AMY;
+
+        assertParseFailure(parser, userInput, MESSAGE_INVALID_FORMAT);
+
         // invalid arguments being parsed as preamble
         userInput = " " + PREFIX_PERSON_INDEX + "1 some random string" + " " + PREFIX_MEETING_INDEX
                 + meetingIndex.getOneBased() + MEETING_NAME_AMY + MEETING_VENUE_AMY + MEETING_WHEN_AMY;
