@@ -46,16 +46,17 @@ public class When {
     }
 
     /**
-     * Returns true if a given string is a valid date and time.
+     * Returns true only if the given string is a valid datetime string.
+     * This method never returns false but throws the {@code ParseException} thrown by {@code parseDateTime()} up
+     * to be handled by the caller. This allows for more specific error message to be displayed to the user.
+     * Possible exceptions thrown are invalid datetime format and invalid datetime values (31st Apr, 29th Feb on
+     * a non leap year etc.)
+     * @throws ParseException if the given string is not a valid date and time
      */
-    public static boolean isValidWhen(String test) {
-        try {
-            LocalDateTime result = DateTimeParser.parseDateTime(test);
-            logger.info(String.format("Supplied: %s, Result: %s", test, result));
-            return true;
-        } catch (ParseException pe) {
-            return false;
-        }
+    public static boolean isValidWhen(String test) throws ParseException {
+        LocalDateTime result = DateTimeParser.parseDateTime(test);
+        logger.info(String.format("Supplied: %s, Result: %s", test, result));
+        return true;
     }
 
     /**

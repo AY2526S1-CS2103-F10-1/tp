@@ -2,6 +2,8 @@ package seedu.address.logic.parser;
 
 import static java.util.Objects.requireNonNull;
 import static seedu.address.logic.Messages.MESSAGE_INVALID_DATETIME_FORMAT;
+import static seedu.address.logic.Messages.MESSAGE_INVALID_DOES_NOT_EXIST;
+import static seedu.address.logic.Messages.MESSAGE_INVALID_YEAR;
 
 import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
@@ -37,7 +39,8 @@ public class DateTimeParser {
             DateTimeFormatter.ofPattern("dd-MM-uuuu HH:mm").withResolverStyle(ResolverStyle.STRICT)
     );
     private static final String OUTPUT_FORMAT = "MMM dd yyyy HH:mm";
-    private static final String LOGGER_INVALID_FORMAT = "Invalid date time format: %1$s";
+    private static final String LOGGER_INVALID_FORMAT = "Invalid datetime format: %1$s";
+    private static final String LOGGER_INVALID_DATETIME = "Invalid datetime value: %1$s";
 
     private static final Logger logger = LogsCenter.getLogger(DateTimeParser.class);
 
@@ -51,9 +54,19 @@ public class DateTimeParser {
         requireNonNull(dateTime);
         for (DateTimeFormatter formatter : ALLOWED_FORMATTERS) {
             try {
-                return LocalDateTime.parse(dateTime, formatter);
-            } catch (DateTimeParseException ignored) {
-                // This exception is expected and can be safely ignored
+                LocalDateTime parsed = LocalDateTime.parse(dateTime, formatter);
+                if (parsed.getYear() < 1) {
+                    throw new ParseException(MESSAGE_INVALID_YEAR);
+                }
+                return parsed;
+            } catch (DateTimeParseException dtpe) {
+                Throwable cause = dtpe.getCause();
+                // checks if parsing failed because of an invalid date/time value
+                if (cause instanceof java.time.DateTimeException) {
+                    logger.info(String.format(LOGGER_INVALID_DATETIME, dateTime));
+                    throw new ParseException(MESSAGE_INVALID_DOES_NOT_EXIST);
+                }
+                // otherwise, just continue to next pattern (might be a format mismatch)
             }
         }
         logger.info(String.format(LOGGER_INVALID_FORMAT, dateTime));

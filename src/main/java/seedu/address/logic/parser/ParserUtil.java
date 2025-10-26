@@ -386,9 +386,8 @@ public class ParserUtil {
     public static When parseWhen(String when) throws ParseException {
         requireNonNull(when);
         String trimmedWhen = when.trim();
-        if (!When.isValidWhen(trimmedWhen)) {
-            throw new ParseException(When.MESSAGE_CONSTRAINTS);
-        }
+        // This call will throw ParseException if invalid
+        When.isValidWhen(trimmedWhen);
         return new When(trimmedWhen);
     }
 }
