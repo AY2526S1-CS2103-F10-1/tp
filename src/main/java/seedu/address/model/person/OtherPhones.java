@@ -3,6 +3,7 @@ package seedu.address.model.person;
 import static seedu.address.commons.util.AppUtil.checkArgument;
 import static seedu.address.logic.parser.ParserUtil.parseParametersAndLabels;
 import static seedu.address.model.person.Person.LABEL_VALIDATION_REGEX;
+import static seedu.address.model.util.ValidationUtil.isParameterAndLabelsValid;
 
 import java.util.HashSet;
 import java.util.List;
@@ -78,30 +79,10 @@ public class OtherPhones {
      * </p>
      * @param phones The {@code List<String>} of the parameters and labels of a Phone.
      * @return A boolean indicating if the parameters and labels of a Phone is valid.
+     * @throws ParseException If there are duplicate other numbers/labels.
      */
-    public static boolean isPhonesAndLabelsValid(List<String> phones) {
-        boolean checkPhone = true;
-        Set<String> set = new HashSet<>();
-
-        for (String currString : phones) {
-            if (set.contains(currString)) {
-                return false;
-            }
-
-            if (checkPhone && !currString.matches(SINGLE_PHONE_REGEX)) {
-                return false;
-            }
-
-            if (!checkPhone && !currString.matches(LABEL_VALIDATION_REGEX)) {
-                return false;
-            }
-
-            set.add(currString);
-
-            checkPhone = !checkPhone;
-        }
-
-        return true;
+    public static boolean isPhonesAndLabelsValid(List<String> phones) throws ParseException {
+        return isParameterAndLabelsValid(phones, SINGLE_PHONE_REGEX, "other numbers");
     }
 
     /**

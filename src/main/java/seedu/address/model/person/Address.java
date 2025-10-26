@@ -4,11 +4,9 @@ import static java.util.Objects.requireNonNull;
 import static seedu.address.commons.util.AppUtil.checkArgument;
 import static seedu.address.logic.parser.ParserUtil.parseParametersAndLabels;
 import static seedu.address.model.person.Person.LABEL_MESSAGE;
-import static seedu.address.model.person.Person.LABEL_VALIDATION_REGEX;
+import static seedu.address.model.util.ValidationUtil.isParameterAndLabelsValid;
 
-import java.util.HashSet;
 import java.util.List;
-import java.util.Set;
 import java.util.logging.Logger;
 
 import seedu.address.commons.core.LogsCenter;
@@ -24,7 +22,7 @@ public class Address {
             + "\n\n"
             + "Multiple addresses are allowed but most adhere to the following conditions: \n"
             + "1. For 1 address only, the label is optional so: ADDRESS or ADDRESS (LABEL).\n"
-            + "2. For multiple emails, the label is compulsory so: ADDRESS1 (LABEL1) ADDRESS2 (LABEL2) ... "
+            + "2. For multiple addresses, the label is compulsory so: ADDRESS1 (LABEL1) ADDRESS2 (LABEL2) ... "
             + "ADDRESSN (LABELN).";
     /*
      * The first character of the address must not be a whitespace,
@@ -52,17 +50,20 @@ public class Address {
     }
 
     /**
-     * Returns true if a given string is a valid email.
+     * Returns true if a given string is a valid address.
+     * @param addresses The addresses to check if it is valid.
+     * @return A boolean indicating if the address is valid.
+     * @throws ParseException if addresses and/or labels are invalid or if they contain duplicates
      */
-    public static boolean isValidAddress(String test) throws ParseException {
-        String trimmedAddress = test.trim();
+    public static boolean isValidAddress(String addresses) throws ParseException {
+        String trimmedAddress = addresses.trim();
 
         if (trimmedAddress.isEmpty()) {
             return false;
         }
 
         List<String> paramsAndLabels = parseParametersAndLabels(Address.class.getName().toLowerCase(),
-                test, false);
+                addresses, false);
 
         if (paramsAndLabels.isEmpty()) {
             return false;
@@ -79,38 +80,15 @@ public class Address {
      * </p><br><p>
      * 1) If there is only one address we accept either: ADDRESS or ADDRESS (LABEL)
      * </p><p>
-     * 2) If there is more than one email every email must be accompanied by a label like: ADDRESS1 (LABEL1)
+     * 2) If there is more than one address every address must be accompanied by a label like: ADDRESS1 (LABEL1)
      * ADDRESS2 (LABEL2) ...
      * </p>
      * @param list The {@code List<String>} of the parameters and labels of an Address.
      * @return A boolean indicating if the parameters and labels of an Address is valid.
+     * @throws ParseException If there are duplicate addresses/labels.
      */
-    private static boolean isAddressesAndLabelsValid(List<String> list) {
-        // If true we are checking if the address is valid, if it is false we are checking if label is valid.
-        boolean checkAddress = true;
-
-        Set<String> set = new HashSet<>();
-
-        for (String currString : list) {
-            if (set.contains(currString)) {
-                return false;
-            }
-
-            if (checkAddress && !currString.matches(ADDRESS_VALIDATION_REGEX)) {
-                return false;
-            }
-
-            if (!checkAddress && !currString.matches(LABEL_VALIDATION_REGEX)) {
-                return false;
-            }
-
-            set.add(currString);
-
-            // Toggle between checking address and label
-            checkAddress = !checkAddress;
-        }
-
-        return true;
+    private static boolean isAddressesAndLabelsValid(List<String> list) throws ParseException {
+        return isParameterAndLabelsValid(list, ADDRESS_VALIDATION_REGEX, "address");
     }
 
     @Override
