@@ -273,7 +273,7 @@ public class ParserUtil {
         // Check for out of bounds issues
         if (closeBracketIndex + 2 >= textLength) {
             exceptionMessage = String.format("Your label at the end is missing a space"
-                    + "to separate it from the last %1$s.", parameterName);
+                    + " to separate it from the last %1$s.", parameterName);
             throw new ParseException(exceptionMessage);
         }
 
