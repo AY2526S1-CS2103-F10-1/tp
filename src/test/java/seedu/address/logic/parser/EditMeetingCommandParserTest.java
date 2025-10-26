@@ -1,7 +1,7 @@
 package seedu.address.logic.parser;
 
 import static seedu.address.logic.Messages.MESSAGE_INVALID_COMMAND_FORMAT;
-import static seedu.address.logic.Messages.MESSAGE_INVALID_DATETIME;
+import static seedu.address.logic.Messages.MESSAGE_INVALID_DOES_NOT_EXIST;
 import static seedu.address.logic.commands.CommandTestUtil.INVALID_MEETING_NAME;
 import static seedu.address.logic.commands.CommandTestUtil.INVALID_MEETING_VENUE;
 import static seedu.address.logic.commands.CommandTestUtil.INVALID_MEETING_WHEN;
@@ -174,7 +174,7 @@ public class EditMeetingCommandParserTest {
         userInput = " " + PREFIX_PERSON_INDEX + personIndex.getOneBased() + " " + PREFIX_MEETING_INDEX
                 + meetingIndex.getOneBased() + MEETING_NAME_AMY + MEETING_VENUE_AMY + INVALID_MEETING_WHEN;
 
-        assertParseFailure(parser, userInput, MESSAGE_INVALID_DATETIME);
+        assertParseFailure(parser, userInput, MESSAGE_INVALID_DOES_NOT_EXIST);
     }
 
     @Test

@@ -2,8 +2,8 @@ package seedu.address.logic.parser;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertThrows;
-import static seedu.address.logic.Messages.MESSAGE_INVALID_DATETIME;
 import static seedu.address.logic.Messages.MESSAGE_INVALID_DATETIME_FORMAT;
+import static seedu.address.logic.Messages.MESSAGE_INVALID_DOES_NOT_EXIST;
 import static seedu.address.logic.Messages.MESSAGE_INVALID_YEAR;
 
 import java.time.LocalDateTime;
@@ -77,16 +77,16 @@ public class DateTimeParserTest {
     public void parseDateTime_parseInvalidDateTime_throwsParseException() {
         Exception ex = assertThrows(ParseException.class, () ->
                 DateTimeParser.parseDateTime(INVALID_DATETIME_1));
-        assertEquals(MESSAGE_INVALID_DATETIME, ex.getMessage());
+        assertEquals(MESSAGE_INVALID_DOES_NOT_EXIST, ex.getMessage());
 
         ex = assertThrows(ParseException.class, () -> DateTimeParser.parseDateTime(INVALID_DATETIME_2));
-        assertEquals(MESSAGE_INVALID_DATETIME, ex.getMessage());
+        assertEquals(MESSAGE_INVALID_DOES_NOT_EXIST, ex.getMessage());
 
         ex = assertThrows(ParseException.class, () -> DateTimeParser.parseDateTime(INVALID_DATETIME_3));
-        assertEquals(MESSAGE_INVALID_DATETIME, ex.getMessage());
+        assertEquals(MESSAGE_INVALID_DOES_NOT_EXIST, ex.getMessage());
 
         ex = assertThrows(ParseException.class, () -> DateTimeParser.parseDateTime(INVALID_LEAP_YEAR_DATE));
-        assertEquals(MESSAGE_INVALID_DATETIME, ex.getMessage());
+        assertEquals(MESSAGE_INVALID_DOES_NOT_EXIST, ex.getMessage());
 
         ex = assertThrows(ParseException.class, () -> DateTimeParser.parseDateTime(INVALID_DATETIME_FORMAT_1));
         assertEquals(MESSAGE_INVALID_DATETIME_FORMAT, ex.getMessage());

@@ -1,8 +1,8 @@
 package seedu.address.logic.parser;
 
 import static java.util.Objects.requireNonNull;
-import static seedu.address.logic.Messages.MESSAGE_INVALID_DATETIME;
 import static seedu.address.logic.Messages.MESSAGE_INVALID_DATETIME_FORMAT;
+import static seedu.address.logic.Messages.MESSAGE_INVALID_DOES_NOT_EXIST;
 import static seedu.address.logic.Messages.MESSAGE_INVALID_YEAR;
 
 import java.time.LocalDateTime;
@@ -64,7 +64,7 @@ public class DateTimeParser {
                 // checks if parsing failed because of an invalid date/time value
                 if (cause instanceof java.time.DateTimeException) {
                     logger.info(String.format(LOGGER_INVALID_DATETIME, dateTime));
-                    throw new ParseException(MESSAGE_INVALID_DATETIME);
+                    throw new ParseException(MESSAGE_INVALID_DOES_NOT_EXIST);
                 }
                 // otherwise, just continue to next pattern (might be a format mismatch)
             }
