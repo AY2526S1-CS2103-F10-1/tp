@@ -2,12 +2,9 @@ package seedu.address.model.person;
 
 import static seedu.address.commons.util.AppUtil.checkArgument;
 import static seedu.address.logic.parser.ParserUtil.parseParametersAndLabels;
-import static seedu.address.model.person.Person.LABEL_VALIDATION_REGEX;
 import static seedu.address.model.util.ValidationUtil.isParameterAndLabelsValid;
 
-import java.util.HashSet;
 import java.util.List;
-import java.util.Set;
 import java.util.logging.Logger;
 
 import seedu.address.commons.core.LogsCenter;

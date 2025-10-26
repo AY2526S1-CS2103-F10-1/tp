@@ -33,15 +33,15 @@ public class ValidationUtil {
         for (String currString : list) {
             // Check for duplicate parameter/label
             if (checkParameter && currParameters.contains(currString)) {
-                exceptionMessage = String.format("One or more of the %ss you " +
-                        "entered contains duplicates!", parameterName);
+                exceptionMessage = String.format("One or more of the %ss you "
+                        + "entered contains duplicates!", parameterName);
 
                 throw new ParseException(exceptionMessage);
             }
 
             if (!checkParameter && currLabels.contains(currString)) {
-                exceptionMessage = String.format("One or more of the labels you entered for %s " +
-                        "contains duplicates!", parameterName);
+                exceptionMessage = String.format("One or more of the labels you entered for %s "
+                        + "contains duplicates!", parameterName);
 
                 throw new ParseException(exceptionMessage);
             }

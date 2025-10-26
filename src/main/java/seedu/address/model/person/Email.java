@@ -105,7 +105,7 @@ public class Email {
      * @return A boolean indicating if the parameters and labels of an Email is valid.
      * @throws ParseException If there are duplicate emails/labels.
      */
-    private static boolean isEmailsAndLabelsValid(List<String> list) throws ParseException{
+    private static boolean isEmailsAndLabelsValid(List<String> list) throws ParseException {
         return isParameterAndLabelsValid(list, EMAIL_VALIDATION_REGEX, "email");
     }
 
