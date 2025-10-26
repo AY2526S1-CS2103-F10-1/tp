@@ -231,7 +231,7 @@ public class ParserUtil {
 
         if (parameterStartIndex == openBracketIndex) {
             exceptionMessage = String.format("One or more of your %1$ss are missing"
-                    + " each %1%s should be accompanied by a label.", parameterName);
+                    + " each %1$s should be accompanied by a label.", parameterName);
             throw new ParseException(exceptionMessage);
         }
 
