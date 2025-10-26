@@ -40,8 +40,8 @@ public class ValidationUtil {
             }
 
             if (!checkParameter && currLabels.contains(currString)) {
-                exceptionMessage = "One or more of the labels you " +
-                        "entered contains duplicates!";
+                exceptionMessage = String.format("One or more of the labels you entered for %s " +
+                        "contains duplicates!", parameterName);
 
                 throw new ParseException(exceptionMessage);
             }
