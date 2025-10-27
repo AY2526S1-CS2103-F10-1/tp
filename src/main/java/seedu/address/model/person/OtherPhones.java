@@ -49,12 +49,13 @@ public class OtherPhones {
     }
 
     /**
-     * Returns true if the given string follows the specified format
-     * @param test
-     * @return boolean
+     * Returns true if a given string is a valid phone.
+     * @param phones The {@code String phone} to check if it is valid.
+     * @return A boolean indicating if the address is valid.
+     * @throws ParseException if phones and/or labels are invalid or if they contain duplicates
      */
-    public static boolean isValidPhone(String test) throws ParseException {
-        String trimmedText = test.trim();
+    public static boolean isValidPhone(String phones) throws ParseException {
+        String trimmedText = phones.trim();
         if (trimmedText.isEmpty()) {
             return true;
         }

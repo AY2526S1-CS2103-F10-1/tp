@@ -69,12 +69,12 @@ public class Email {
     /**
      * Returns if a given string is a valid email.
      *
-     * @param test The {@code String email} test if it is valid.
+     * @param emails The {@code String emails} to check if it is valid.
      * @return A boolean indicating if the email is valid or not.
      * @throws ParseException if emails and/or labels are invalid or if they contain duplicates
      */
-    public static boolean isValidEmail(String test) throws ParseException {
-        String trimmedEmail = test.trim();
+    public static boolean isValidEmail(String emails) throws ParseException {
+        String trimmedEmail = emails.trim();
 
         if (trimmedEmail.isEmpty()) {
             return false;

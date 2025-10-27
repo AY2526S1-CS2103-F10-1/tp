@@ -52,7 +52,7 @@ public class Address {
 
     /**
      * Returns true if a given string is a valid address.
-     * @param addresses The addresses to check if it is valid.
+     * @param addresses The {@code String addresses} to check if it is valid.
      * @return A boolean indicating if the address is valid.
      * @throws ParseException if addresses and/or labels are invalid or if they contain duplicates
      */
