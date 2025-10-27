@@ -32,7 +32,7 @@ public class Email {
             + "    - have each domain label consist of alphanumeric characters, separated only by hyphens, if any.\n"
             + LABEL_MESSAGE
             + "\n\n"
-            + "Multiple emails are allowed but most adhere to the following conditions: \n"
+            + "Multiple emails are allowed but must adhere to the following conditions: \n"
             + "1. For 1 email only, the label is optional so: EMAIL or EMAIL (LABEL).\n"
             + "2. For multiple emails, the label is compulsory so: EMAIL1 (LABEL1) EMAIL2 (LABEL2) ... "
             + "EMAILN (LABELN).";
@@ -46,7 +46,7 @@ public class Email {
     private static final String DOMAIN_LAST_PART_REGEX = "(" + DOMAIN_PART_REGEX + "){2,}$"; // At least two chars
     private static final String DOMAIN_REGEX = "(" + DOMAIN_PART_REGEX + "\\.)*" + DOMAIN_LAST_PART_REGEX;
     public static final String EMAIL_VALIDATION_REGEX = LOCAL_PART_REGEX + "@" + DOMAIN_REGEX;
-
+    private static final String ERROR_MESSAGE_DISPLAY_NAME = "email";
     public final String value;
 
     /**
@@ -80,7 +80,7 @@ public class Email {
             return false;
         }
 
-        List<String> paramsAndLabels = parseParametersAndLabels(Email.class.getName().toLowerCase(),
+        List<String> paramsAndLabels = parseParametersAndLabels(ERROR_MESSAGE_DISPLAY_NAME,
                 test, false);
 
         if (paramsAndLabels.isEmpty()) {
@@ -106,7 +106,7 @@ public class Email {
      * @throws ParseException If there are duplicate emails/labels.
      */
     private static boolean isEmailsAndLabelsValid(List<String> list) throws ParseException {
-        return isParameterAndLabelsValid(list, EMAIL_VALIDATION_REGEX, "email");
+        return isParameterAndLabelsValid(list, EMAIL_VALIDATION_REGEX, ERROR_MESSAGE_DISPLAY_NAME);
     }
 
     @Override

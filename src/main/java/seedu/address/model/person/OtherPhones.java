@@ -25,7 +25,7 @@ public class OtherPhones {
             "^\\s*(?:\\+\\d{1,3}\\s*)?\\d{3,}(?:\\s*x\\d+)?\\s*$";
 
     private static final Logger logger = LogsCenter.getLogger(OtherPhones.class);
-
+    private static final String ERROR_MESSAGE_DISPLAY_NAME = "other number";
     public final String numbers;
 
 
@@ -59,7 +59,7 @@ public class OtherPhones {
             return true;
         }
         List<String> paramsAndLabels = parseParametersAndLabels(
-                OtherPhones.class.getName().toLowerCase(), test, false);
+                ERROR_MESSAGE_DISPLAY_NAME, test, false);
         return isPhonesAndLabelsValid(paramsAndLabels);
     }
 
