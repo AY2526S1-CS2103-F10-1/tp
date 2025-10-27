@@ -89,7 +89,7 @@ public class Address {
      * @throws ParseException If there are duplicate addresses/labels.
      */
     private static boolean isAddressesAndLabelsValid(List<String> list) throws ParseException {
-        return isParameterAndLabelsValid(list, ADDRESS_VALIDATION_REGEX, "address");
+        return isParameterAndLabelsValid(list, ADDRESS_VALIDATION_REGEX, ERROR_MESSAGE_DISPLAY_NAME);
     }
 
     @Override

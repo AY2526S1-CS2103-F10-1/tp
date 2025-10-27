@@ -79,7 +79,7 @@ public class OtherPhones {
      * @throws ParseException If there are duplicate other numbers/labels.
      */
     public static boolean isPhonesAndLabelsValid(List<String> phones) throws ParseException {
-        return isParameterAndLabelsValid(phones, SINGLE_PHONE_REGEX, "other number");
+        return isParameterAndLabelsValid(phones, SINGLE_PHONE_REGEX, ERROR_MESSAGE_DISPLAY_NAME);
     }
 
     /**
