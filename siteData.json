@@ -62,7 +62,13 @@
         "glossary": "Glossary",
         "appendix-instructions-for-manual-testing": "Appendix: Instructions for manual testing",
         "launch-and-shutdown": "Launch and shutdown",
-        "deleting-a-person": "Deleting a person",
+        "adding-a-person": "Adding a person",
+        "adding-a-meeting": "Adding a meeting",
+        "editing-a-meeting": "Editing a meeting",
+        "deleting-a-meeting": "Deleting a meeting",
+        "finding-a-meeting": "Finding a meeting",
+        "flagging-a-person": "Flagging a person",
+        "unflagging-a-person": "Unflagging a person",
         "saving-data": "Saving data"
       },
       "headingKeywords": {}
