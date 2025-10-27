@@ -17,7 +17,10 @@ Class Person
 Class Address
 Class Email
 Class Name
-Class Phone
+Class MainPhone
+Class OtherPhones
+Class Number
+Class PhoneTag
 Class Tag
 Class Meeting
 Class MeetingName
@@ -42,25 +45,25 @@ UserPrefs .up.|> ReadOnlyUserPrefs
 
 AddressBook *--> "1" UniquePersonList
 UniquePersonList --> "~* all" Person
-Person *--> Name
+Person *--> "1" Name
 Person *--> "1" MainPhone
 Person *--> "*" OtherPhones
-Person *--> Email
-Person *--> Address
+Person *--> "1" Email
+Person *--> "1" Address
 Person *--> "*" Tag
 Person *--> "*" Meeting
 Person *--> "1" FlagStatus
-Meeting *--> MeetingName
-Meeting *--> Venue
-Meeting *--> When
-OtherPhones *--> Number
-OtherPhones *--> PhoneTag
+Meeting *--> "1" MeetingName
+Meeting *--> "1" Venue
+Meeting *--> "1" When
+OtherPhones *--> "*" Number
+OtherPhones *--> "*" PhoneTag
 
 Person -[hidden]up--> I
 UniquePersonList -[hidden]right-> I
 
-Name -[hidden]right-> Phone
-Phone -[hidden]right-> Address
+Name -[hidden]right-> MainPhone
+OtherPhones -[hidden]right-> Address
 Address -[hidden]right-> Email
 
 ModelManager --> "~* filtered" Person
