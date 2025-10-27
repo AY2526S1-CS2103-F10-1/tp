@@ -57,6 +57,9 @@ public class Address {
      * @throws ParseException if addresses and/or labels are invalid or if they contain duplicates
      */
     public static boolean isValidAddress(String addresses) throws ParseException {
+        requireNonNull(addresses);
+        assert addresses != null : "Address provided in isValidAddress is null!";
+
         String trimmedAddress = addresses.trim();
 
         if (trimmedAddress.isEmpty()) {

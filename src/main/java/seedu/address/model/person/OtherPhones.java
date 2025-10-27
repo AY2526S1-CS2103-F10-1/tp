@@ -1,5 +1,6 @@
 package seedu.address.model.person;
 
+import static java.util.Objects.requireNonNull;
 import static seedu.address.commons.util.AppUtil.checkArgument;
 import static seedu.address.logic.parser.ParserUtil.parseParametersAndLabels;
 import static seedu.address.model.util.ValidationUtil.isParameterAndLabelsValid;
@@ -55,12 +56,18 @@ public class OtherPhones {
      * @throws ParseException if phones and/or labels are invalid or if they contain duplicates
      */
     public static boolean isValidPhone(String phones) throws ParseException {
-        String trimmedText = phones.trim();
-        if (trimmedText.isEmpty()) {
+        requireNonNull(phones);
+        assert phones != null : "Phones provided in isValidPhone is null!";
+
+        String trimmedPhones = phones.trim();
+
+        if (trimmedPhones.isEmpty()) {
             return true;
         }
+
         List<String> paramsAndLabels = parseParametersAndLabels(
-                ERROR_MESSAGE_DISPLAY_NAME, trimmedText, false);
+                ERROR_MESSAGE_DISPLAY_NAME, trimmedPhones, false);
+
         return isPhonesAndLabelsValid(paramsAndLabels);
     }
 

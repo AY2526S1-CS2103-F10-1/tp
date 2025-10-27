@@ -16,7 +16,7 @@ public class ValidationUtil {
      * Validates a list of parameters and labels and check if they are valid.
      * @param list The list of parameters and labels.
      * @param parameterRegex The regex to validate the parameter.
-     * @param parameterName The actyal parameter name used in exception messages.
+     * @param parameterName The actual parameter name used in exception messages.
      * @return A boolean indicating if the parameters and labels are valid.
      * @throws ParseException If there are duplicate parameters/labels.
      */

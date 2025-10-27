@@ -74,6 +74,9 @@ public class Email {
      * @throws ParseException if emails and/or labels are invalid or if they contain duplicates
      */
     public static boolean isValidEmail(String emails) throws ParseException {
+        requireNonNull(emails);
+        assert emails != null : "Emails provided in isValidEmail is null!";
+
         String trimmedEmail = emails.trim();
 
         if (trimmedEmail.isEmpty()) {
