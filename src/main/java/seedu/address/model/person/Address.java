@@ -64,7 +64,7 @@ public class Address {
         }
 
         List<String> paramsAndLabels = parseParametersAndLabels(ERROR_MESSAGE_DISPLAY_NAME,
-                addresses, false);
+                trimmedAddress, false);
 
         if (paramsAndLabels.isEmpty()) {
             return false;

@@ -59,7 +59,7 @@ public class OtherPhones {
             return true;
         }
         List<String> paramsAndLabels = parseParametersAndLabels(
-                ERROR_MESSAGE_DISPLAY_NAME, test, false);
+                ERROR_MESSAGE_DISPLAY_NAME, trimmedText, false);
         return isPhonesAndLabelsValid(paramsAndLabels);
     }
 

@@ -81,7 +81,7 @@ public class Email {
         }
 
         List<String> paramsAndLabels = parseParametersAndLabels(ERROR_MESSAGE_DISPLAY_NAME,
-                test, false);
+                trimmedEmail, false);
 
         if (paramsAndLabels.isEmpty()) {
             return false;
