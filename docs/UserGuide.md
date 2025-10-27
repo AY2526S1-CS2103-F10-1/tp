@@ -20,7 +20,7 @@ Financial Advisor Contacts Pro (FAContactsPro) is a **desktop app tailored to fi
 
 1. Download the latest `.jar` file from [here](https://github.com/AY2526S1-CS2103-F10-1/tp/releases).
 
-1. Copy the file to the folder you want to use as the _home folder_ for your AddressBook.
+1. Copy the file to the folder you want to use as the _home folder_ for your FAContactsPro AddressBook.
 
 1. Open a command terminal, `cd` into the folder you put the jar file in, and use the `java -jar facontactspro.jar` command to run the application.<br>
    A GUI similar to the below should appear in a few seconds. Note how the app contains some sample data.<br>
