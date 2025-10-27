@@ -20,7 +20,7 @@ Financial Advisor Contacts Pro (FAContactsPro) is a **desktop app tailored to fi
 
 1. Download the latest `.jar` file from [here](https://github.com/AY2526S1-CS2103-F10-1/tp/releases).
 
-1. Copy the file to the folder you want to use as the _home folder_ for your AddressBook.
+1. Copy the file to the folder you want to use as the _home folder_ for your FAContactsPro AddressBook.
 
 1. Open a command terminal, `cd` into the folder you put the jar file in, and use the `java -jar facontactspro.jar` command to run the application.<br>
    A GUI similar to the below should appear in a few seconds. Note how the app contains some sample data.<br>
@@ -31,8 +31,12 @@ Financial Advisor Contacts Pro (FAContactsPro) is a **desktop app tailored to fi
 
    * `list` : Lists all contacts.
 
-   * `add n=John Doe mn=98765432 on=88888888 e=johnd@example.com a=John street, block 123, #01-01` : Adds a contact named `John Doe` to the Address Book.
+   * `add n=John Doe mn=98765432 on=9999 (Office) 6789 (School) e=johnd@example.com (Main) johnd@work.com (Work) a=311, Clementi Ave 2, #02-25 (Home) Kent Ridge Drive Blk 2 (Office) t=colleague t=managers` : Adds a contact named `John Doe` to the Address Book.
 
+   * `addmt p=1 m=Financial advice sharing v=AMK Hub w=2025-11-01 1600` : Adds a new meeting called `Financial advice sharing` to the first contact displayed in the Address Book.
+   
+   * `deletemt p=1 i=1` : Deletes the 1st meeting from the first contact shown in the current list.
+   
    * `delete 3` : Deletes the 3rd contact shown in the current list.
 
    * `clear` : Deletes all contacts.
@@ -98,16 +102,16 @@ Format: `add n=NAME mn=MAIN_NUMBER [on=OPTIONAL_NUMBER] e=EMAIL a=ADDRESS [t/TAG
 * The Name must not start or end with a hyphen, apostrophe, period, accented character, or slash.
 * The Name must not contain consecutive special characters (e.g., --, '', //, .., or double spaces).
 
-<box type="tip" seamless>
+**Rules for `OTHER_PHONE_NUMBERS, EMAIL, ADDRESS`**
+* You can store multiple of them inside by using labels. For example, `e=johnsmith@gmail.com (personal) johnwork@company.com.sg (work)`.
+  But, if you are just storing 1 of these parameters the label will be optionally, else if you are storing multiple of these parameters the label is compulsory.
 
-**Tip:** A person can have any number of tags (including 0)
-</box>
+**Rules for `Tag`**
+* A person can have any number of tags (including 0)
 
 Examples:
-* `add n=John Doe mn=98765432 e=johnd@example.com a=John street, block 123, #01-01`
-* `add n=Betsy Crowe t=friend e=betsycrowe@example.com a=Newgate Prison mn=1234567 t=criminal`
-
----
+* `add n=George Lim mn=91113342 e=george@example.com a=Goldhill street, block 123, #01-01`
+* `add n=John Doe mn=98765432 on=9999 (Office) 6789 (School) e=johnd@example.com (Main) johnd@work.com (Work) a=311, Clementi Ave 2, #02-25 (Home) Kent Ridge Drive Blk 2 (Office) t=colleague t=managers`
 
 ### Listing all persons : `list`
 
@@ -115,13 +119,15 @@ Shows a list of all persons in the address book.
 
 Format: `list`
 
+![result for list](images/Ui.png)
+
 ---
 
 ### Editing a person : `edit`
 
 Edits an existing person in the address book.
 
-Format: `edit INDEX [n=NAME] [mn=MAIN_NUMBER] [mn=OPTIONAL_NUMBER] [e=EMAIL] [a=ADDRESS] [t=TAG]…​`
+Format: `edit INDEX [n=NAME] [mn=PHONE] [on=OTHER_PHONES] [e=EMAIL] [a=ADDRESS] [t/TAG]…​`
 
 * Edits the person at the specified `INDEX`. The index refers to the index number shown in the displayed person list. The index **must be a positive integer** 1, 2, 3, …​
 * At least one of the optional fields must be provided.
@@ -131,8 +137,9 @@ Format: `edit INDEX [n=NAME] [mn=MAIN_NUMBER] [mn=OPTIONAL_NUMBER] [e=EMAIL] [a=
     specifying any tags after it.
 
 Examples:
-*  `edit 1 mn=91234567 e=johndoe@example.com` Edits the main phone number and email address of the 1st person to be `91234567` and `johndoe@example.com` respectively.
+*  `edit 1 p=91234567 e=johndoe@example.com` Edits the phone number and email address of the 1st person to be `91234567` and `johndoe@example.com` respectively.
 *  `edit 2 n=Betsy Crower t=` Edits the name of the 2nd person to be `Betsy Crower` and clears all existing tags.
+   ![result for 'edit 2 n=Betsy Crower t='](images/editToBestyCrower.png)
 
 ---
 
@@ -194,6 +201,26 @@ Examples:
 
 ---
 
+### Finding a meeting : `findmt`
+
+Finds persons who's any of their meeting names contain any of the given keywords.
+
+Format: `findmt KEYWORD [MORE_KEYWORDS]`
+
+* The search is case-insensitive. e.g `discuss` will match `Discuss`
+* The order of the keywords does not matter. e.g. `Discuss Workplan` will match `Workplan Discuss`
+* Only the meeting name is searched.
+* Only full words will be matched e.g. `Discuss` will not match `Discussing`
+* Persons whose who's any of their meeting names match at least one keyword will be returned (i.e. `OR` search).
+  e.g. `Discuss Workplan` will return `Discuss promotion`, `Workplan drafting`
+
+Examples:
+* `findmt lunch` returns `Meet for lunch` and `lunch at colony`
+* `findmt meet discuss` returns `Meet to discuss new policy`, `Meet for lunch`<br>
+  ![result for 'findmt meet discuss'](images/findmtMeetDiscuss.png)
+
+---
+
 ### Editing a meeting : `editmt`
 
 Edits the specified meeting of a specified person from the address book
@@ -208,8 +235,8 @@ Format: `editmt p=PERSON_INDEX i=MEETING_INDEX [m=MEETING] [v=VENUE] [w=WHEN]`
 * Likewise, updating a meeting that overlaps with another meeting or is a duplicate of another meeting is allowed.
 
 Examples:
-* `editmt p=1 i=2 v=Starbucks at J8 w=2025-10-05 1600` Edits the venue and date and time of the 2nd meeting of the
-  1st person to be `Starbucks at J8` and `Oct 05 2025 16:00` respectively.
+* `editmt p=1 i=2 v=Starbucks at J8 w=2025-10-05 1600` Edits the venue and date and time of the 2nd meeting of the 
+1st person to be `Starbucks at J8` and `Oct 05 2025 16:00` respectively.
 * `editmt p=2 i=1 m=Analyse finances` Edits the meeting name of the 1st meeting of the 2nd person to be `Analyse 
 finances`.<br>
   ![result for 'editmt p=2 i=1 m=Analyse finances'](images/editMeetingResult.png)
@@ -284,19 +311,19 @@ Format: `exit`
 
 ### Saving the data
 
-AddressBook data are saved in the hard disk automatically after any command that changes the data. There is no need to save manually.
+FAContactsPro data are saved in the hard disk automatically after any command that changes the data. There is no need to save manually.
 
 ---
 
 ### Editing the data file
 
-AddressBook data are saved automatically as a JSON file `[JAR file location]/data/addressbook.json`. Advanced users are welcome to update data directly by editing that data file.
+FAContactsPro data are saved automatically as a JSON file `[JAR file location]/data/addressbook.json`. Advanced users are welcome to update data directly by editing that data file.
 
 <box type="warning" seamless>
 
 **Caution:**
-If your changes to the data file makes its format invalid, AddressBook will discard all data and start with an empty data file at the next run.  Hence, it is recommended to take a backup of the file before editing it.<br>
-Furthermore, certain edits can cause the AddressBook to behave in unexpected ways (e.g., if a value entered is outside the acceptable range). Therefore, edit the data file only if you are confident that you can update it correctly.
+If your changes to the data file makes its format invalid, FAContactsPro will discard all data and start with an empty data file at the next run.  Hence, it is recommended to take a backup of the file before editing it.<br>
+Furthermore, certain edits can cause FAContactsPro to behave in unexpected ways (e.g., if a value entered is outside the acceptable range). Therefore, edit the data file only if you are confident that you can update it correctly.
 </box>
 
 ---
@@ -310,7 +337,7 @@ _Details coming soon ..._
 ## FAQ
 
 **Q**: How do I transfer my data to another Computer?<br>
-**A**: Install the app in the other computer and overwrite the empty data file it creates with the file that contains the data of your previous AddressBook home folder.
+**A**: Install the app in the other computer and overwrite the empty data file it creates with the file that contains the data of your previous FAContactsPro home folder.
 
 --------------------------------------------------------------------------------------------------------------------
 
@@ -323,21 +350,22 @@ _Details coming soon ..._
 
 ## Command summary
 
-| Action             | Format, Examples                                                                                                                                                      |
-|--------------------|-----------------------------------------------------------------------------------------------------------------------------------------------------------------------|
-| **Help**           | `help`                                                                                                                                                                |
-| **Add**            | `add n/NAME p/PHONE_NUMBER e/EMAIL a/ADDRESS [t/TAG]…​` <br> e.g., `add n/James Ho p/22224444 e/jamesho@example.com a/123, Clementi Rd, 1234665 t/friend t/colleague` |
-| **List**           | `list`                                                                                                                                                                |
-| **Edit**           | `edit INDEX [n/NAME] [p/PHONE_NUMBER] [e/EMAIL] [a/ADDRESS] [t/TAG]…​`<br> e.g.,`edit 2 n/James Lee e/jameslee@example.com`                                           |
-| **Find**           | `find KEYWORD [MORE_KEYWORDS]`<br> e.g., `find James Jake`                                                                                                            |
-| **Delete**         | `delete INDEX`<br> e.g., `delete 3`                                                                                                                                   |
-| **Add Meeting**    | `addmt p=PERSON_INDEX m=MEETING v=VENUE w=WHEN` <br> e.g. `addmt p=1 m=Financial advice sharing v=AMK Hub w=2025-11-01 1600`                                          |
-| **Edit Meeting**   | `editmt p=PERSON_INDEX i=MEETING_INDEX [m=MEETING] [v=VENUE] [w=WHEN]` <br> e.g. `editmt p=1 i=2 v=Starbucks at J8 w=2025-10-05 1600`                                 |
-| **Delete Meeting** | `deletemt p=PERSON_INDEX i=MEETING_INDEX` <br> e.g. `deletemt p=1 i=1`                                                                                                |
-| **Flag Person**    | `flag INDEX` <br> e.g. `flag 1`                                                                                                                                       |
-| **Unflag Person**  | `unflag INDEX` <br> e.g. `unflag 1`                                                                                                                                   |
-|  **Clear**         | `clear`                                                                                                                                                               |
-| **Exit**           | `exit`                                                                                                                                                                |
+| Action              | Format, Examples                                                                                                                                                      |
+|---------------------|-----------------------------------------------------------------------------------------------------------------------------------------------------------------------|
+| **Help**            | `help`                                                                                                                                                                |
+| **Add**             | `add n/NAME p/PHONE_NUMBER e/EMAIL a/ADDRESS [t/TAG]…​` <br> e.g., `add n/James Ho p/22224444 e/jamesho@example.com a/123, Clementi Rd, 1234665 t/friend t/colleague` |
+| **List**            | `list`                                                                                                                                                                |
+| **Edit**            | `edit INDEX [n/NAME] [p/PHONE_NUMBER] [e/EMAIL] [a/ADDRESS] [t/TAG]…​`<br> e.g.,`edit 2 n/James Lee e/jameslee@example.com`                                           |
+| **Find**            | `find KEYWORD [MORE_KEYWORDS]`<br> e.g., `find James Jake`                                                                                                            |
+| **Delete**          | `delete INDEX`<br> e.g., `delete 3`                                                                                                                                   |
+| **Add Meeting**     | `addmt p=PERSON_INDEX m=MEETING v=VENUE w=WHEN` <br> e.g. `addmt p=1 m=Financial advice sharing v=AMK Hub w=2025-11-01 1600`                                          |
+|  **Find Meeting** | `findmt KEYWORD [MORE_KEYWORDS]`<br> e.g., `findmt meet discuss`                                                                                                        |
+| **Edit Meeting**    | `editmt p=PERSON_INDEX i=MEETING_INDEX [m=MEETING] [v=VENUE] [w=WHEN]` <br> e.g. `editmt p=1 i=2 v=Starbucks at J8 w=2025-10-05 1600`                                 |
+|  **Delete Meeting** | `deletemt p=PERSON_INDEX i=MEETING_INDEX` <br> e.g. `deletemt p=1 i=1`                                                                                                |
+| **Flag Person**     | `flag INDEX` <br> e.g. `flag 1`                                                                                                                                       |
+| **Unflag Person**   | `unflag INDEX` <br> e.g. `unflag 1`                                                                                                                                   |
+| **Clear**           | `clear`                                                                                                                                                               |
+| **Exit**            | `exit`                                                                                                                                                                |
 
 
 
