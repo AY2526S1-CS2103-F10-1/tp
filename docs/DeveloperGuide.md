@@ -65,6 +65,8 @@ For example, the `Logic` component defines its API in the `Logic.java` interface
 
 The sections below give more details of each component.
 
+---
+
 ### UI component
 
 The **API** of this component is specified in [`Ui.java`](https://github.com/se-edu/addressbook-level3/tree/master/src/main/java/seedu/address/ui/Ui.java)
@@ -81,6 +83,8 @@ The `UI` component,
 * listens for changes to `Model` data so that the UI can be updated with the modified data.
 * keeps a reference to the `Logic` component, because the `UI` relies on the `Logic` to execute commands.
 * depends on some classes in the `Model` component, as it displays `Person` object residing in the `Model`.
+
+---
 
 ### Logic component
 
@@ -117,6 +121,8 @@ How the parsing works:
 * When called upon to parse a user command, the `AddressBookParser` class creates an `XYZCommandParser` (`XYZ` is a placeholder for the specific command name e.g., `AddCommandParser`) which uses the other classes shown above to parse the user command and create a `XYZCommand` object (e.g., `AddCommand`) which the `AddressBookParser` returns back as a `Command` object.
 * All `XYZCommandParser` classes (e.g., `AddCommandParser`, `DeleteCommandParser`, ...) inherit from the `Parser` interface so that they can be treated similarly where possible e.g, during testing.
 
+---
+
 ### Model component
 **API** : [`Model.java`](https://github.com/se-edu/addressbook-level3/tree/master/src/main/java/seedu/address/model/Model.java)
 
@@ -138,6 +144,7 @@ The `Model` component,
 
 </box>
 
+---
 
 ### Storage component
 
@@ -150,6 +157,8 @@ The `Storage` component,
 * inherits from both `AddressBookStorage` and `UserPrefStorage`, which means it can be treated as either one (if only the functionality of only one is needed).
 * depends on some classes in the `Model` component (because the `Storage` component's job is to save/retrieve objects that belong to the `Model`)
 
+---
+
 ### Common classes
 
 Classes used by multiple components are in the `seedu.address.commons` package.
@@ -159,6 +168,8 @@ Classes used by multiple components are in the `seedu.address.commons` package.
 ## **Implementation**
 
 This section describes some noteworthy details on how certain features are implemented.
+
+--- 
 
 ### Multi-value fields for contacts
 Certain fields of the contacts, e.g. email, address, and other numbers, allow the user to store multiple values. Whereas, other fields like name and main number do not allow storing multi values.
@@ -187,6 +198,33 @@ How the `Multi-value fields` logic works:
 1. After `AddCommandParser` is called upon to parse the arguments it calls the relevant static method from `ParserUtil`
 1. After `ParserUtil` is called upon to parse the XYZField it calls upon the `XYZField` class to validate that fields argument that was passed.
 1. The `XYZField` class needs to call upon `ParserUtil` to help parse the arguments for that fields into a list of the parameters and labels before it can validate them.
+
+---
+
+### Sorting Filtered Contacts By Flag 
+The `FlagStatus` field of each contact stores whether they are flagged. This allows flagged persons to be prioritised in the displayed list.
+
+However, this flag-based ordering must be applied on top of any existing filter (e.g. results of a `find` command). 
+Since `FilteredList` only supports filtering but not custom ordering, we introduce a separate `PersonList` class that wraps both filtering and sorting.
+
+Below is a sequence diagram to illustrate how `ModelManager` retrieves the list of persons through `PersonList`, which constructs a `SortedList` to preserve filtering while also enforcing flag-priority ordering.
+
+<puml src="diagrams/GetPersonListSequenceDiagram.puml" width="900" height="500"/>
+
+When `getPersonList()` is called, `PersonList` constructs a `SortedList` using:
+
+1. `filteredPersons`: a `FilteredList<Person>` representing the current filter results.
+
+2. A comparator that ensures:
+     - Flagged persons appear before unflagged persons.
+     - Within each group, the original order from `filteredPersons` is preserved by comparing their indices in the source list.
+
+This design allows `PersonList` to preserve filtering functionality while also enforcing the flag-priority ordering, keeping `ModelManager` unaware of these details. 
+Future extensions (e.g. different sorting criteria) can be added cleanly within `PersonList`.
+
+**Note**: The constructor details of SortedList are omitted as they are not essential to understanding the interaction.
+
+---
 
 ### \[Proposed\] Undo/redo feature
 
@@ -324,6 +362,8 @@ _{Explain here how the data archiving feature will be implemented}_
 **Value proposition**:
 As financial advisors deal with multitudinous leads every single day, our desktop application offers value by allowing advisors to efficiently manage large client databases, stay on top of a hectic schedule and streamline follow-ups through reminders and customisable client tagging. We help financial advisors save precious time spent on tedious administrative workload, so they can focus on building client relationships, making informed decisions and growing their business.
 
+---
+
 ### User stories
 
 Priorities: High (must have) - `1`, Low (unlikely to have) - `4`
@@ -362,7 +402,13 @@ Priorities: High (must have) - `1`, Low (unlikely to have) - `4`
 |   `4`    | financial advisor      | broadcast information to clients through email                                                   | update them accordingly with market news                                                                                      |
 |   `4`    | financial advisor      | set up meeting invites through google / zoom                                                     | book the time of my clients in advance                                                                                        |
 
+---
+
 ### Use cases
+
+Presented below are the detailed use cases of FAContactsPro, outlining the typical ways users are expected to interact with the system.
+
+---
 
 **System: FAContactsPro**
 
@@ -402,6 +448,8 @@ Use case ends.
 
       Use case resumes from Step 2.
 
+---
+
 **System: FAContactsPro**
 
 **Use case: UC02 - Delete client / colleague contact**
@@ -439,6 +487,8 @@ Use case ends.
       Steps 1b1 - 1b2 is repeated until the system is able to update the data in the storage without any errors.
 
       Use case resumes from Step 2.
+
+---
 
 **System: FAContactsPro**
 
@@ -484,6 +534,8 @@ Use case ends.
 
       Use case ends.
 
+---
+
 **System: FAContactsPro**
 
 **Use case: UC04 - Search for contacts by Name**
@@ -521,6 +573,8 @@ Use case ends.
       Steps 1b1 - 1b2 is repeated until the system is able to retrieve the data from the storage without any errors.
 
       Use case resumes from Step 2.
+
+---
 
 **System: FAContactsPro**
 
@@ -560,6 +614,8 @@ Use case ends.
 
       Use case resumes from Step 2.
 
+---
+
 **System: FAContactsPro**
 
 **Use case: UC06 - Search for contacts by Email**
@@ -598,6 +654,8 @@ Use case ends.
 
       Use case resumes from Step 2.
 
+---
+
 **System: FAContactsPro**
 
 **Use case: UC07 - Search for contacts by Tag**
@@ -635,6 +693,8 @@ Use case ends.
       Steps 1b1 - 1b2 is repeated until the system is able to retrieve the data from the storage without any errors.
 
       Use case resumes from Step 2.
+
+---
 
 **System: FAContactsPro**
 
@@ -684,6 +744,8 @@ Use case ends.
 
       Use case resumes from Step 2.
 
+---
+
 **System: FAContactsPro**
 
 **Use case: UC09 - Delete all contacts**
@@ -732,6 +794,8 @@ Use case ends.
 
       Use case resumes from Step 2.
 
+---
+
 **System: FAContactsPro**
 
 **Use case: UC10 - Exit FAContactsPro application**
@@ -770,6 +834,8 @@ Use case ends.
 
       Use case resumes from Step 2.
 
+---
+
 **System: FAContactsPro**
 
 **Use case: UC11 - Sort list of contacts by name**
@@ -797,6 +863,8 @@ Use case ends.
 
       Use case resumes from Step 2.
 
+---
+
 **System: FAContactsPro**
 
 **Use case: UC12 - Sort list of contacts by tags**
@@ -823,6 +891,8 @@ Use case ends.
       Steps 1a1-1a2 are repeated until the command entered is correct.
 
       Use case resumes from Step 2.
+
+---
 
 **System: FAContactsPro**
 
@@ -861,6 +931,8 @@ Use case ends.
 
       Use case resumes from Step 2.
 
+---
+
 **System: FAContactsPro**
 
 **Use case: UC14 - Adding custom notes to contact**
@@ -898,6 +970,8 @@ Use case ends.
 
       Use case resumes from Step 2.
 
+---
+
 **System: FAContactsPro**
 
 **Use case: UC15 - Viewing all upcoming meetings with contact**
@@ -934,6 +1008,8 @@ Use case ends.
       Steps 1b1-1b2 are repeated until the system is able to retrieve the contact/meetings from storage without any errors.
 
       Use case resumes from Step 2.
+
+---
 
 **System: FAContactsPro**
 
@@ -982,6 +1058,8 @@ Use case ends.
 
       Use case resumes from Step 2.
 
+---
+
 **System: FAContactsPro**
 
 **Use case: UC17 - Edit an existing meeting for a specified contact**
@@ -1028,6 +1106,8 @@ Use case ends.
       Steps 1c1 - 1c2 is repeated until the system is able to update the data from the storage without any errors.
 
       Use case resumes from Step 2.
+
+---
 
 **System: FAContactsPro**
 
@@ -1089,6 +1169,8 @@ Use case ends.
 
       Use case resumes from Step 2.
 
+---
+
 **System: FAContactsPro**
 
 **Use case: UC19 – Flag a contact as important**
@@ -1140,6 +1222,8 @@ Use case ends.
       Steps 1d1 – 1d2 repeat until the data is successfully updated.
 
       Use case resumes from Step 2.
+
+---
 
 **System: FAContactsPro**
 
@@ -1193,6 +1277,8 @@ Use case ends.
 
       Use case resumes from Step 2.
 
+---
+
 ### Non-Functional Requirements
 
 1. **Data performance**: the system should be able to hold up to 10000 contacts
@@ -1205,6 +1291,8 @@ Use case ends.
 8. **Scalability**: the application design should allow for new features without large architectural changes
 9. **Data persistence**: Contact details should be saved automatically after every modification.
 10. **Compliance**: the system should comply with the relevant data protection regulations if handling personal information
+
+---
 
 ### Glossary
 * **Client / Contact**: Refers to an individual whose details are stored in the system. Each client/contact record includes attributes such as name, phone number, email, and tags.
@@ -1227,6 +1315,8 @@ testers are expected to do more *exploratory* testing.
 
 </box>
 
+---
+
 ### Launch and shutdown
 
 1. Initial launch
@@ -1243,6 +1333,8 @@ testers are expected to do more *exploratory* testing.
        Expected: The most recent window size and location is retained.
 
 1. _{ more test cases …​ }_
+
+---
 
 ### Deleting a person
 
@@ -1261,6 +1353,8 @@ testers are expected to do more *exploratory* testing.
 
 1. _{ more test cases …​ }_
 
+---
+
 ### Saving data
 
 1. Dealing with missing/corrupted data files
@@ -1268,3 +1362,5 @@ testers are expected to do more *exploratory* testing.
    1. _{explain how to simulate a missing/corrupted file, and the expected behavior}_
 
 1. _{ more test cases …​ }_
+
+
