@@ -32,6 +32,7 @@ public class Address {
      */
     public static final String ADDRESS_VALIDATION_REGEX = "[^\\s].*";
     private static final Logger logger = LogsCenter.getLogger(Address.class);
+    private static final String ERROR_MESSAGE_DISPLAY_NAME = "address";
     public final String value;
 
     /**
@@ -61,7 +62,7 @@ public class Address {
             return false;
         }
 
-        List<String> paramsAndLabels = parseParametersAndLabels(Address.class.getName().toLowerCase(),
+        List<String> paramsAndLabels = parseParametersAndLabels(ERROR_MESSAGE_DISPLAY_NAME,
                 test, false);
 
         if (paramsAndLabels.isEmpty()) {

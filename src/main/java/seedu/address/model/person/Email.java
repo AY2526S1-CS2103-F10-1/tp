@@ -48,7 +48,7 @@ public class Email {
     private static final String DOMAIN_LAST_PART_REGEX = "(" + DOMAIN_PART_REGEX + "){2,}$"; // At least two chars
     private static final String DOMAIN_REGEX = "(" + DOMAIN_PART_REGEX + "\\.)*" + DOMAIN_LAST_PART_REGEX;
     public static final String EMAIL_VALIDATION_REGEX = LOCAL_PART_REGEX + "@" + DOMAIN_REGEX;
-
+    private static final String ERROR_MESSAGE_DISPLAY_NAME = "email";
     public final String value;
 
     /**
@@ -81,7 +81,7 @@ public class Email {
             return false;
         }
 
-        List<String> paramsAndLabels = parseParametersAndLabels(Email.class.getName().toLowerCase(),
+        List<String> paramsAndLabels = parseParametersAndLabels(ERROR_MESSAGE_DISPLAY_NAME,
                 test, false);
 
         if (paramsAndLabels.isEmpty()) {
