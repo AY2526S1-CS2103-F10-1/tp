@@ -156,6 +156,7 @@ Format: `addmt p=INDEX m=MEETING v=VENUE w=WHEN`
 * The `WHEN` value needs to be a valid datetime format of the form `yyyy/mm/dd HH[:]mm` or `dd-mm-yyyy HH[:]mm`.
 * `/` and `-` are interchangeable but the format needs to remain consistent (i.e. all `/` or all `-`)
 * The `:` in between `HH` and `mm` can be omitted i.e. (`1600` or `16:00`).
+* Adding in duplicate or overlapping meetings are allowed
 
 Examples:
 * `addmt p=1 m=Financial advice sharing v=AMK Hub w=2025-11-01 1600` Adds a new Financial advice sharing meeting to the 
@@ -163,6 +164,26 @@ Examples:
   ![result for 'addmt p=1 m=Financial advice sharing v=AMK Hub w=2025-11-01 1600'](images/addMeetingResult.png)
 
 ---
+
+### Editing a meeting : `editmt`
+
+Edits the specified meeting of a specified person from the address book
+
+Format: `editmt p=INDEX i=MEETING_INDEX [m=MEETING] [v=VENUE] [w=WHEN]`
+
+* Edits the meeting details at the specified `MEETING_INDEX` for the person at the specified `INDEX`. 
+* The index refers to the index number shown in the displayed person list. 
+* The index **must be a positive integer** 1, 2, 3, …​
+* At least one of the optional fields must be provided.
+* Existing values will be updated to the input values.
+* Likewise, updating a meeting that overlaps with another meeting or is a duplicate of another meeting is allowed.
+
+Examples:
+* `editmt p=1 i=2 v=Starbucks at J8 w=2025-10-05 1600` Edits the venue and date and time of the 2nd meeting of the 
+1st person to be `Starbucks at J8` and `Oct 05 2025 16:00` respectively.
+* `editmt p=2 i=1 m=Analyse finances` Edits the meeting name of the 1st meeting of the 2nd person to be `Analyse 
+finances`.<br>
+  ![result for 'editmt p=2 i=1 m=Analyse finances'](images/editMeetingResult.png)
 
 ### Deleting a person : `delete`
 
@@ -237,16 +258,17 @@ _Details coming soon ..._
 
 ## Command summary
 
-| Action             | Format, Examples                                                                                                                                                      |
-|--------------------|-----------------------------------------------------------------------------------------------------------------------------------------------------------------------|
-| **Add**            | `add n/NAME p/PHONE_NUMBER e/EMAIL a/ADDRESS [t/TAG]…​` <br> e.g., `add n/James Ho p/22224444 e/jamesho@example.com a/123, Clementi Rd, 1234665 t/friend t/colleague` |
-| **Add Meeting**    | `addmt p=PERSON_INDEX m=MEETING v=VENUE w=WHEN` <br> e.g. `addmt p=1 m=Financial advice sharing v=AMK Hub w=2025-11-01 1600`                                          |
+| Action          | Format, Examples                                                                                                                                                      |
+|-----------------|-----------------------------------------------------------------------------------------------------------------------------------------------------------------------|
+| **Add**         | `add n/NAME p/PHONE_NUMBER e/EMAIL a/ADDRESS [t/TAG]…​` <br> e.g., `add n/James Ho p/22224444 e/jamesho@example.com a/123, Clementi Rd, 1234665 t/friend t/colleague` |
+| **Add Meeting** | `addmt p=INDEX m=MEETING v=VENUE w=WHEN` <br> e.g. `addmt p=1 m=Financial advice sharing v=AMK Hub w=2025-11-01 1600`                                                 |
 | **Delete Meeting** | `deletemt p=PERSON_INDEX i=MEETING_INDEX` <br> e.g. `deletemt p=1 i=1`                                                                                                |
 | **Flag Person**    | `flag PERSON_INDEX` <br> e.g. `flag 1`                                                                                                                                |
 | **Unflag Person**  | `unflag PERSON_INDEX` <br> e.g. `unflag 1`                                                                                                                            |
-| **Clear**          | `clear`                                                                                                                                                               |
-| **Delete**         | `delete INDEX`<br> e.g., `delete 3`                                                                                                                                   |
-| **Edit**           | `edit INDEX [n/NAME] [p/PHONE_NUMBER] [e/EMAIL] [a/ADDRESS] [t/TAG]…​`<br> e.g.,`edit 2 n/James Lee e/jameslee@example.com`                                           |
-| **Find**           | `find KEYWORD [MORE_KEYWORDS]`<br> e.g., `find James Jake`                                                                                                            |
-| **List**           | `list`                                                                                                                                                                |
-| **Help**           | `help`                                                                                                                                                                |
+| **Clear**       | `clear`                                                                                                                                                               |
+| **Delete**      | `delete INDEX`<br> e.g., `delete 3`                                                                                                                                   |
+| **Edit**        | `edit INDEX [n/NAME] [p/PHONE_NUMBER] [e/EMAIL] [a/ADDRESS] [t/TAG]…​`<br> e.g.,`edit 2 n/James Lee e/jameslee@example.com`                                           |
+| **Edit Meeting**| `editmt p=INDEX i=MEETING_INDEX [m=MEETING] [v=VENUE] [w=WHEN]` <br> e.g. `editmt p=1 i=2 v=Starbucks at J8 w=2025-10-05 1600`                                        |
+| **Find**        | `find KEYWORD [MORE_KEYWORDS]`<br> e.g., `find James Jake`                                                                                                            |
+| **List**        | `list`                                                                                                                                                                |
+| **Help**        | `help`                                                                                                                                                                |
