@@ -67,6 +67,8 @@ Financial Advisor Contacts Pro (FAContactsPro) is a **desktop app tailored to fi
 * If you are using a PDF version of this document, be careful when copying and pasting commands that span multiple lines as space characters surrounding line-breaks may be omitted when copied over to the application.
 </box>
 
+---
+
 ### Viewing help : `help`
 
 Shows a message explaining how to access the help page.
@@ -75,6 +77,7 @@ Shows a message explaining how to access the help page.
 
 Format: `help`
 
+---
 
 ### Adding a person: `add`
 
@@ -91,11 +94,15 @@ Examples:
 * `add n/John Doe p/98765432 e/johnd@example.com a/John street, block 123, #01-01`
 * `add n/Betsy Crowe t/friend e/betsycrowe@example.com a/Newgate Prison p/1234567 t/criminal`
 
+---
+
 ### Listing all persons : `list`
 
 Shows a list of all persons in the address book.
 
 Format: `list`
+
+---
 
 ### Editing a person : `edit`
 
@@ -114,6 +121,8 @@ Examples:
 *  `edit 1 p/91234567 e/johndoe@example.com` Edits the phone number and email address of the 1st person to be `91234567` and `johndoe@example.com` respectively.
 *  `edit 2 n/Betsy Crower t/` Edits the name of the 2nd person to be `Betsy Crower` and clears all existing tags.
 
+---
+
 ### Locating persons by name: `find`
 
 Finds persons whose names contain any of the given keywords.
@@ -131,6 +140,8 @@ Examples:
 * `find John` returns `john` and `John Doe`
 * `find alex david` returns `Alex Yeoh`, `David Li`<br>
   ![result for 'find alex david'](images/findAlexDavidResult.png)
+
+---
 
 ### Adding a meeting : `addmt`
 
@@ -151,6 +162,8 @@ Examples:
 1st person in the displayed person list, that is taking place at AMK Hub on 1st Nov 2025 at 4:00PM.<br>
   ![result for 'addmt p=1 m=Financial advice sharing v=AMK Hub w=2025-11-01 1600'](images/addMeetingResult.png)
 
+---
+
 ### Deleting a person : `delete`
 
 Deletes the specified person from the address book.
@@ -165,11 +178,15 @@ Examples:
 * `list` followed by `delete 2` deletes the 2nd person in the address book.
 * `find Betsy` followed by `delete 1` deletes the 1st person in the results of the `find` command.
 
+---
+
 ### Clearing all entries : `clear`
 
 Clears all entries from the address book.
 
 Format: `clear`
+
+---
 
 ### Exiting the program : `exit`
 
@@ -177,9 +194,13 @@ Exits the program.
 
 Format: `exit`
 
+---
+
 ### Saving the data
 
 AddressBook data are saved in the hard disk automatically after any command that changes the data. There is no need to save manually.
+
+---
 
 ### Editing the data file
 
@@ -191,6 +212,8 @@ AddressBook data are saved automatically as a JSON file `[JAR file location]/dat
 If your changes to the data file makes its format invalid, AddressBook will discard all data and start with an empty data file at the next run.  Hence, it is recommended to take a backup of the file before editing it.<br>
 Furthermore, certain edits can cause the AddressBook to behave in unexpected ways (e.g., if a value entered is outside the acceptable range). Therefore, edit the data file only if you are confident that you can update it correctly.
 </box>
+
+---
 
 ### Archiving data files `[coming in v2.0]`
 
@@ -214,13 +237,16 @@ _Details coming soon ..._
 
 ## Command summary
 
-| Action          | Format, Examples                                                                                                                                                      |
-|-----------------|-----------------------------------------------------------------------------------------------------------------------------------------------------------------------|
-| **Add**         | `add n/NAME p/PHONE_NUMBER e/EMAIL a/ADDRESS [t/TAG]…​` <br> e.g., `add n/James Ho p/22224444 e/jamesho@example.com a/123, Clementi Rd, 1234665 t/friend t/colleague` |
-| **Add Meeting** | `addmt p=INDEX m=MEETING v=VENUE w=WHEN` <br> e.g. `addmt p=1 m=Financial advice sharing v=AMK Hub w=2025-11-01 1600`                                                                                                                   |
-| **Clear**       | `clear`                                                                                                                                                               |
-| **Delete**      | `delete INDEX`<br> e.g., `delete 3`                                                                                                                                   |
-| **Edit**        | `edit INDEX [n/NAME] [p/PHONE_NUMBER] [e/EMAIL] [a/ADDRESS] [t/TAG]…​`<br> e.g.,`edit 2 n/James Lee e/jameslee@example.com`                                           |
-| **Find**        | `find KEYWORD [MORE_KEYWORDS]`<br> e.g., `find James Jake`                                                                                                            |
-| **List**        | `list`                                                                                                                                                                |
-| **Help**        | `help`                                                                                                                                                                |
+| Action             | Format, Examples                                                                                                                                                      |
+|--------------------|-----------------------------------------------------------------------------------------------------------------------------------------------------------------------|
+| **Add**            | `add n/NAME p/PHONE_NUMBER e/EMAIL a/ADDRESS [t/TAG]…​` <br> e.g., `add n/James Ho p/22224444 e/jamesho@example.com a/123, Clementi Rd, 1234665 t/friend t/colleague` |
+| **Add Meeting**    | `addmt p=PERSON_INDEX m=MEETING v=VENUE w=WHEN` <br> e.g. `addmt p=1 m=Financial advice sharing v=AMK Hub w=2025-11-01 1600`                                          |
+| **Delete Meeting** | `deletemt p=PERSON_INDEX i=MEETING_INDEX` <br> e.g. `deletemt p=1 i=1`                                                                                                |
+| **Flag Person**    | `flag PERSON_INDEX` <br> e.g. `flag 1`                                                                                                                                |
+| **Unflag Person**  | `unflag PERSON_INDEX` <br> e.g. `unflag 1`                                                                                                                            |
+| **Clear**          | `clear`                                                                                                                                                               |
+| **Delete**         | `delete INDEX`<br> e.g., `delete 3`                                                                                                                                   |
+| **Edit**           | `edit INDEX [n/NAME] [p/PHONE_NUMBER] [e/EMAIL] [a/ADDRESS] [t/TAG]…​`<br> e.g.,`edit 2 n/James Lee e/jameslee@example.com`                                           |
+| **Find**           | `find KEYWORD [MORE_KEYWORDS]`<br> e.g., `find James Jake`                                                                                                            |
+| **List**           | `list`                                                                                                                                                                |
+| **Help**           | `help`                                                                                                                                                                |
