@@ -1281,26 +1281,25 @@ Use case ends.
 
 ### Non-Functional Requirements
 
-1. **Data performance**: the system should be able to hold up to 10000 contacts
-2. **Cross Compatibility**: the system should be cross compatible across different operating systems (Mac, Windows etc.) as long as they have java 17
-3. **Performance Requirements**: the system should respond within two seconds
+1. **Data performance**: the system should be able to hold up to 10000 contacts.
+2. **Cross Compatibility**: the system should be cross compatible across different operating systems (Mac, Windows etc.) as long as they have java 17.
+3. **Performance Requirements**: Common commands (add, delete, list, flag) should execute in under 2 seconds on a modern laptop (Intel i5, 8GB RAM)
 4. **Quality requirements**: the system should be usable by a novice who has never used a contact management system.
-5. **Security**: Data should only be accessible by the user of the device of the application
-6. **Maintainability**: the code base should be modular, and follow a strict OOP structure
-7. **Maintainability**: there should be clear documentations on the code base
-8. **Scalability**: the application design should allow for new features without large architectural changes
-9. **Data persistence**: Contact details should be saved automatically after every modification.
-10. **Compliance**: the system should comply with the relevant data protection regulations if handling personal information
+5. **Security**: Data should only be accessible by the user of the device of the application.
+6. **Maintainability**: there should be clear documentations on the code base.
+7. **Scalability**: the application design should allow for new features without large architectural changes.
+8. **Data persistence**: Contact details should be saved automatically after every modification.
 
 ---
 
 ### Glossary
 * **Client / Contact**: Refers to an individual whose details are stored in the system. Each client/contact record includes attributes such as name, phone number, email, and tags.
-* **Reminder**: A scheduled notification linked to a client or event that alerts the user of upcoming tasks, meetings, or follow-ups.
 * **Command**: A typed instruction entered into the system’s CLI (e.g. add, delete, list) to perform an action.
 * **Validation**: Rules applied to user inputs (e.g., regex checks for email or phone numbers) to ensure data consistency and prevent errors.
 * **Storage / Contact List**: The collection of all stored contact records within the system.
 * **System**: Refers to FAContactsPro, the contact management desktop application being designed.
+* **Flagged contact**: A contact marked as high priority by the user, which will appear at the top of the displayed list.
+* **Meeting**: An event entry associated with a specific contact, storing date, time, venue and meeting name.
 
 --------------------------------------------------------------------------------------------------------------------
 
