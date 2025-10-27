@@ -1,13 +1,17 @@
 package seedu.address.model.person;
 
 import java.util.function.Predicate;
+import java.util.logging.Logger;
 
+import seedu.address.commons.core.LogsCenter;
 import seedu.address.commons.util.ToStringBuilder;
 
 /**
  * Checks a {@code Person}'s {@code Phone} matches any of the keywords given.
  */
 public class NumberContainsKeywordPredicate implements Predicate<Person> {
+    private static final Logger logger = LogsCenter.getLogger(NameContainsKeywordsPredicate.class);
+
     private final String keyword;
 
     public NumberContainsKeywordPredicate(String keywords) {
@@ -20,6 +24,10 @@ public class NumberContainsKeywordPredicate implements Predicate<Person> {
      */
     @Override
     public boolean test(Person person) {
+        String logMessage = String.format("NameContainsKeywordsPredicate check using: "
+                + "Keywords=%s and Number=%s.", keyword, person.getPhone());
+        logger.info(logMessage);
+
         return person.getPhone().value.contains(keyword);
     }
 
