@@ -1222,8 +1222,11 @@ Given below are instructions to test the app manually.
 
 <box type="info" seamless>
 
-**Note:** These instructions only provide a starting point for testers to work on;
+**Note:** 
+1. These instructions only provide a starting point for testers to work on;
 testers are expected to do more *exploratory* testing.
+
+2. These commands remain untouched from the original AB3 AddressBook: _edit, list, find, clear, delete, help, exit_
 
 </box>
 
@@ -1242,29 +1245,95 @@ testers are expected to do more *exploratory* testing.
    1. Re-launch the app by double-clicking the jar file.<br>
        Expected: The most recent window size and location is retained.
 
-1. _{ more test cases …​ }_
+### Adding a person
 
-### Deleting a person
+1. Adding a person with all field specified correctly
 
-1. Deleting a person while all persons are being shown
+   1. Test case: `add n=john mn=33334 on=3333 e=john@gmail.com a=pine square t=eccentric` <br>
+      Expected: New contact "john" is added to the list. Details of the new contact shown in the status message. 
 
-   1. Prerequisites: List all persons using the `list` command. Multiple persons in the list.
+   1. Test case: `add n=  mn=666777 on=3333 e=john@gmail.com a=pine square t=eccentric` <br>
+      Expected: No contact is added. Error details shown in the status message.
 
-   1. Test case: `delete 1`<br>
-      Expected: First contact is deleted from the list. Details of the deleted contact shown in the status message. Timestamp in the status bar is updated.
+   1. Test case: `add n=john mn=33a34 on=3333 e=john@gmail.com a=pine square t=eccentric` <br>
+      Expected: No contact is added. Error details shown in the status message.
 
-   1. Test case: `delete 0`<br>
-      Expected: No person is deleted. Error details shown in the status message. Status bar remains the same.
+### Adding a meeting
 
-   1. Other incorrect delete commands to try: `delete`, `delete x`, `...` (where x is larger than the list size)<br>
-      Expected: Similar to previous.
+1. Adding a meeting to a person being shown
 
-1. _{ more test cases …​ }_
+   1. Prerequisites: At least one person listed.
+
+   1. Test case: `addmt p=1 m=discussion v=library w=2025-04-05 18:00` <br>
+      Expected: New meeting is added to the person at index 1. Details of meeting should be reflected in the person's UI.
+    
+   1. Test case: `addmt p=0 m=discussion v=library w=2025-04-05 18:00` <br>
+      Expected: No meeting is added. Error details shown in the status message.
+
+### Editing a meeting
+
+1. Editing a meeting of a person being shown
+
+    1. Prerequisites: At least one person with at least one meeting.
+    
+    1. Test case: `editmt p=1 i=1 m=updated discussion` <br>
+        Expected: Meeting 1 of person at index 1 is updated. Details of updated meeting shown in the status message.
+     
+    1. Test case: `editmt p=1 m=0 nm=updated discussion` <br>
+        Expected: No meeting is updated. Error details shown in the status message.
+
+### Deleting a meeting
+
+1. Deleting a meeting of a person being shown
+
+    1. Prerequisites: At least one person with at least one meeting.
+    
+    1. Test case: `deletemt p=1 i=1` <br>
+        Expected: Meeting 1 of person at index 1 is deleted. Details of deleted meeting shown in the status message.
+     
+    1. Test case: `deletemt p=1 i=0` <br>
+        Expected: No meeting is deleted. Error details shown in the status message.
+
+### Finding a meeting
+
+1. Finding meetings of a person being shown
+
+    1. Prerequisites: At least one person with at least one meeting with "discussion" in name.
+    
+    1. Test case: `findmt discussion` <br>
+        Expected: All persons with "discussion" in the meeting description are shown in the person list panel.
+     
+    1. Test case: `findmt nonexistent` <br>
+        Expected: No persons are listed. Appropriate message shown in the status message.
+
+### Flagging a person
+
+1. Flagging a person being shown
+
+   1. Prerequisites: At least one person listed in the address book.
+
+   1. Test case: `flag 1`<br>
+      Expected: Person at index 1 is flagged. Details of the flagged person shown in the status message.
+
+   1. Test case: `flag 0`<br>
+      Expected: No person is flagged. Error details shown in the status message.
+
+### Unflagging a person
+
+1. Flagging a person being shown
+
+   1. Prerequisites: At least one person listed in the address book who is flagged.
+
+   1. Test case: `unflag 1`<br>
+      Expected: Person at index 1 is unflagged. Details of the unflagged person shown in the status message.
+
+   1. Test case: `unflag 0`<br>
+      Expected: No person is unflagged. Error details shown in the status message.
 
 ### Saving data
 
 1. Dealing with missing/corrupted data files
 
-   1. _{explain how to simulate a missing/corrupted file, and the expected behavior}_
+   1. Go to the data folder and access addressbook.json. Change its contents to an invalid format (e.g. Set a person as `"tag": true`).
+      Expected: The app should still launch however with an empty list of persons.
 
-1. _{ more test cases …​ }_
