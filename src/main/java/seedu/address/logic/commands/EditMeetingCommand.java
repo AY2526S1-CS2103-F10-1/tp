@@ -37,7 +37,7 @@ public class EditMeetingCommand extends Command {
             + "[" + PREFIX_MEETING + "MEETING] "
             + "[" + PREFIX_VENUE + "VENUE] "
             + "[" + PREFIX_WHEN + "WHEN]\n"
-            + "Example: " + COMMAND_WORD + PREFIX_PERSON_INDEX + "1 "
+            + "Example: " + COMMAND_WORD + " " + PREFIX_PERSON_INDEX + "1 "
             + PREFIX_MEETING_INDEX + "2 "
             + PREFIX_VENUE + "Starbucks at J8 "
             + PREFIX_WHEN + "2025-10-05 1600";
