@@ -10,6 +10,30 @@ import seedu.address.testutil.PersonBuilder;
 public class NumberContainsKeywordPredicateTest {
 
     @Test
+    public void equals() {
+        String firstPredicateNumber = "999";
+        String secondPredicateNumber = "888";
+
+        NumberContainsKeywordPredicate firstPredicate = new NumberContainsKeywordPredicate(firstPredicateNumber);
+
+        // same object -> returns true
+        assertTrue(firstPredicate.equals(firstPredicate));
+
+        // same values -> returns true
+        NumberContainsKeywordPredicate firstPredicateCopy = new NumberContainsKeywordPredicate(firstPredicateNumber);
+        assertTrue(firstPredicate.equals(firstPredicateCopy));
+
+        // different types -> returns false
+        assertFalse(firstPredicate.equals(1));
+
+        // null -> returns false
+        assertFalse(firstPredicate.equals(null));
+
+        // different person -> returns false
+        assertFalse(firstPredicate.equals(secondPredicateNumber));
+    }
+
+    @Test
     public void test_numberContainsKeywords_returnTrue() {
         //Exact Number
         NumberContainsKeywordPredicate predicate = new NumberContainsKeywordPredicate(

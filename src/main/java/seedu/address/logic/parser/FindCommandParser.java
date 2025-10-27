@@ -28,7 +28,7 @@ public class FindCommandParser implements Parser<FindCommand> {
      * @throws ParseException if the user input does not conform the expected format
      */
     public FindCommand parse(String args) throws ParseException {
-        List<Predicate<Person>> listOfPredicates = new ArrayList<>();
+        List<Predicate<Person>> predicates = new ArrayList<>();
         String trimmedArgs = args.trim();
         if (trimmedArgs.isEmpty()) {
             throw new ParseException(
@@ -38,28 +38,30 @@ public class FindCommandParser implements Parser<FindCommand> {
         ArgumentMultimap argMultimap =
                 ArgumentTokenizer.tokenize(args, PREFIX_NAME, PREFIX_MAIN_PHONE, PREFIX_TAG);
 
+        argMultimap.verifyNoDuplicatePrefixesFor(PREFIX_NAME, PREFIX_MAIN_PHONE, PREFIX_TAG);
+
         String nameKeywords = argMultimap.getValue(PREFIX_NAME).orElse("");
         if (!nameKeywords.equals("")) {
-            listOfPredicates.add(
+            predicates.add(
                     new NameContainsKeywordsPredicate(Arrays.asList(nameKeywords.split("\\s+"))));
         }
         String phoneKeywords = argMultimap.getValue(PREFIX_MAIN_PHONE).orElse("");
         if (!phoneKeywords.equals("")) {
-            listOfPredicates.add(
+            predicates.add(
                     new NumberContainsKeywordPredicate(phoneKeywords));
         }
         String tagKeywords = argMultimap.getValue(PREFIX_TAG).orElse("");
         if (!tagKeywords.equals("")) {
-            listOfPredicates.add(
-                    new TagContainsKeywordPredicate(Arrays.asList(tagKeywords)));
+            predicates.add(
+                    new TagContainsKeywordPredicate(Arrays.asList(tagKeywords.split("\\s+"))));
         }
 
-        if (listOfPredicates.isEmpty()) {
+        if (predicates.isEmpty()) {
             throw new ParseException(
                     String.format(MESSAGE_INVALID_COMMAND_FORMAT, FindCommand.MESSAGE_USAGE));
         }
 
-        return new FindCommand(listOfPredicates);
+        return new FindCommand(predicates);
     }
 
 }

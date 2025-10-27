@@ -35,12 +35,12 @@ public class TagContainsKeywordPredicate implements Predicate<Person> {
         }
 
         // instanceof handles nulls
-        if (!(other instanceof NumberContainsKeywordPredicate)) {
+        if (!(other instanceof TagContainsKeywordPredicate)) {
             return false;
         }
 
-        TagContainsKeywordPredicate otherNumberContainsKeywordPredicate = (TagContainsKeywordPredicate) other;
-        return keywords.equals(otherNumberContainsKeywordPredicate.keywords);
+        TagContainsKeywordPredicate otherTagContainsKeywordPredicate = (TagContainsKeywordPredicate) other;
+        return keywords.equals(otherTagContainsKeywordPredicate.keywords);
     }
 
     @Override

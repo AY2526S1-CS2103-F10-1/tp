@@ -37,6 +37,8 @@ public class FindCommand extends Command {
      * @param predicates to filter a person by (Name, phone, tags)
      */
     public FindCommand(List<Predicate<Person>> predicates) {
+        assert predicates.size() != 0 : "Predicates cannot be empty";
+
         for (Predicate<Person> p : predicates) {
             listOfPredicate.add(p);
         }
@@ -48,7 +50,7 @@ public class FindCommand extends Command {
 
         @SuppressWarnings("unchecked")
         // Converting list of predicates into array, this is allowed as list of predicates
-        // already ensures that all elements is a Predicate<Person> so the casting is sage.
+        // already ensures that all elements is a Predicate<Person> so the casting is safe.
         Predicate<Person> [] predicatesArray = listOfPredicate.toArray(new Predicate[0]);
         model.updatePersonListFilter(predicatesArray);
 
