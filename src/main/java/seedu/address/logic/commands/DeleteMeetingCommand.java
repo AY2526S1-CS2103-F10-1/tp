@@ -12,6 +12,7 @@ import seedu.address.commons.util.ToStringBuilder;
 import seedu.address.logic.Messages;
 import seedu.address.logic.commands.exceptions.CommandException;
 import seedu.address.model.Model;
+import seedu.address.model.meeting.Meeting;
 import seedu.address.model.person.Person;
 
 /**
@@ -38,7 +39,7 @@ public class DeleteMeetingCommand extends Command {
             + MESSAGE_FORMAT;
     public static final String MESSAGE_INVALID_BLANK_PERSON_INDEX = "Please provide the person index.\n"
             + MESSAGE_FORMAT;
-    public static final String MESSAGE_DELETE_MEETING_SUCCESS = "Deleted meeting from Person: %1$s";
+    public static final String MESSAGE_DELETE_MEETING_SUCCESS = "Deleted Meeting: %1$s from Person: %2$s";
 
     private final Index personIndex;
     private final Index meetingIndex;
@@ -69,6 +70,7 @@ public class DeleteMeetingCommand extends Command {
         }
 
         // Removes meetings from the person's meeting list
+        Meeting meetingToDelete = personToEdit.getMeetings().get(meetingIndex.getZeroBased());
         model.deleteMeetingFromPerson(personToEdit, meetingIndex.getZeroBased());
 
         // Creates a new Person object with the updated meetings list
@@ -82,7 +84,9 @@ public class DeleteMeetingCommand extends Command {
 
         model.updatePersonListFilter(PREDICATE_SHOW_ALL_PERSONS);
 
-        return new CommandResult(String.format(MESSAGE_DELETE_MEETING_SUCCESS, Messages.format(personToEdit)));
+        return new CommandResult(String.format(MESSAGE_DELETE_MEETING_SUCCESS,
+                Messages.format(meetingToDelete),
+                Messages.format(personToEdit)));
     }
 
     @Override
