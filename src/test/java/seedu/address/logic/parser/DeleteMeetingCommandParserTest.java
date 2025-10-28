@@ -81,7 +81,14 @@ public class DeleteMeetingCommandParserTest {
 
     @Test
     public void parse_extraPrefix_throwsParseException() {
-        assertParseFailure(parser, " p=1 i=b c=1", String.format(
+        assertParseFailure(parser, " p=1 i=1 c=1", String.format(
+                MESSAGE_INVALID_COMMAND_FORMAT,
+                DeleteMeetingCommand.MESSAGE_USAGE));
+    }
+
+    @Test
+    public void parse_nonEmptyPreambleBeforePrefix_throwsParseException() {
+        assertParseFailure(parser, "a;dlkfja;sldkjf p=1 i=1", String.format(
                 MESSAGE_INVALID_COMMAND_FORMAT,
                 DeleteMeetingCommand.MESSAGE_USAGE));
     }

@@ -43,8 +43,6 @@ public class DeleteMeetingCommand extends Command {
             + MESSAGE_FORMAT;
     public static final String MESSAGE_INVALID_BLANK_PERSON_INDEX = "Please provide the person index.\n"
             + MESSAGE_FORMAT;
-    public static final String MESSAGE_INVALID_PERSON_INDEX = "Invalid person index! It must be a positive integer!";
-    public static final String MESSAGE_INVALID_MEETING_INDEX = "Invalid meeting index! It must be a positive integer!";
     public static final String MESSAGE_DELETE_MEETING_SUCCESS = "Deleted Meeting: %1$s from Person: %2$s";
 
     private final Logger logger = LogsCenter.getLogger(getClass());

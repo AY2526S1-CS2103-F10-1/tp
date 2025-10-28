@@ -5,6 +5,8 @@ import static seedu.address.logic.Messages.MESSAGE_INVALID_COMMAND_FORMAT;
 import static seedu.address.logic.parser.CliSyntax.PREFIX_MEETING_INDEX;
 import static seedu.address.logic.parser.CliSyntax.PREFIX_PERSON_INDEX;
 
+import java.util.stream.Stream;
+
 import seedu.address.commons.core.index.Index;
 import seedu.address.logic.commands.DeleteMeetingCommand;
 import seedu.address.logic.parser.exceptions.ParseException;
@@ -37,10 +39,12 @@ public class DeleteMeetingCommandParser implements Parser<DeleteMeetingCommand> 
 
         verifyNoBlankPrefixValues(personIndexString, meetingIndexString);
 
+        validateEmptyPreamble(argumentMultimap.getPreamble());
+
         argumentMultimap.verifyNoDuplicatePrefixesFor(PREFIX_PERSON_INDEX, PREFIX_MEETING_INDEX);
 
-        Index personIndex = parsePersonIndex(personIndexString);
-        Index meetingIndex = parseMeetingIndex(meetingIndexString);
+        Index personIndex = parseIndexString(personIndexString);
+        Index meetingIndex = parseIndexString(meetingIndexString);
 
         return new DeleteMeetingCommand(personIndex, meetingIndex);
     }
@@ -66,32 +70,31 @@ public class DeleteMeetingCommandParser implements Parser<DeleteMeetingCommand> 
     }
 
     /**
-     * Parses and validates the given person index string.
+     * Parses and validates the given index string.
      *
-     * @return A valid {@code Index} representing the person index.
-     * @throws ParseException If the value is not a valid positive integer.
+     * @throws ParseException If the value is not a valid index.
      */
-    private Index parsePersonIndex(String personIndexString) throws ParseException {
+    private Index parseIndexString(String indexString) throws ParseException {
         try {
-            return ParserUtil.parseIndex(personIndexString);
+            return ParserUtil.parseIndex(indexString);
         } catch (ParseException ive) {
-            throw new ParseException(String.format(MESSAGE_INVALID_COMMAND_FORMAT, DeleteMeetingCommand.MESSAGE_INVALID_PERSON_INDEX),
-                    ive);
+            throw new ParseException(String.format(MESSAGE_INVALID_COMMAND_FORMAT, DeleteMeetingCommand.MESSAGE_USAGE));
         }
     }
 
+
     /**
-     * Parses and validates the given meeting index string.
+     * Ensures that the command preamble (the text before the first prefix) is empty.
+     * <p>
+     * A non-empty preamble indicates invalid input formatting, since this command
+     * does not allow free-form arguments before its required prefixes.
      *
-     * @return A valid {@code Index} representing the meeting index.
-     * @throws ParseException If the value is not a valid positive integer.
+     * @param preamble The raw preamble string extracted from the user input.
+     * @throws ParseException If the preamble is not empty.
      */
-    private Index parseMeetingIndex(String meetingIndexString) throws ParseException {
-        try {
-            return ParserUtil.parseIndex(meetingIndexString);
-        } catch (ParseException ive) {
-            throw new ParseException(String.format(MESSAGE_INVALID_COMMAND_FORMAT, DeleteMeetingCommand.MESSAGE_INVALID_MEETING_INDEX),
-                    ive);
+    private static void validateEmptyPreamble(String preamble) throws ParseException {
+        if (!preamble.isBlank()) {
+            throw new ParseException(String.format(MESSAGE_INVALID_COMMAND_FORMAT, DeleteMeetingCommand.MESSAGE_USAGE));
         }
     }
 }

@@ -124,7 +124,8 @@ public class DeleteMeetingCommandTest {
         Index outOfBoundIndex = Index.fromOneBased(model.getPersonList().size() + 1);
         DeleteMeetingCommand deleteMeetingCommand = new DeleteMeetingCommand(outOfBoundIndex, INDEX_FIRST_MEETING);
 
-        assertCommandFailure(deleteMeetingCommand, model, Messages.MESSAGE_INVALID_PERSON_DISPLAYED_INDEX);
+        assertCommandFailure(deleteMeetingCommand, model,
+                DeleteMeetingCommand.MESSAGE_INVALID_PERSON_DISPLAYED_INDEX);
     }
 
     @Test
@@ -133,7 +134,8 @@ public class DeleteMeetingCommandTest {
                 .get(INDEX_FIRST_PERSON.getZeroBased()).getMeetingCount() + 1);
         DeleteMeetingCommand deleteMeetingCommand = new DeleteMeetingCommand(INDEX_FIRST_PERSON, outOfBoundIndex);
 
-        assertCommandFailure(deleteMeetingCommand, model, DeleteMeetingCommand.MESSAGE_INVALID_MEETING_DISPLAYED_INDEX);
+        assertCommandFailure(deleteMeetingCommand, model,
+                DeleteMeetingCommand.MESSAGE_INVALID_MEETING_DISPLAYED_INDEX);
     }
 
     @Test
