@@ -63,7 +63,7 @@ Financial Advisor Contacts Pro (FAContactsPro) is a **desktop app tailored to fi
   e.g. `[t=TAG]…​` can be used as ` ` (i.e. 0 times), `t=friend`, `t=friend t=family` etc.
 
 * Parameters can be in any order.<br>
-  e.g. if the command specifies `n=NAME p=PHONE_NUMBER`, `p=PHONE_NUMBER n=NAME` is also acceptable.
+  e.g. if the command specifies `n=NAME mn=MAIN_NUMBER`, `mn=MAIN_NUMBER n=NAME` is also acceptable.
 
 * Extraneous parameters for commands that do not take in parameters (such as `help`, `list`, `exit` and `clear`) will be ignored.<br>
   e.g. if the command specifies `help 123`, it will be interpreted as `help`.
@@ -87,7 +87,7 @@ Format: `help`
 
 Adds a person to the address book.
 
-Format: `add n=NAME mn=MAIN_NUMBER [on=OPTIONAL_NUMBER] e=EMAIL a=ADDRESS [t/TAG]…​`
+Format: `add n=NAME mn=MAIN_NUMBER [on=OTHER_NUMBER] e=EMAIL a=ADDRESS [t/TAG]…​`
 
 **Rules for `Name`**
 * The `Name` must contain at least one alphanumeric character.
@@ -102,9 +102,9 @@ Format: `add n=NAME mn=MAIN_NUMBER [on=OPTIONAL_NUMBER] e=EMAIL a=ADDRESS [t/TAG
 * The Name must not start or end with a hyphen, apostrophe, period, accented character, or slash.
 * The Name must not contain consecutive special characters (e.g., --, '', //, .., or double spaces).
 
-**Rules for `OTHER_PHONE_NUMBERS, EMAIL, ADDRESS`**
+**Rules for `OTHER_NUMBER, EMAIL, ADDRESS`**
 * You can store multiple of them inside by using labels. For example, `e=johnsmith@gmail.com (personal) johnwork@company.com.sg (work)`.
-  But, if you are just storing 1 of these parameters the label will be optionally, else if you are storing multiple of these parameters the label is compulsory.
+  But, if you are just storing 1 of these parameters the label will be optional, else if you are storing multiple of these parameters the label is compulsory.
 
 **Rules for `Tag`**
 * A person can have any number of tags (including 0)
@@ -127,7 +127,7 @@ Format: `list`
 
 Edits an existing person in the address book.
 
-Format: `edit INDEX [n=NAME] [mn=PHONE] [on=OTHER_PHONES] [e=EMAIL] [a=ADDRESS] [t/TAG]…​`
+Format: `edit INDEX [n=NAME] [mn=PHONE] [on=OTHER_NUMBER] [e=EMAIL] [a=ADDRESS] [t/TAG]…​`
 
 * Edits the person at the specified `INDEX`. The index refers to the index number shown in the displayed person list. The index **must be a positive integer** 1, 2, 3, …​
 * At least one of the optional fields must be provided.
@@ -188,7 +188,7 @@ Format: `addmt p=PERSON_INDEX m=MEETING v=VENUE w=WHEN`
 * Adds a meeting for the person identified by the `PERSON_INDEX` number used in the displayed person list.
 * A new meeting would be added to the person's list of current meetings.
 * The person's index refers to the index number shown in the displayed person list.
-* The peron's index **must be a positive integer** 1, 2, 3, …​
+* The person's index **must be a positive integer** 1, 2, 3, …​
 * The `WHEN` value needs to be a valid datetime format of the form `yyyy/mm/dd HH[:]mm` or `dd-mm-yyyy HH[:]mm`.
 * `/` and `-` are interchangeable but the format needs to remain consistent (i.e. all `/` or all `-`)
 * The `:` in between `HH` and `mm` can be omitted i.e. (`1600` or `16:00`).
@@ -228,7 +228,7 @@ Edits the specified meeting of a specified person from the address book
 Format: `editmt p=PERSON_INDEX i=MEETING_INDEX [m=MEETING] [v=VENUE] [w=WHEN]`
 
 * Edits the meeting details at the specified `MEETING_INDEX` for the person at the specified `PERSON_INDEX`.
-* The peron's index refers to the index number shown in the displayed person list.
+* The person's index refers to the index number shown in the displayed person list.
 * The index **must be a positive integer** 1, 2, 3, …​
 * At least one of the optional fields must be provided.
 * Existing values will be updated to the input values.
@@ -350,22 +350,22 @@ _Details coming soon ..._
 
 ## Command summary
 
-| Action              | Format, Examples                                                                                                                                                      |
-|---------------------|-----------------------------------------------------------------------------------------------------------------------------------------------------------------------|
-| **Help**            | `help`                                                                                                                                                                |
-| **Add**             | `add n/NAME p/PHONE_NUMBER e/EMAIL a/ADDRESS [t/TAG]…​` <br> e.g., `add n/James Ho p/22224444 e/jamesho@example.com a/123, Clementi Rd, 1234665 t/friend t/colleague` |
-| **List**            | `list`                                                                                                                                                                |
-| **Edit**            | `edit INDEX [n/NAME] [p/PHONE_NUMBER] [e/EMAIL] [a/ADDRESS] [t/TAG]…​`<br> e.g.,`edit 2 n/James Lee e/jameslee@example.com`                                           |
-| **Find**            | `find KEYWORD [MORE_KEYWORDS]`<br> e.g., `find James Jake`                                                                                                            |
-| **Delete**          | `delete INDEX`<br> e.g., `delete 3`                                                                                                                                   |
-| **Add Meeting**     | `addmt p=PERSON_INDEX m=MEETING v=VENUE w=WHEN` <br> e.g. `addmt p=1 m=Financial advice sharing v=AMK Hub w=2025-11-01 1600`                                          |
-|  **Find Meeting** | `findmt KEYWORD [MORE_KEYWORDS]`<br> e.g., `findmt meet discuss`                                                                                                        |
-| **Edit Meeting**    | `editmt p=PERSON_INDEX i=MEETING_INDEX [m=MEETING] [v=VENUE] [w=WHEN]` <br> e.g. `editmt p=1 i=2 v=Starbucks at J8 w=2025-10-05 1600`                                 |
-|  **Delete Meeting** | `deletemt p=PERSON_INDEX i=MEETING_INDEX` <br> e.g. `deletemt p=1 i=1`                                                                                                |
-| **Flag Person**     | `flag INDEX` <br> e.g. `flag 1`                                                                                                                                       |
-| **Unflag Person**   | `unflag INDEX` <br> e.g. `unflag 1`                                                                                                                                   |
-| **Clear**           | `clear`                                                                                                                                                               |
-| **Exit**            | `exit`                                                                                                                                                                |
+| Action             | Format, Examples                                                                                                                                                        |
+|--------------------|-------------------------------------------------------------------------------------------------------------------------------------------------------------------------|
+| **Help**           | `help`                                                                                                                                                                  |
+| **Add**            | `add n=NAME mn=PHONE_NUMBER e=EMAIL a=ADDRESS [t=TAG]…​` <br> e.g., `add n=James Ho mn=22224444 e=jamesho@example.com a=123, Clementi Rd, 1234665 t=friend t=colleague` |
+| **List**           | `list`                                                                                                                                                                  |
+| **Edit**           | `edit INDEX [n=NAME] [mn=MAIN_NUMBER] [e=EMAIL] [a=ADDRESS] [t=TAG]…​`<br> e.g.,`edit 2 n=James Lee e=jameslee@example.com`                                             |
+| **Find**           | `find KEYWORD [MORE_KEYWORDS]`<br> e.g., `find James Jake`                                                                                                              |
+| **Delete**         | `delete INDEX`<br> e.g., `delete 3`                                                                                                                                     |
+| **Add Meeting**    | `addmt p=PERSON_INDEX m=MEETING v=VENUE w=WHEN` <br> e.g. `addmt p=1 m=Financial advice sharing v=AMK Hub w=2025-11-01 1600`                                            |
+| **Find Meeting**   | `findmt KEYWORD [MORE_KEYWORDS]`<br> e.g., `findmt meet discuss`                                                                                                        |
+| **Edit Meeting**   | `editmt p=PERSON_INDEX i=MEETING_INDEX [m=MEETING] [v=VENUE] [w=WHEN]` <br> e.g. `editmt p=1 i=2 v=Starbucks at J8 w=2025-10-05 1600`                                   |
+| **Delete Meeting** | `deletemt p=PERSON_INDEX i=MEETING_INDEX` <br> e.g. `deletemt p=1 i=1`                                                                                                  |
+| **Flag Person**    | `flag INDEX` <br> e.g. `flag 1`                                                                                                                                         |
+| **Unflag Person**  | `unflag INDEX` <br> e.g. `unflag 1`                                                                                                                                     |
+| **Clear**          | `clear`                                                                                                                                                                 |
+| **Exit**           | `exit`                                                                                                                                                                  |
 
 
 
