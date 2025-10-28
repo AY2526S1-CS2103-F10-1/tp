@@ -17,7 +17,7 @@ import seedu.address.model.person.FlagStatus;
 import seedu.address.model.person.Person;
 
 /**
- * Flags a person identified using it's displayed index from the address book.
+ * Flags a person identified using its displayed index from the address book.
  */
 public class FlagCommand extends Command {
     public static final String COMMAND_WORD = "flag";
@@ -47,7 +47,8 @@ public class FlagCommand extends Command {
      */
     public FlagCommand(Index targetIndex) {
         requireNonNull(targetIndex);
-        assert(targetIndex.getZeroBased() >= 0);
+        assert(targetIndex.getZeroBased() >= 0) : ": Index in FlagCommand "
+                + "is supposed to be non-negative!";
 
         this.targetIndex = targetIndex;
     }
@@ -61,7 +62,7 @@ public class FlagCommand extends Command {
         Person flaggedPerson = flagPerson(personToFlag, model);
 
         // log the flagging transition to ensure flagging took place
-        logger.info(String.format("%s was flagged (%b -> %b)",
+        logger.info(String.format("%s flag status changed (%b -> %b)",
                 flaggedPerson.getName(),
                 personToFlag.isFlagged(),
                 flaggedPerson.isFlagged()));

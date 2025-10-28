@@ -17,7 +17,7 @@ import seedu.address.model.person.FlagStatus;
 import seedu.address.model.person.Person;
 
 /**
- * Unflags a person identified using it's displayed index from the address book.
+ * Unflags a person identified using its displayed index from the address book.
  */
 public class UnflagCommand extends Command {
     public static final String COMMAND_WORD = "unflag";
@@ -27,8 +27,10 @@ public class UnflagCommand extends Command {
             + "Parameters: INDEX (must be a positive integer)\n"
             + "Example: " + COMMAND_WORD + " 1";
 
-    public static final String MESSAGE_FLAG_PERSON_SUCCESS = "Unflagged Person: %1$s";
-    public static final String MESSAGE_ALREADY_FLAGGED = "This person is already unflagged.";
+    public static final String MESSAGE_UNFLAG_PERSON_SUCCESS = "Unflagged Person: %1$s";
+    public static final String MESSAGE_INVALID_INDEX = "The index given is invalid.\n"
+            + "Either the person list is empty, or the index is out of range of the displayed person list.";
+    public static final String MESSAGE_ALREADY_UNFLAGGED = "This person is already unflagged.";
     private static final Boolean UNFLAGGED_STATUS = false;
 
     private final Logger logger = LogsCenter.getLogger(getClass());
@@ -36,11 +38,17 @@ public class UnflagCommand extends Command {
     private final Index targetIndex;
 
     /**
-     * Creates an UnflagCommand to unflag the person at the specified {@code targetIndex}.
+     * Constructs a {@code UnflagCommand} to unflag the person at the given index.
+     * <p>
+     * The {@code targetIndex} is guaranteed to be valid and non-negative,
+     * as input validation is handled by {@code UnflagCommandParser}.
+     *
+     * @param targetIndex Index of the person in the displayed list to unflag.
      */
     public UnflagCommand(Index targetIndex) {
         requireNonNull(targetIndex);
-        assert(targetIndex.getZeroBased() >= 0);
+        assert(targetIndex.getZeroBased() >= 0) : "Index in UnflagCommand "
+                + "is supposed to be non-negative!";
 
         this.targetIndex = targetIndex;
     }
@@ -49,37 +57,56 @@ public class UnflagCommand extends Command {
     @Override
     public CommandResult execute(Model model) throws CommandException {
         requireNonNull(model);
-        assert(targetIndex.getZeroBased() >= 0);
 
-        List<Person> lastShownList = model.getPersonList();
-
-        // zero-based index is longer than list size
-        if (targetIndex.getZeroBased() >= lastShownList.size()) {
-            throw new CommandException(Messages.MESSAGE_INVALID_PERSON_DISPLAYED_INDEX);
-        }
-
-        Person personToUnflag = lastShownList.get(targetIndex.getZeroBased());
-
-        // check if person is already unflagged
-        if (!personToUnflag.isFlagged()) {
-            throw new CommandException(MESSAGE_ALREADY_FLAGGED);
-        }
-
-        // create an edited person descriptor with flag status set to false
-        EditPersonDescriptor editPersonDescriptor = new EditPersonDescriptor();
-        editPersonDescriptor.setFlagStatus(new FlagStatus(UNFLAGGED_STATUS));
-        Person unflaggedPerson = createEditedPerson(personToUnflag, editPersonDescriptor);
-
-        model.setPerson(personToUnflag, unflaggedPerson);
+        Person personToUnflag = validateAndGetPerson(model);
+        Person unflaggedPerson = unflagPerson(model, personToUnflag);
 
         // log the unflagging transition to ensure unflagging took place
-        logger.info(String.format("%s was flagged (%b -> %b)",
-                unflaggedPerson.getName().toString(),
+        logger.info(String.format("%s flag status changed (%b -> %b)",
+                unflaggedPerson.getName(),
                 personToUnflag.isFlagged(),
                 unflaggedPerson.isFlagged()));
 
-        return new CommandResult(String.format(MESSAGE_FLAG_PERSON_SUCCESS,
+        return new CommandResult(String.format(MESSAGE_UNFLAG_PERSON_SUCCESS,
                 Messages.format(unflaggedPerson)));
+    }
+
+    /**
+     * Validates the target index and returns the corresponding {@code Person}.
+     * <p>
+     * Ensures the index is valid and that the person is not unflagged already.
+     *
+     * @return The {@code Person} to unflag.
+     * @throws CommandException If the index is invalid.
+     */
+    private Person validateAndGetPerson(Model model) throws CommandException {
+        List<Person> lastShownList = model.getPersonList();
+
+        if (targetIndex.getZeroBased() >= lastShownList.size()) {
+            throw new CommandException(MESSAGE_INVALID_INDEX);
+        }
+
+        Person person = lastShownList.get(targetIndex.getZeroBased());
+        if (!person.isFlagged()) {
+            throw new CommandException(MESSAGE_ALREADY_UNFLAGGED);
+        }
+
+        return person;
+    }
+
+    /**
+     * Creates an unflagged copy of the given person and updates the model.
+     *
+     * @return The unflagged {@code Person}.
+     */
+    private Person unflagPerson(Model model, Person personToUnflag) {
+        EditPersonDescriptor descriptor = new EditPersonDescriptor();
+        descriptor.setFlagStatus(new FlagStatus(UNFLAGGED_STATUS));
+        Person unflaggedPerson = createEditedPerson(personToUnflag, descriptor);
+
+        model.setPerson(personToUnflag, unflaggedPerson);
+
+        return unflaggedPerson;
     }
 
     @Override
