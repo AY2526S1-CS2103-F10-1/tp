@@ -82,8 +82,6 @@ public class DeleteMeetingCommand extends Command {
         // Replaces the old person with the new person in the model to refresh the GUI
         model.setPerson(personToEdit, editedPerson);
 
-        model.updatePersonListFilter(PREDICATE_SHOW_ALL_PERSONS);
-
         return new CommandResult(String.format(MESSAGE_DELETE_MEETING_SUCCESS,
                 Messages.format(meetingToDelete),
                 Messages.format(personToEdit)));
