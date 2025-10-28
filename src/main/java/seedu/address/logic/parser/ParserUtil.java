@@ -315,7 +315,7 @@ public class ParserUtil {
         // Check if the size of the list is correct
         if (list.size() >= listMinSize && list.size() % 2 == 1) {
             exceptionMessage = String.format("Every %1$s must be accompanied by a label"
-                    + " . For example %1$s1 (label1) %1$s2 (label2).", parameterName);
+                    + ". For example %1$s1 (label1) %1$s2 (label2).", parameterName);
             throw new ParseException(exceptionMessage);
         }
     }
