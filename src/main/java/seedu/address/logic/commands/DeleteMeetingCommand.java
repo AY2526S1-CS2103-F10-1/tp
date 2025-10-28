@@ -33,13 +33,18 @@ public class DeleteMeetingCommand extends Command {
             + MESSAGE_FORMAT
             + "Example: " + COMMAND_WORD + " " + PREFIX_PERSON_INDEX + "1 " + PREFIX_MEETING_INDEX + "1";
 
-    public static final String MESSAGE_INVALID_MEETING_DISPLAYED_INDEX = "The meeting index provided is invalid";
+    public static final String MESSAGE_INVALID_MEETING_DISPLAYED_INDEX = "The meeting index provided is invalid.\n"
+            + "Please enter an index within the displayed meeting list.";
+    public static final String MESSAGE_INVALID_PERSON_DISPLAYED_INDEX = "The person index provided is invalid.\n"
+            + "Please enter an index within the displayed person list.";
     public static final String MESSAGE_INVALID_BLANK = "Please provide arguments after the command word.\n"
             + MESSAGE_FORMAT;
     public static final String MESSAGE_INVALID_BLANK_MEETING_INDEX = "Please provide the meeting index.\n"
             + MESSAGE_FORMAT;
     public static final String MESSAGE_INVALID_BLANK_PERSON_INDEX = "Please provide the person index.\n"
             + MESSAGE_FORMAT;
+    public static final String MESSAGE_INVALID_PERSON_INDEX = "Invalid person index! It must be a positive integer!";
+    public static final String MESSAGE_INVALID_MEETING_INDEX = "Invalid meeting index! It must be a positive integer!";
     public static final String MESSAGE_DELETE_MEETING_SUCCESS = "Deleted Meeting: %1$s from Person: %2$s";
 
     private final Logger logger = LogsCenter.getLogger(getClass());
@@ -90,7 +95,7 @@ public class DeleteMeetingCommand extends Command {
         List<Person> lastShownList = model.getPersonList();
 
         if (personIndex.getZeroBased() >= lastShownList.size()) {
-            throw new CommandException(Messages.MESSAGE_INVALID_PERSON_DISPLAYED_INDEX);
+            throw new CommandException(MESSAGE_INVALID_PERSON_DISPLAYED_INDEX);
         }
 
         Person personToEdit = lastShownList.get(personIndex.getZeroBased());
