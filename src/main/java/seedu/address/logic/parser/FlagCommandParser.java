@@ -14,11 +14,9 @@ public class FlagCommandParser implements Parser<FlagCommand> {
     @Override
     public FlagCommand parse(String args) throws ParseException {
         try {
-
-            // try to parse the index
             Index index = ParserUtil.parseIndex(args);
 
-            assert(index.getZeroBased() >= 0);
+            assert(index.getZeroBased() >= 0) : "Index should be non-negative";
 
             return new FlagCommand(index);
         } catch (ParseException e) {
@@ -27,5 +25,4 @@ public class FlagCommandParser implements Parser<FlagCommand> {
             );
         }
     }
-
 }
