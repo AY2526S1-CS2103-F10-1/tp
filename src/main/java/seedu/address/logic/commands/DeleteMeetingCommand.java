@@ -5,7 +5,9 @@ import static seedu.address.logic.parser.CliSyntax.PREFIX_MEETING_INDEX;
 import static seedu.address.logic.parser.CliSyntax.PREFIX_PERSON_INDEX;
 
 import java.util.List;
+import java.util.logging.Logger;
 
+import seedu.address.commons.core.LogsCenter;
 import seedu.address.commons.core.index.Index;
 import seedu.address.commons.util.ToStringBuilder;
 import seedu.address.logic.Messages;
@@ -40,6 +42,8 @@ public class DeleteMeetingCommand extends Command {
             + MESSAGE_FORMAT;
     public static final String MESSAGE_DELETE_MEETING_SUCCESS = "Deleted Meeting: %1$s from Person: %2$s";
 
+    private final Logger logger = LogsCenter.getLogger(getClass());
+
     private final Index personIndex;
     private final Index meetingIndex;
 
@@ -68,6 +72,9 @@ public class DeleteMeetingCommand extends Command {
                 .getMeetings().get(meetingIndex.getZeroBased());
 
         deleteSpecifiedPersonMeeting(model, personToEdit);
+
+        logger.info(String.format("Successfully deleted meeting %s from Person %s",
+                Messages.format(meetingToDelete), personToEdit.getName()));
 
         return buildCommandResult(meetingToDelete, personToEdit);
     }
@@ -108,13 +115,11 @@ public class DeleteMeetingCommand extends Command {
     private void deleteSpecifiedPersonMeeting(Model model, Person personToEdit) {
         model.deleteMeetingFromPerson(personToEdit, meetingIndex.getZeroBased());
 
-        // Creates a new Person object with the updated meetings list
         Person editedPerson = new Person(personToEdit.getName(), personToEdit.getPhone(),
                 personToEdit.getOtherPhones(), personToEdit.getEmail(),
                 personToEdit.getAddress(), personToEdit.getTags(),
                 personToEdit.getMeetings(), personToEdit.getFlagStatus());
 
-        // Replaces the old person with the new person in the model to refresh the GUI
         model.setPerson(personToEdit, editedPerson);
     }
 
