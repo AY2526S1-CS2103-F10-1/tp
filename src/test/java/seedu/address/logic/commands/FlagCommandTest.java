@@ -8,7 +8,7 @@ import static seedu.address.logic.commands.CommandTestUtil.assertCommandSuccess;
 import static seedu.address.logic.commands.CommandTestUtil.showPersonAtIndex;
 import static seedu.address.testutil.TypicalIndexes.INDEX_FIRST_PERSON;
 import static seedu.address.testutil.TypicalIndexes.INDEX_SECOND_PERSON;
-import static seedu.address.testutil.TypicalIndexes.INDEX_THIRD_PERSON;
+import static seedu.address.testutil.TypicalIndexes.INDEX_SEVENTH_PERSON;
 import static seedu.address.testutil.TypicalPersons.getTypicalAddressBook;
 
 import org.junit.jupiter.api.Test;
@@ -26,8 +26,9 @@ public class FlagCommandTest {
 
     @Test
     public void execute_validIndexUnfilteredList_success() {
-        Person personToFlag = model.getPersonList().get(INDEX_THIRD_PERSON.getZeroBased());
-        FlagCommand flagCommand = new FlagCommand(INDEX_THIRD_PERSON);
+        // test the boundary index values by getting the last (7th) person
+        Person personToFlag = model.getPersonList().get(INDEX_SEVENTH_PERSON.getZeroBased());
+        FlagCommand flagCommand = new FlagCommand(INDEX_SEVENTH_PERSON);
 
         String expectedMessage = String.format(FlagCommand.MESSAGE_FLAG_PERSON_SUCCESS,
                 Messages.format(personToFlag));
@@ -47,7 +48,7 @@ public class FlagCommandTest {
         Index outOfBoundIndex = Index.fromOneBased(model.getPersonList().size() + 1);
         FlagCommand flagCommand = new FlagCommand(outOfBoundIndex);
 
-        assertCommandFailure(flagCommand, model, Messages.MESSAGE_INVALID_PERSON_DISPLAYED_INDEX);
+        assertCommandFailure(flagCommand, model, FlagCommand.MESSAGE_INVALID_INDEX);
     }
 
     @Test
@@ -86,7 +87,7 @@ public class FlagCommandTest {
 
         FlagCommand flagCommand = new FlagCommand(outOfBoundIndex);
 
-        assertCommandFailure(flagCommand, model, Messages.MESSAGE_INVALID_PERSON_DISPLAYED_INDEX);
+        assertCommandFailure(flagCommand, model, FlagCommand.MESSAGE_INVALID_INDEX);
     }
 
     @Test
