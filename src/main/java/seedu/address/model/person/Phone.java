@@ -15,6 +15,7 @@ public class Phone {
     public static final String VALIDATION_REGEX = "^(?:\\+\\d{2,} )?\\d{3,}(?: x\\d+)?$";
     public final String value;
 
+
     /**
      * Constructs a {@code Phone}.
      *

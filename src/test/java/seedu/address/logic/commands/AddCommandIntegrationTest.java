@@ -152,4 +152,20 @@ public class AddCommandIntegrationTest {
                 addedPerson.getOtherPhones().toString());
     }
 
+    @Test
+    public void addCommand_multipleOtherNumbers_personAddedToModel() throws Exception {
+        AddCommandParser parser = new AddCommandParser();
+
+        AddCommand command = parser.parse(" n=Jean-Luc mn=91234567 "
+                + "on=9999 (work) 99998 (test) e=test@example.com (main) "
+                + "john@work.com (work) a=123 Street t=Friend");
+        command.execute(model);
+
+        int addedPersonIndex = model.getPersonList().size() - 1;
+        Person addedPerson = model.getPersonList().get(addedPersonIndex);
+        assertEquals("9999 (work) 99998 (test)",
+                addedPerson.getOtherPhones().toString());
+
+    }
+
 }

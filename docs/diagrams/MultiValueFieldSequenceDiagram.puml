@@ -1,0 +1,44 @@
+@startuml
+!include style.puml
+skinparam ArrowFontStyle plain
+
+
+box Multi-value fields logic LOGIC_COLOR_T1
+participant ":AddressBookParser" as AddressBookParser LOGIC_COLOR
+participant ":AddCommandParser" as AddCommandParser LOGIC_COLOR
+participant "<color:red>«static»</color>\nParserUtil" as ParserUtil LOGIC_COLOR
+participant "<color:red>«static»</color>\nXYZField" as XYZField LOGIC_COLOR
+
+end box
+
+create AddCommandParser
+AddressBookParser -> AddCommandParser
+activate AddCommandParser
+
+AddCommandParser --> AddressBookParser
+deactivate AddCommandParser
+
+AddressBookParser -> AddCommandParser : parse(...)
+activate AddCommandParser
+
+AddCommandParser -> ParserUtil : parseXYZField()
+activate ParserUtil
+
+ParserUtil -> XYZField : isValidXYZField()
+activate XYZField
+
+XYZField -> ParserUtil : parseParametersAndLabels()
+ParserUtil --> XYZField
+XYZField --> ParserUtil
+deactivate XYZField
+
+ParserUtil --> AddCommandParser
+deactivate ParserUtil
+
+AddCommandParser --> AddressBookParser :
+deactivate AddCommandParser
+'Hidden arrow to position the destroy marker below the end of the activation bar.
+AddCommandParser -[hidden]-> AddressBookParser
+destroy AddCommandParser
+deactivate AddressBookParser
+@enduml

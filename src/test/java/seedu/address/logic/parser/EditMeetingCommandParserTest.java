@@ -1,6 +1,7 @@
 package seedu.address.logic.parser;
 
 import static seedu.address.logic.Messages.MESSAGE_INVALID_COMMAND_FORMAT;
+import static seedu.address.logic.Messages.MESSAGE_INVALID_DOES_NOT_EXIST;
 import static seedu.address.logic.commands.CommandTestUtil.INVALID_MEETING_NAME;
 import static seedu.address.logic.commands.CommandTestUtil.INVALID_MEETING_VENUE;
 import static seedu.address.logic.commands.CommandTestUtil.INVALID_MEETING_WHEN;
@@ -35,7 +36,6 @@ import seedu.address.logic.commands.EditMeetingCommand.EditMeetingDescriptor;
 import seedu.address.logic.parser.exceptions.ParseException;
 import seedu.address.model.meeting.MeetingName;
 import seedu.address.model.meeting.Venue;
-import seedu.address.model.meeting.When;
 import seedu.address.testutil.EditMeetingDescriptorBuilder;
 
 public class EditMeetingCommandParserTest {
@@ -92,6 +92,12 @@ public class EditMeetingCommandParserTest {
 
         userInput = " " + PREFIX_PERSON_INDEX + personIndex.getOneBased() + " " + PREFIX_MEETING_INDEX
                 + "0" + MEETING_NAME_BOB + MEETING_VENUE_BOB + MEETING_WHEN_BOB;
+
+        assertParseFailure(parser, userInput, MESSAGE_INVALID_FORMAT);
+
+        // non-empty preamble after command
+        userInput = "abc " + PREFIX_PERSON_INDEX + personIndex.getOneBased() + " " + PREFIX_MEETING_INDEX
+                + meetingIndex.getOneBased() + MEETING_VENUE_AMY + MEETING_WHEN_AMY;
 
         assertParseFailure(parser, userInput, MESSAGE_INVALID_FORMAT);
 
@@ -174,7 +180,7 @@ public class EditMeetingCommandParserTest {
         userInput = " " + PREFIX_PERSON_INDEX + personIndex.getOneBased() + " " + PREFIX_MEETING_INDEX
                 + meetingIndex.getOneBased() + MEETING_NAME_AMY + MEETING_VENUE_AMY + INVALID_MEETING_WHEN;
 
-        assertParseFailure(parser, userInput, When.MESSAGE_CONSTRAINTS);
+        assertParseFailure(parser, userInput, MESSAGE_INVALID_DOES_NOT_EXIST);
     }
 
     @Test

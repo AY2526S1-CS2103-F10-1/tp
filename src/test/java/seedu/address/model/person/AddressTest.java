@@ -39,15 +39,16 @@ public class AddressTest {
 
         assertThrows(ParseException.class, () ->
                 Address.isValidAddress("Kent Ridge (home) (school)")); // Another address missing
-
+        assertThrows(ParseException.class, () ->
+                Address.isValidAddress("Kent Ridge (home) "
+                        + "Jurong (home)")); // duplicate labels
+        assertThrows(ParseException.class, () ->
+                Address.isValidAddress("Kent Ridge (home) "
+                        + "Kent Ridge (school)")); // duplicate addresses
         try {
             // invalid addresses
             assertFalse(Address.isValidAddress("")); // empty string
             assertFalse(Address.isValidAddress(" ")); // spaces only
-            assertFalse(Address.isValidAddress("Kent Ridge (home) "
-                    + "Jurong (home)")); // Duplicate labels
-            assertFalse(Address.isValidAddress("Kent Ridge (home) "
-                    + "Kent Ridge (school)")); // Duplicate address
             assertFalse(Address.isValidAddress("Kent Ridge ()")); // Empty label
             assertFalse(Address.isValidAddress("Kent Ridge (  )")); // Label with spaces only
             assertFalse(Address.isValidAddress("Kent Ridge (--)")); // Label with hyphen only

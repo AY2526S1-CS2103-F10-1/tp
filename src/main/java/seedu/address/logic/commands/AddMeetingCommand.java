@@ -5,7 +5,6 @@ import static seedu.address.logic.parser.CliSyntax.PREFIX_MEETING;
 import static seedu.address.logic.parser.CliSyntax.PREFIX_PERSON_INDEX;
 import static seedu.address.logic.parser.CliSyntax.PREFIX_VENUE;
 import static seedu.address.logic.parser.CliSyntax.PREFIX_WHEN;
-import static seedu.address.model.Model.PREDICATE_SHOW_ALL_PERSONS;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -87,7 +86,6 @@ public class AddMeetingCommand extends Command {
                 personToEdit.getAddress(), personToEdit.getTags(),
                 editedMeetings, personToEdit.getFlagStatus());
         model.setPerson(personToEdit, editedPerson);
-        model.updatePersonListFilter(PREDICATE_SHOW_ALL_PERSONS);
 
         return new CommandResult(generateSuccessMessage(editedPerson));
     }

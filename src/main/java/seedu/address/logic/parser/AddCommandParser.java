@@ -53,7 +53,7 @@ public class AddCommandParser implements Parser<AddCommand> {
         Set<Tag> tagList = ParserUtil.parseTags(argMultimap.getAllValues(PREFIX_TAG));
         List<Meeting> meetings = new ArrayList<>();
         OtherPhones otherPhones = ParserUtil.parseOtherPhones(
-                argMultimap.getValue(PREFIX_OTHER_PHONE).orElse(""));
+                argMultimap.getValue(PREFIX_OTHER_PHONE).orElse(""), phone);
 
         Person person = new Person(name, phone, otherPhones, email, address, tagList, meetings, DEFAULT_FLAG_STATUS);
 

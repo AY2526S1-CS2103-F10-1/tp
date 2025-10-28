@@ -190,6 +190,34 @@ How the `Multi-value fields` logic works:
 #### Implementation
 
 
+### Multi-value fields for contacts
+Certain fields of the contacts, e.g. email, address, and other numbers, allow the user to store multiple values. Whereas, other fields like name and main number do not allow storing multi values.
+Take for example, email, which is entered into the add command arguments as e=johnsmith@gmail.com (Personal email) johnss@u.nus.edu (NUS email). It will also be displayed in the GUI as johnsmith@gmail.com (Personal email) johnss@u.nus.edu (NUS email).
+
+
+For the most part the sequence diagram for the add command will look like the [Delete Sequence Diagram](#delete-sequence-diagram) that we have seen above just that we need to change all the delete operations/classes to add.
+Instead, we will now be focusing on the classes/objects for the validation of multi-value fields which the sequence diagram below will show. The main differences can be seen in the AddCommandParser.
+
+<puml src="diagrams/MultiValueFieldSequenceDiagram.puml" width="900" height="500"/>
+
+<box type="info" seamless>
+**Note:** The XYZField that is mentioned in the sequence diagram refers to a person's field which supports storing multiple values.
+</box>
+
+<box type="info" seamless>
+**Note:** The ... in parse refers to the arguments for the add command which for example would be: n=John Doe mn=98765432 on=9999 (Office) 6789 (School) e=johnd@example.com (Main) johnd@school.com (School) a=311, Clementi Ave 2, #02-25 (Home) Kent Ridge Drive Blk 2 (School) t=friends t=owesMoney
+</box>
+
+<box type="info" seamless>
+**Note:** This sequence diagram only focuses on one of the fields that support storing multiple values as an example.
+</box>
+
+How the `Multi-value fields` logic works:
+
+1. After `AddCommandParser` is called upon to parse the arguments it calls the relevant static method from `ParserUtil`
+1. After `ParserUtil` is called upon to parse the XYZField it calls upon the `XYZField` class to validate that fields argument that was passed.
+1. The `XYZField` class needs to call upon `ParserUtil` to help parse the arguments for that fields into a list of the parameters and labels before it can validate them.
+
 ### \[Proposed\] Undo/redo feature
 
 #### Proposed Implementation
@@ -1031,6 +1059,170 @@ Use case ends.
 
       Use case resumes from Step 2.
 
+**System: FAContactsPro**
+
+**Use case: UC18 – Delete a meeting linked to a specific contact**
+
+**Actor: User**
+
+**MSS**
+
+1. User types in a command to delete a meeting associated with a contact.
+
+2. FAContactsPro identifies the specified contact and meeting.
+
+3. FAContactsPro removes the meeting from the contact’s meeting list.
+
+4. FAContactsPro displays a success message confirming deletion.
+
+Use case ends.
+
+**Extensions**
+
+* 1a. FAContactsPro detects an error in the command format.
+
+    * 1a1. FAContactsPro displays an error message.
+
+    * 1a2. User re-enters the command.
+
+      Steps 1a1 - 1a2 is repeated until the command format is valid.
+
+      Use case resumes from Step 2.
+
+* 1b. The specified contact index is invalid.
+
+    * 1b1. FAContactsPro displays an error message informing the user that the contact could not be found.
+
+    * 1b2. User enters the command again with a new contact index.
+
+      Steps 1b1 - 1b2 are repeated until the user enters a valid contact index.
+
+      Use case resumes from Step 2.
+
+* 1c. The specified meeting index is invalid for the contact.
+
+    * 1c1. FAContactsPro displays an error message indicating that the meeting cannot be found.
+
+    * 1c2. User enters the command again with a new meeting index.
+
+      Steps 1c1 - 1c2 are repeated until the user enters a valid meeting index.
+
+      Use case resumes from Step 2.
+
+* 1d. FAContactsPro encounters an error while updating storage.
+
+    * 1d1. FAContactsPro displays an error message prompting the user to retry.
+
+    * 1d2. User re-enters the command.
+
+      Steps 1d1 – 1d2 repeat until storage is successfully updated.
+
+      Use case resumes from Step 2.
+
+**System: FAContactsPro**
+
+**Use case: UC19 – Flag a contact as important**
+
+**Actor: User**
+
+**MSS**
+
+1. User types in a command to flag a contact.
+
+2. FAContactsPro marks the specified contact as flagged.
+
+3. FAContactsPro displays a success message confirming that the contact has been flagged.
+
+Use case ends.
+
+**Extensions**
+
+* 1a. FAContactsPro detects an error in the command entered.
+
+    * 1a1. FAContactsPro displays an error message indicating the invalid command format.
+
+    * 1a2. User re-enters the command with the correct format.
+
+      Use case resumes from Step 2.
+
+* 1b. The specified contact index is invalid.
+
+    * 1b1. FAContactsPro displays an error message informing the user that the contact cannot be found.
+
+    * 1b2. User enters the command again with a new contact index.
+  
+      Steps 1b1 - 1b2 are repeated until the user enters a valid contact index.
+
+      Use case resumes from Step 2.
+
+* 1c. The selected contact is already flagged.
+
+    * 1c1. FAContactsPro displays a message stating that the contact is already flagged and takes no further action.
+
+      Use case ends.
+
+* 1d. FAContactsPro is unable to update the contact in storage.
+
+    * 1d1. FAContactsPro displays an error message prompting the user to retry.
+
+    * 1d2. User enters the command again.
+
+      Steps 1d1 – 1d2 repeat until the data is successfully updated.
+
+      Use case resumes from Step 2.
+
+**System: FAContactsPro**
+
+**Use case: UC20 – Unflag a contact**
+
+**Actor: User**
+
+**MSS**
+
+1. User types in a command to unflag a contact.
+
+2. FAContactsPro marks the specified contact as unflagged.
+
+3. FAContactsPro displays a success message confirming that the contact has been unflagged.
+
+Use case ends.
+
+**Extensions**
+
+* 1a. FAContactsPro detects an error in the command entered.
+
+    * 1a1. FAContactsPro displays an error message indicating the invalid command format.
+
+    * 1a2. User re-enters the command with the correct format.
+
+      Use case resumes from Step 2.
+
+* 1b. The specified contact index is invalid.
+
+    * 1b1. FAContactsPro displays an error message informing the user that the contact cannot be found.
+
+    * 1b2. User enters the command again with a new contact index.
+
+      Steps 1b1 - 1b2 are repeated until the user enters a valid contact index.
+
+      Use case resumes from Step 2.
+
+* 1c. The selected contact is already unflagged.
+
+    * 1c1. FAContactsPro displays a message stating that the contact is already unflagged and takes no further action.
+
+      Use case ends.
+
+* 1d. FAContactsPro is unable to update the contact in storage.
+
+    * 1d1. FAContactsPro displays an error message prompting the user to retry.
+
+    * 1d2. User enters the command again.
+
+      Steps 1d1 – 1d2 repeat until the data is successfully updated.
+
+      Use case resumes from Step 2.
+
 ### Non-Functional Requirements
 
 1. **Data performance**: the system should be able to hold up to 10000 contacts
@@ -1060,8 +1252,11 @@ Given below are instructions to test the app manually.
 
 <box type="info" seamless>
 
-**Note:** These instructions only provide a starting point for testers to work on;
+**Note:** 
+1. These instructions only provide a starting point for testers to work on;
 testers are expected to do more *exploratory* testing.
+
+2. These commands remain untouched from the original AB3 AddressBook: _edit, list, find, clear, delete, help, exit_
 
 </box>
 
@@ -1080,29 +1275,95 @@ testers are expected to do more *exploratory* testing.
    1. Re-launch the app by double-clicking the jar file.<br>
        Expected: The most recent window size and location is retained.
 
-1. _{ more test cases …​ }_
+### Adding a person
 
-### Deleting a person
+1. Adding a person with all field specified correctly
 
-1. Deleting a person while all persons are being shown
+   1. Test case: `add n=john mn=33334 on=3333 e=john@gmail.com a=pine square t=eccentric` <br>
+      Expected: New contact "john" is added to the list. Details of the new contact shown in the status message. 
 
-   1. Prerequisites: List all persons using the `list` command. Multiple persons in the list.
+   1. Test case: `add n=  mn=666777 on=3333 e=john@gmail.com a=pine square t=eccentric` <br>
+      Expected: No contact is added. Error details shown in the status message.
 
-   1. Test case: `delete 1`<br>
-      Expected: First contact is deleted from the list. Details of the deleted contact shown in the status message. Timestamp in the status bar is updated.
+   1. Test case: `add n=john mn=33a34 on=3333 e=john@gmail.com a=pine square t=eccentric` <br>
+      Expected: No contact is added. Error details shown in the status message.
 
-   1. Test case: `delete 0`<br>
-      Expected: No person is deleted. Error details shown in the status message. Status bar remains the same.
+### Adding a meeting
 
-   1. Other incorrect delete commands to try: `delete`, `delete x`, `...` (where x is larger than the list size)<br>
-      Expected: Similar to previous.
+1. Adding a meeting to a person being shown
 
-1. _{ more test cases …​ }_
+   1. Prerequisites: At least one person listed.
+
+   1. Test case: `addmt p=1 m=discussion v=library w=2025-04-05 18:00` <br>
+      Expected: New meeting is added to the person at index 1. Details of meeting should be reflected in the person's UI.
+    
+   1. Test case: `addmt p=0 m=discussion v=library w=2025-04-05 18:00` <br>
+      Expected: No meeting is added. Error details shown in the status message.
+
+### Editing a meeting
+
+1. Editing a meeting of a person being shown
+
+    1. Prerequisites: At least one person with at least one meeting.
+    
+    1. Test case: `editmt p=1 i=1 m=updated discussion` <br>
+        Expected: Meeting 1 of person at index 1 is updated. Details of updated meeting shown in the status message.
+     
+    1. Test case: `editmt p=1 m=0 nm=updated discussion` <br>
+        Expected: No meeting is updated. Error details shown in the status message.
+
+### Deleting a meeting
+
+1. Deleting a meeting of a person being shown
+
+    1. Prerequisites: At least one person with at least one meeting.
+    
+    1. Test case: `deletemt p=1 i=1` <br>
+        Expected: Meeting 1 of person at index 1 is deleted. Details of deleted meeting shown in the status message.
+     
+    1. Test case: `deletemt p=1 i=0` <br>
+        Expected: No meeting is deleted. Error details shown in the status message.
+
+### Finding a meeting
+
+1. Finding meetings of a person being shown
+
+    1. Prerequisites: At least one person with at least one meeting with "discussion" in name.
+    
+    1. Test case: `findmt discussion` <br>
+        Expected: All persons with "discussion" in the meeting description are shown in the person list panel.
+     
+    1. Test case: `findmt nonexistent` <br>
+        Expected: No persons are listed. Appropriate message shown in the status message.
+
+### Flagging a person
+
+1. Flagging a person being shown
+
+   1. Prerequisites: At least one person listed in the address book.
+
+   1. Test case: `flag 1`<br>
+      Expected: Person at index 1 is flagged. Details of the flagged person shown in the status message.
+
+   1. Test case: `flag 0`<br>
+      Expected: No person is flagged. Error details shown in the status message.
+
+### Unflagging a person
+
+1. Flagging a person being shown
+
+   1. Prerequisites: At least one person listed in the address book who is flagged.
+
+   1. Test case: `unflag 1`<br>
+      Expected: Person at index 1 is unflagged. Details of the unflagged person shown in the status message.
+
+   1. Test case: `unflag 0`<br>
+      Expected: No person is unflagged. Error details shown in the status message.
 
 ### Saving data
 
 1. Dealing with missing/corrupted data files
 
-   1. _{explain how to simulate a missing/corrupted file, and the expected behavior}_
+   1. Go to the data folder and access addressbook.json. Change its contents to an invalid format (e.g. Set a person as `"tag": true`).
+      Expected: The app should still launch however with an empty list of persons.
 
-1. _{ more test cases …​ }_

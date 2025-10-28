@@ -63,8 +63,10 @@ public class EditMeetingCommandTest {
         EditMeetingCommand editMeetingCommand = new EditMeetingCommand(INDEX_FIRST_PERSON, INDEX_FIRST_MEETING,
                 editMeetingDescriptor);
 
+        Meeting editedMeeting = editedPerson.getMeetings().get(INDEX_FIRST_MEETING.getZeroBased());
+
         String expectedMessage = String.format(EditMeetingCommand.MESSAGE_EDIT_MEETING_SUCCESS,
-                Messages.format(editedPerson));
+                Messages.format(editedMeeting));
 
         Model expectedModel = new ModelManager(model.getAddressBook(), new UserPrefs());
         expectedModel.setPerson(firstPerson, editedPerson);
@@ -87,11 +89,14 @@ public class EditMeetingCommandTest {
         EditMeetingCommand editMeetingCommand = new EditMeetingCommand(INDEX_FIRST_PERSON, INDEX_FIRST_MEETING,
                 editMeetingDescriptor);
 
+        Meeting editedMeeting = editedPerson.getMeetings().get(INDEX_FIRST_MEETING.getZeroBased());
+
         String expectedMessage = String.format(EditMeetingCommand.MESSAGE_EDIT_MEETING_SUCCESS,
-                Messages.format(editedPerson));
+                Messages.format(editedMeeting));
 
         Model expectedModel = new ModelManager(model.getAddressBook(), new UserPrefs());
         expectedModel.setPerson(firstPerson, editedPerson);
+        showPersonAtIndex(expectedModel, INDEX_FIRST_PERSON);
 
         assertCommandSuccess(editMeetingCommand, model, expectedMessage, expectedModel);
     }

@@ -78,10 +78,14 @@ public class ParserUtil {
      *
      * @throws ParseException if the given {@code otherPhones} is invalid.
      */
-    public static OtherPhones parseOtherPhones(String otherPhones) throws ParseException {
+    public static OtherPhones parseOtherPhones(String otherPhones, Phone mainPhone) throws ParseException {
         requireNonNull(otherPhones);
         if (!otherPhones.equals("") && !OtherPhones.isValidPhone(otherPhones)) {
             throw new ParseException(OtherPhones.MESSAGE_CONSTRAINTS);
+        }
+
+        if (OtherPhones.mainPhoneExists(otherPhones, mainPhone)) {
+            throw new ParseException(OtherPhones.MESSAGE_DUPLICATE_CONSTRAINTS);
         }
         return new OtherPhones(otherPhones);
     }
@@ -226,8 +230,8 @@ public class ParserUtil {
         }
 
         if (parameterStartIndex == openBracketIndex) {
-            exceptionMessage = String.format("One or more of your %1$ss are missing"
-                    + " each %1%s should be accompanied by a label.", parameterName);
+            exceptionMessage = String.format("One or more of your %1$ss are missing."
+                    + " Each %1$s should be accompanied by a label.", parameterName);
             throw new ParseException(exceptionMessage);
         }
 
@@ -269,7 +273,7 @@ public class ParserUtil {
         // Check for out of bounds issues
         if (closeBracketIndex + 2 >= textLength) {
             exceptionMessage = String.format("Your label at the end is missing a space"
-                    + "to separate it from the last %1$s.", parameterName);
+                    + " to separate it from the last %1$s.", parameterName);
             throw new ParseException(exceptionMessage);
         }
 
@@ -382,9 +386,8 @@ public class ParserUtil {
     public static When parseWhen(String when) throws ParseException {
         requireNonNull(when);
         String trimmedWhen = when.trim();
-        if (!When.isValidWhen(trimmedWhen)) {
-            throw new ParseException(When.MESSAGE_CONSTRAINTS);
-        }
+        // This call will throw ParseException if invalid
+        When.isValidWhen(trimmedWhen);
         return new When(trimmedWhen);
     }
 }
