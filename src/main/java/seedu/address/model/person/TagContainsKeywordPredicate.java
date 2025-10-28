@@ -30,7 +30,6 @@ public class TagContainsKeywordPredicate implements Predicate<Person> {
                 + "Keywords=%s and tags=%s.", keywords, tags);
         logger.info(logMessage);
 
-        System.out.println(keywords);
         return keywords.isEmpty() || keywords.stream()
                 .anyMatch(keyword ->
                         tags.stream().anyMatch(
