@@ -3,7 +3,6 @@ package seedu.address.logic.commands;
 import static seedu.address.commons.util.CollectionUtil.requireAllNonNull;
 import static seedu.address.logic.parser.CliSyntax.PREFIX_MEETING_INDEX;
 import static seedu.address.logic.parser.CliSyntax.PREFIX_PERSON_INDEX;
-import static seedu.address.model.Model.PREDICATE_SHOW_ALL_PERSONS;
 
 import java.util.List;
 
@@ -45,11 +44,18 @@ public class DeleteMeetingCommand extends Command {
     private final Index meetingIndex;
 
     /**
-     * @param personIndex of the person in the filtered person list to edit
-     * @param meetingIndex of the meeting in the person's meeting list to delete
+     * Creates a DeleteMeetingCommand to delete the specified {@code Meeting} from {@code Person}.
+     * <p>
+     * The provided indices are guaranteed to be non-negative due to validation in the {@code DeleteMeetingParser}.
+     *
+     * @param personIndex of the person in the filtered person list to edit.
+     * @param meetingIndex of the meeting in the person's meeting list to delete.
      */
     public DeleteMeetingCommand(Index personIndex, Index meetingIndex) {
         requireAllNonNull(personIndex, meetingIndex);
+
+        assert(personIndex.getZeroBased() >= 0) : "Person index should be non-negative";
+        assert(meetingIndex.getZeroBased() >= 0) : "Meeting index should be non-negative";
 
         this.personIndex = personIndex;
         this.meetingIndex = meetingIndex;
@@ -57,6 +63,23 @@ public class DeleteMeetingCommand extends Command {
 
     @Override
     public CommandResult execute(Model model) throws CommandException {
+        Person personToEdit = validateAndGetPerson(model);
+        Meeting meetingToDelete = personToEdit
+                .getMeetings().get(meetingIndex.getZeroBased());
+
+        deleteSpecifiedPersonMeeting(model, personToEdit);
+
+        return buildCommandResult(meetingToDelete, personToEdit);
+    }
+
+    /**
+     * Validates the person and meeting indices and returns the corresponding {@code Person}.
+     *
+     * @param model The model containing the person list.
+     * @return The {@code Person} to edit.
+     * @throws CommandException If indices are invalid.
+     */
+    private Person validateAndGetPerson(Model model) throws CommandException {
         List<Person> lastShownList = model.getPersonList();
 
         if (personIndex.getZeroBased() >= lastShownList.size()) {
@@ -69,8 +92,20 @@ public class DeleteMeetingCommand extends Command {
             throw new CommandException(MESSAGE_INVALID_MEETING_DISPLAYED_INDEX);
         }
 
-        // Removes meetings from the person's meeting list
-        Meeting meetingToDelete = personToEdit.getMeetings().get(meetingIndex.getZeroBased());
+        return personToEdit;
+    }
+
+    /**
+     * Deletes the specified meeting from the given person.
+     * <p>
+     * Creates a new {@code Person} without the meeting and updates the model
+     * to replace the old person, ensuring the UI is refreshed.
+     *
+     * @param model The model to update.
+     * @param personToEdit The person whose meetings are being modified.
+     * @return The updated {@code Person}.
+     */
+    private void deleteSpecifiedPersonMeeting(Model model, Person personToEdit) {
         model.deleteMeetingFromPerson(personToEdit, meetingIndex.getZeroBased());
 
         // Creates a new Person object with the updated meetings list
@@ -81,7 +116,12 @@ public class DeleteMeetingCommand extends Command {
 
         // Replaces the old person with the new person in the model to refresh the GUI
         model.setPerson(personToEdit, editedPerson);
+    }
 
+    /**
+     * Builds the success message after a meeting is deleted.
+     */
+    private CommandResult buildCommandResult(Meeting meetingToDelete, Person personToEdit) {
         return new CommandResult(String.format(MESSAGE_DELETE_MEETING_SUCCESS,
                 Messages.format(meetingToDelete),
                 Messages.format(personToEdit)));
