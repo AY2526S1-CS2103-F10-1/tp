@@ -19,7 +19,8 @@ import seedu.address.logic.parser.exceptions.ParseException;
 public class Email {
     private static final Logger logger = LogsCenter.getLogger(Email.class);
     private static final String SPECIAL_CHARACTERS = "+_.-";
-    public static final String MESSAGE_CONSTRAINTS = "Emails are case-insensitive and should be of the "
+    public static final String MESSAGE_CONSTRAINTS = "For email, one or more emails/labels are invalid!\n\n"
+            + "Emails are case-insensitive and should be of the "
             + "format local-part@domain "
             + "and adhere to the following constraints:\n"
             + "1. The local-part should only contain alphanumeric characters and these special characters, excluding "

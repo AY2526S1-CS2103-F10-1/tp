@@ -17,7 +17,8 @@ import seedu.address.logic.parser.exceptions.ParseException;
  * Guarantees: immutable; is valid as declared in {@link #isValidAddress(String)}
  */
 public class Address {
-    public static final String MESSAGE_CONSTRAINTS = "Addresses are case-insensitive and "
+    public static final String MESSAGE_CONSTRAINTS = "For address, one or more addresses/labels are invalid!\n\n"
+            + "Addresses are case-insensitive and "
             + "can take any values, and it should not be blank.\n\n"
             + LABEL_MESSAGE
             + "\n\n"
