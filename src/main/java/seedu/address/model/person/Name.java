@@ -7,7 +7,6 @@ import seedu.address.logic.parser.exceptions.ParseException;
 
 /**
  * Represents a Person's name in the address book.
- * Guarantees: immutable; is valid as declared in {@link #isValidName(String)}
  */
 public class Name {
 
@@ -37,9 +36,9 @@ public class Name {
     public final String fullName;
 
     /**
-     * Constructs a {@code Name}.
+     * Constructs a {@code Name} after validating it.
      *
-     * @param name A valid name.
+     * @throws IllegalArgumentException if the given name is invalid
      */
     public Name(String name) {
         requireNonNull(name);
@@ -54,16 +53,16 @@ public class Name {
     }
 
     /**
-     * Returns true if a given string is a valid name.
+     * Validates the given name string against defined constraints.
+     *
+     * @throws IllegalArgumentException if the name is invalid
      */
     public static boolean isValidName(String test) throws ParseException {
 
-        // Checks if the name is blank
-        if (test.trim().isEmpty()) {
+        if (test.isBlank()) {
             throw new ParseException(MESSAGE_CONSTRAINTS_NO_BLANK_NAME);
         }
 
-        // Checks if the name contains at least one alphabetic character
         if (!test.matches(VALIDATION_REGEX_AT_LEAST_ONE_ALPHANUMERIC)) {
             throw new ParseException(MESSAGE_CONSTRAINTS_AT_LEAST_ONE_ALPHANUMERIC);
         }
@@ -79,13 +78,11 @@ public class Name {
             throw new ParseException(MESSAGE_CONSTRAINTS_INVALID_START_END);
         }
 
-        // If the name contains consecutive special characters
         if (test.matches(VALIDATION_REGEX_NO_CONSECUTIVE_SPECIAL_CHAR)) {
             throw new ParseException(MESSAGE_CONSTRAINTS_NO_CONSECUTIVE_SPECIAL_CHAR);
         }
 
         return true;
-
     }
 
     @Override
