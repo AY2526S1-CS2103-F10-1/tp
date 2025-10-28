@@ -4,6 +4,7 @@ import java.util.function.Predicate;
 import java.util.logging.Logger;
 
 import seedu.address.commons.core.LogsCenter;
+import seedu.address.commons.util.StringUtil;
 import seedu.address.commons.util.ToStringBuilder;
 
 /**
@@ -24,11 +25,11 @@ public class NumberContainsKeywordPredicate implements Predicate<Person> {
      */
     @Override
     public boolean test(Person person) {
-        String logMessage = String.format("NameContainsKeywordsPredicate check using: "
+        String logMessage = String.format("NumberContainsKeywordsPredicate check using: "
                 + "Keywords=%s and Number=%s.", keyword, person.getPhone());
         logger.info(logMessage);
 
-        return person.getPhone().value.contains(keyword);
+        return person.checkNumberContainsKeyword(keyword);
     }
 
     @Override

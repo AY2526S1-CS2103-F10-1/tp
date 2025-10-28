@@ -26,7 +26,7 @@ public class TagContainsKeywordPredicate implements Predicate<Person> {
     public boolean test(Person person) {
         Set<Tag> tags = person.getTags();
 
-        String logMessage = String.format("NameContainsKeywordsPredicate check using: "
+        String logMessage = String.format("TagContainsKeywordsPredicate check using: "
                 + "Keywords=%s and tags=%s.", keywords, tags);
         logger.info(logMessage);
 
