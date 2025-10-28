@@ -31,7 +31,7 @@ public class ParserUtil {
     private static final Logger logger = LogsCenter.getLogger(ParserUtil.class);
     private static final int FIELD_MAXIMUM_LENGTH = 200;
     private static final String EXCEED_FIELD_MAXIMUM_LENGTH_ERROR_MESSAGE = "Input for %s has exceeded "
-            +  "the maximum length of %d characters!";
+            + "the maximum length of %d characters!";
 
     /**
      * Parses {@code oneBasedIndex} into an {@code Index} and returns it. Leading and trailing whitespaces will be

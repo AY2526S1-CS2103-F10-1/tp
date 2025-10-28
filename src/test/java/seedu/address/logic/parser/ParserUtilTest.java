@@ -128,21 +128,21 @@ public class ParserUtilTest {
 
     @Test
     public void parseAddress_invalidLength_throwsParseException() {
-        String TOO_LONG_ADDRESS = "15, 29a Upper Paya Lebar Road, Singapore 533015 (Home 1) "
+        String invalidAddressLength = "15, 29a Upper Paya Lebar Road, Singapore 533015 (Home 1) "
                 + "Blk 742, 04-187, Yishun Avenue 5, Singapore 760742 (Home 2) 290, 03-22, Orchard Road, "
                 + "Singapore 238801 (Home 3) Jurong West Street 2112 (Home 4)";
 
-        assertThrows(ParseException.class, () -> ParserUtil.parseAddress(TOO_LONG_ADDRESS));
+        assertThrows(ParseException.class, () -> ParserUtil.parseAddress(invalidAddressLength));
     }
 
     @Test
     public void parseAddress_validValueLengthJustNice_returnsAddress() throws Exception {
-        String VALID_ADDRESS_JUST_NICE_LENGTH = "15, 29a Upper Paya Lebar Road, Singapore 533015 (Home 1) "
+        String validAddressLengthJustNice = "15, 29a Upper Paya Lebar Road, Singapore 533015 (Home 1) "
                 + "Blk 742, 04-187, Yishun Avenue 5, Singapore 760742 (Home 2) 290, 03-22, Orchard Road, "
                 + "Singapore 238801 (Home 3) Jurong West Street 211 (Home 4)";
 
-        Address expectedAddress = new Address(VALID_ADDRESS_JUST_NICE_LENGTH);
-        assertEquals(expectedAddress, ParserUtil.parseAddress(VALID_ADDRESS_JUST_NICE_LENGTH));
+        Address expectedAddress = new Address(validAddressLengthJustNice);
+        assertEquals(expectedAddress, ParserUtil.parseAddress(validAddressLengthJustNice));
     }
 
     @Test
@@ -170,21 +170,21 @@ public class ParserUtilTest {
 
     @Test
     public void parseEmail_invalidLength_throwsParseException() {
-        String TOO_LONG_EMAIL = "test1@gmail.com (work1) test2@gmail.com (work2) "
+        String invalidEmailLength = "test1@gmail.com (work1) test2@gmail.com (work2) "
                 + "test3@gmail.com (work3) test4@gmail.com (work4) test5@gmail.com (work5) test6@gmail.com "
                 + "(work6) test7@gmail.com (work7) test8@gmail.com (work8) test9@gmail.com (work9) "
                 + "test10@gmail.com (work10) test11@gmail.com (work11) test12@gmail.com (work12)";
 
-        assertThrows(ParseException.class, () -> ParserUtil.parseEmail(TOO_LONG_EMAIL));
+        assertThrows(ParseException.class, () -> ParserUtil.parseEmail(invalidEmailLength));
     }
 
     @Test
     public void parseEmail_validValueLengthJustNice_returnsEmail() throws Exception {
-        String VALID_EMAIL_JUST_NICE_LENGTH = "test1@gmail.com (work 1) test2@gmail.com (work 2) "
+        String validEmailLengthJustNice = "test1@gmail.com (work 1) test2@gmail.com (work 2) "
                 + "test3@gmail.com (work 3) test4@gmail.com (work 4) test5@gmail.com (work 5) "
                 + "test6@gmail.com (work 6) test7@gmail.com (work 7) test8@gmail.com (work 8)";
-        Email expectedEmail = new Email(VALID_EMAIL_JUST_NICE_LENGTH);
-        assertEquals(expectedEmail, ParserUtil.parseEmail(VALID_EMAIL_JUST_NICE_LENGTH));
+        Email expectedEmail = new Email(validEmailLengthJustNice);
+        assertEquals(expectedEmail, ParserUtil.parseEmail(validEmailLengthJustNice));
     }
 
     @Test
