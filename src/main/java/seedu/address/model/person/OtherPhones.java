@@ -1,12 +1,11 @@
 package seedu.address.model.person;
 
+import static java.util.Objects.requireNonNull;
 import static seedu.address.commons.util.AppUtil.checkArgument;
 import static seedu.address.logic.parser.ParserUtil.parseParametersAndLabels;
-import static seedu.address.model.person.Person.LABEL_VALIDATION_REGEX;
+import static seedu.address.model.util.ValidationUtil.isParameterAndLabelsValid;
 
-import java.util.HashSet;
 import java.util.List;
-import java.util.Set;
 import java.util.logging.Logger;
 
 import seedu.address.commons.core.LogsCenter;
@@ -27,7 +26,7 @@ public class OtherPhones {
             "^\\s*(?:\\+\\d{1,3}\\s*)?\\d{3,}(?:\\s*x\\d+)?\\s*$";
 
     private static final Logger logger = LogsCenter.getLogger(OtherPhones.class);
-
+    private static final String ERROR_MESSAGE_DISPLAY_NAME = "other number";
     public final String numbers;
 
 
@@ -51,17 +50,24 @@ public class OtherPhones {
     }
 
     /**
-     * Returns true if the given string follows the specified format
-     * @param test
-     * @return boolean
+     * Returns true if a given string is a valid phone.
+     * @param phones The {@code String phone} to check if it is valid.
+     * @return A boolean indicating if the address is valid.
+     * @throws ParseException if phones and/or labels are invalid or if they contain duplicates
      */
-    public static boolean isValidPhone(String test) throws ParseException {
-        String trimmedText = test.trim();
-        if (trimmedText.isEmpty()) {
+    public static boolean isValidPhone(String phones) throws ParseException {
+        requireNonNull(phones);
+        assert phones != null : "Phones provided in isValidPhone is null!";
+
+        String trimmedPhones = phones.trim();
+
+        if (trimmedPhones.isEmpty()) {
             return true;
         }
+
         List<String> paramsAndLabels = parseParametersAndLabels(
-                OtherPhones.class.getName().toLowerCase(), test, false);
+                ERROR_MESSAGE_DISPLAY_NAME, trimmedPhones, false);
+
         return isPhonesAndLabelsValid(paramsAndLabels);
     }
 
@@ -78,30 +84,10 @@ public class OtherPhones {
      * </p>
      * @param phones The {@code List<String>} of the parameters and labels of a Phone.
      * @return A boolean indicating if the parameters and labels of a Phone is valid.
+     * @throws ParseException If there are duplicate other numbers/labels.
      */
-    public static boolean isPhonesAndLabelsValid(List<String> phones) {
-        boolean checkPhone = true;
-        Set<String> set = new HashSet<>();
-
-        for (String currString : phones) {
-            if (set.contains(currString)) {
-                return false;
-            }
-
-            if (checkPhone && !currString.matches(SINGLE_PHONE_REGEX)) {
-                return false;
-            }
-
-            if (!checkPhone && !currString.matches(LABEL_VALIDATION_REGEX)) {
-                return false;
-            }
-
-            set.add(currString);
-
-            checkPhone = !checkPhone;
-        }
-
-        return true;
+    public static boolean isPhonesAndLabelsValid(List<String> phones) throws ParseException {
+        return isParameterAndLabelsValid(phones, SINGLE_PHONE_REGEX, ERROR_MESSAGE_DISPLAY_NAME);
     }
 
     /**

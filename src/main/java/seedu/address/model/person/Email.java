@@ -4,11 +4,9 @@ import static java.util.Objects.requireNonNull;
 import static seedu.address.commons.util.AppUtil.checkArgument;
 import static seedu.address.logic.parser.ParserUtil.parseParametersAndLabels;
 import static seedu.address.model.person.Person.LABEL_MESSAGE;
-import static seedu.address.model.person.Person.LABEL_VALIDATION_REGEX;
+import static seedu.address.model.util.ValidationUtil.isParameterAndLabelsValid;
 
-import java.util.HashSet;
 import java.util.List;
-import java.util.Set;
 import java.util.logging.Logger;
 
 import seedu.address.commons.core.LogsCenter;
@@ -30,11 +28,11 @@ public class Email {
             + "separated by periods.\n"
             + "The domain name must:\n"
             + "    - end with a domain label at least 2 characters long\n"
-            + "    - have each domain label start and end with alphanumeric characters\n\n"
+            + "    - have each domain label start and end with alphanumeric characters\ngi"
             + "    - have each domain label consist of alphanumeric characters, separated only by hyphens, if any.\n"
             + LABEL_MESSAGE
             + "\n\n"
-            + "Multiple emails are allowed but most adhere to the following conditions: \n"
+            + "Multiple emails are allowed but must adhere to the following conditions: \n"
             + "1. For 1 email only, the label is optional so: EMAIL or EMAIL (LABEL).\n"
             + "2. For multiple emails, the label is compulsory so: EMAIL1 (LABEL1) EMAIL2 (LABEL2) ... "
             + "EMAILN (LABELN).";
@@ -48,7 +46,7 @@ public class Email {
     private static final String DOMAIN_LAST_PART_REGEX = "(" + DOMAIN_PART_REGEX + "){2,}$"; // At least two chars
     private static final String DOMAIN_REGEX = "(" + DOMAIN_PART_REGEX + "\\.)*" + DOMAIN_LAST_PART_REGEX;
     public static final String EMAIL_VALIDATION_REGEX = LOCAL_PART_REGEX + "@" + DOMAIN_REGEX;
-
+    private static final String ERROR_MESSAGE_DISPLAY_NAME = "email";
     public final String value;
 
     /**
@@ -71,18 +69,22 @@ public class Email {
     /**
      * Returns if a given string is a valid email.
      *
-     * @param test The {@code String email} test if it is valid.
+     * @param emails The {@code String emails} to check if it is valid.
      * @return A boolean indicating if the email is valid or not.
+     * @throws ParseException if emails and/or labels are invalid or if they contain duplicates
      */
-    public static boolean isValidEmail(String test) throws ParseException {
-        String trimmedEmail = test.trim();
+    public static boolean isValidEmail(String emails) throws ParseException {
+        requireNonNull(emails);
+        assert emails != null : "Emails provided in isValidEmail is null!";
+
+        String trimmedEmail = emails.trim();
 
         if (trimmedEmail.isEmpty()) {
             return false;
         }
 
-        List<String> paramsAndLabels = parseParametersAndLabels(Email.class.getName().toLowerCase(),
-                test, false);
+        List<String> paramsAndLabels = parseParametersAndLabels(ERROR_MESSAGE_DISPLAY_NAME,
+                trimmedEmail, false);
 
         if (paramsAndLabels.isEmpty()) {
             return false;
@@ -104,33 +106,10 @@ public class Email {
      * </p>
      * @param list The {@code List<String>} of the parameters and labels of an Email.
      * @return A boolean indicating if the parameters and labels of an Email is valid.
+     * @throws ParseException If there are duplicate emails/labels.
      */
-    private static boolean isEmailsAndLabelsValid(List<String> list) {
-        // If true we are checking if the email is valid, if it is false we are checking if label is valid.
-        boolean checkEmail = true;
-
-        Set<String> set = new HashSet<>();
-
-        for (String currString : list) {
-            if (set.contains(currString)) {
-                return false;
-            }
-
-            if (checkEmail && !currString.matches(EMAIL_VALIDATION_REGEX)) {
-                return false;
-            }
-
-            if (!checkEmail && !currString.matches(LABEL_VALIDATION_REGEX)) {
-                return false;
-            }
-
-            set.add(currString);
-
-            // Toggle between checking address and label
-            checkEmail = !checkEmail;
-        }
-
-        return true;
+    private static boolean isEmailsAndLabelsValid(List<String> list) throws ParseException {
+        return isParameterAndLabelsValid(list, EMAIL_VALIDATION_REGEX, ERROR_MESSAGE_DISPLAY_NAME);
     }
 
     @Override

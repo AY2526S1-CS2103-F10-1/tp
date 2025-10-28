@@ -14,16 +14,16 @@ UniquePersonList -right-> Person
 
 Person -up-> "*" Tag
 
-Person *--> Name
+Person *--> "1" Name
 Person *--> "1" MainPhone
 Person *--> "*" OtherPhones
-Person *--> Email
-Person *--> Address
+Person *--> "1" Email
+Person *--> "1" Address
 Person *--> "*" Meeting
 Person *--> "1" FlagStatus
-Meeting *--> MeetingName
-Meeting *--> Venue
-Meeting *--> When
+Meeting *--> "1" MeetingName
+Meeting *--> "1" Venue
+Meeting *--> "1" When
 
 OtherPhones *--> "*" Number
 OtherPhones *--> "*" NumberTag

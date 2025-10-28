@@ -38,7 +38,12 @@ public class EmailTest {
                 Email.isValidEmail("peterjack@example.c(Work)")); // missing space in between label
         assertThrows(ParseException.class, () ->
                 Email.isValidEmail("test@gmail.com (test) (work)")); // Another email missing
-
+        assertThrows(ParseException.class, () ->
+                Email.isValidEmail("test@gmail.com (main) "
+                        + "e1234567@u.nus.edu (main)")); // Duplicate labels
+        assertThrows(ParseException.class, () ->
+                Email.isValidEmail("test@gmail.com (main) "
+                        + "test@gmail.com (school)")); // Duplicate emails
         try {
             // blank email
             assertFalse(Email.isValidEmail("")); // empty string
@@ -65,10 +70,6 @@ public class EmailTest {
             assertFalse(Email.isValidEmail("peterjack@-example.com")); // domain name starts with a hyphen
             assertFalse(Email.isValidEmail("peterjack@example.com-")); // domain name ends with a hyphen
             assertFalse(Email.isValidEmail("peterjack@example.c")); // top level domain has less than two chars
-            assertFalse(Email.isValidEmail("test@gmail.com (main) "
-                    + "e1234567@u.nus.edu (main)")); // Duplicate labels
-            assertFalse(Email.isValidEmail("test@gmail.com (main) "
-                    + "test@gmail.com (school)")); // Duplicate emails
             assertFalse(Email.isValidEmail("test@gmail.com ()")); // Empty label
             assertFalse(Email.isValidEmail("test@gmail.com (  )")); // Label with spaces only
             assertFalse(Email.isValidEmail("test@gmail.com (--)")); // Label with hyphen only
