@@ -63,13 +63,15 @@ Financial Advisor Contacts Pro (FAContactsPro) is a **desktop app tailored to fi
   e.g. `[t=TAG]…​` can be used as ` ` (i.e. 0 times), `t=friend`, `t=friend t=family` etc.
 
 * Parameters can be in any order.<br>
-  e.g. if the command specifies `n=NAME p=PHONE_NUMBER`, `p=PHONE_NUMBER n=NAME` is also acceptable.
+  e.g. if the command specifies `n=NAME mn=MAIN_NUMBER`, `mn=MAIN_NUMBER n=NAME` is also acceptable.
 
 * Extraneous parameters for commands that do not take in parameters (such as `help`, `list`, `exit` and `clear`) will be ignored.<br>
   e.g. if the command specifies `help 123`, it will be interpreted as `help`.
 
 * If you are using a PDF version of this document, be careful when copying and pasting commands that span multiple lines as space characters surrounding line-breaks may be omitted when copied over to the application.
 </box>
+
+---
 
 ### Viewing help : `help`
 
@@ -79,16 +81,33 @@ Shows a message explaining how to access the help page.
 
 Format: `help`
 
+---
 
 ### Adding a person: `add`
 
 Adds a person to the address book.
 
-Format: `add n=NAME mn=PHONE e=EMAIL a=ADDRESS [on=OTHER_PHONES] [t=TAG]…​`
+Format: `add n=NAME mn=MAIN_NUMBER [on=OTHER_NUMBER] e=EMAIL a=ADDRESS [t/TAG]…​`
 
+**Rules for `Name`**
+* The `Name` must contain at least one alphanumeric character.
+* Allowed characters are:
+  * Letters (including accented characters)
+  * Digits
+  * Spaces
+  * Hyphens (-)
+  * Apostrophes (')
+  * Periods (.)
+  * Slashes (/)
+* The Name must not start or end with a hyphen, apostrophe, period, accented character, or slash.
+* The Name must not contain consecutive special characters (e.g., --, '', //, .., or double spaces).
+
+**Rules for `OTHER_NUMBER, EMAIL, ADDRESS`**
+* You can store multiple of them inside by using labels. For example, `e=johnsmith@gmail.com (personal) johnwork@company.com.sg (work)`.
+  But, if you are just storing 1 of these parameters the label will be optional, else if you are storing multiple of these parameters the label is compulsory.
+
+**Rules for `Tag`**
 * A person can have any number of tags (including 0)
-* For OTHER_PHONE_NUMBERS, EMAIL, ADDRESS you can store multiple of them inside by using labels. For example, `e=johnsmith@gmail.com (personal) johnwork@company.com.sg (work)`. 
-But, if you are just storing 1 of these parameters the label will be optionally, else if you are storing multiple of these parameters the label is compulsory.
 
 Examples:
 * `add n=George Lim mn=91113342 e=george@example.com a=Goldhill street, block 123, #01-01`
@@ -102,11 +121,13 @@ Format: `list`
 
 ![result for list](images/Ui.png)
 
+---
+
 ### Editing a person : `edit`
 
 Edits an existing person in the address book.
 
-Format: `edit INDEX [n=NAME] [mn=PHONE] [on=OTHER_PHONES] [e=EMAIL] [a=ADDRESS] [t/TAG]…​`
+Format: `edit INDEX [n=NAME] [mn=PHONE] [on=OTHER_NUMBER] [e=EMAIL] [a=ADDRESS] [t/TAG]…​`
 
 * Edits the person at the specified `INDEX`. The index refers to the index number shown in the displayed person list. The index **must be a positive integer** 1, 2, 3, …​
 * At least one of the optional fields must be provided.
@@ -119,6 +140,8 @@ Examples:
 *  `edit 1 p=91234567 e=johndoe@example.com` Edits the phone number and email address of the 1st person to be `91234567` and `johndoe@example.com` respectively.
 *  `edit 2 n=Betsy Crower t=` Edits the name of the 2nd person to be `Betsy Crower` and clears all existing tags.
    ![result for 'edit 2 n=Betsy Crower t='](images/editToBestyCrower.png)
+
+---
 
 ### Locating persons by name: `find`
 
@@ -138,25 +161,45 @@ Examples:
 * `find alex david` returns `Alex Yeoh`, `David Li`<br>
   ![result for 'find alex david'](images/findAlexDavidResult.png)
 
+---
+
+### Deleting a person : `delete`
+
+Deletes the specified person from the address book.
+
+Format: `delete INDEX`
+
+* Deletes the person at the specified `INDEX`.
+* The index refers to the index number shown in the displayed person list.
+* The index **must be a positive integer** 1, 2, 3, …​
+
+Examples:
+* `list` followed by `delete 2` deletes the 2nd person in the address book.
+* `find Betsy` followed by `delete 1` deletes the 1st person in the results of the `find` command.
+
+---
+
 ### Adding a meeting : `addmt`
 
 Adds a meeting for the specified person from the address book.
 
-Format: `addmt p=INDEX m=MEETING v=VENUE w=WHEN`
+Format: `addmt p=PERSON_INDEX m=MEETING v=VENUE w=WHEN`
 
-* Adds a meeting for the person identified by the `INDEX` number used in the displayed person list.
+* Adds a meeting for the person identified by the `PERSON_INDEX` number used in the displayed person list.
 * A new meeting would be added to the person's list of current meetings.
-* The index refers to the index number shown in the displayed person list.
-* The index **must be a positive integer** 1, 2, 3, …​
+* The person's index refers to the index number shown in the displayed person list.
+* The person's index **must be a positive integer** 1, 2, 3, …​
 * The `WHEN` value needs to be a valid datetime format of the form `yyyy/mm/dd HH[:]mm` or `dd-mm-yyyy HH[:]mm`.
 * `/` and `-` are interchangeable but the format needs to remain consistent (i.e. all `/` or all `-`)
 * The `:` in between `HH` and `mm` can be omitted i.e. (`1600` or `16:00`).
 * Adding in duplicate or overlapping meetings are allowed
 
 Examples:
-* `addmt p=1 m=Financial advice sharing v=AMK Hub w=2025-11-01 1600` Adds a new Financial advice sharing meeting to the 
-1st person in the displayed person list, that is taking place at AMK Hub on 1st Nov 2025 at 4:00PM.<br>
+* `addmt p=1 m=Financial advice sharing v=AMK Hub w=2025-11-01 1600` Adds a new Financial advice sharing meeting to the
+  1st person in the displayed person list, that is taking place at AMK Hub on 1st Nov 2025 at 4:00PM.<br>
   ![result for 'addmt p=1 m=Financial advice sharing v=AMK Hub w=2025-11-01 1600'](images/addMeetingResult.png)
+
+---
 
 ### Finding a meeting : `findmt`
 
@@ -176,14 +219,16 @@ Examples:
 * `findmt meet discuss` returns `Meet to discuss new policy`, `Meet for lunch`<br>
   ![result for 'findmt meet discuss'](images/findmtMeetDiscuss.png)
 
+---
+
 ### Editing a meeting : `editmt`
 
 Edits the specified meeting of a specified person from the address book
 
-Format: `editmt p=INDEX i=MEETING_INDEX [m=MEETING] [v=VENUE] [w=WHEN]`
+Format: `editmt p=PERSON_INDEX i=MEETING_INDEX [m=MEETING] [v=VENUE] [w=WHEN]`
 
-* Edits the meeting details at the specified `MEETING_INDEX` for the person at the specified `INDEX`. 
-* The index refers to the index number shown in the displayed person list. 
+* Edits the meeting details at the specified `MEETING_INDEX` for the person at the specified `PERSON_INDEX`.
+* The person's index refers to the index number shown in the displayed person list.
 * The index **must be a positive integer** 1, 2, 3, …​
 * At least one of the optional fields must be provided.
 * Existing values will be updated to the input values.
@@ -196,19 +241,57 @@ Examples:
 finances`.<br>
   ![result for 'editmt p=2 i=1 m=Analyse finances'](images/editMeetingResult.png)
 
-### Deleting a person : `delete`
+---
 
-Deletes the specified person from the address book.
+### Deleting a meeting : `deletemt`
 
-Format: `delete INDEX`
+Deletes the specified meeting of a specified person from the address book.
 
-* Deletes the person at the specified `INDEX`.
-* The index refers to the index number shown in the displayed person list.
-* The index **must be a positive integer** 1, 2, 3, …​
+Format: `deletemt p=PERSON_INDEX i=MEETING_INDEX`
+
+* Deletes the meeting at the specified `MEETING_INDEX` for the person at the specified `PERSON_INDEX`.
+* The person’s index refers to the index number shown in the displayed person list.
+* The meeting index refers to the index number of the meeting shown in the person’s meeting list.
+* Both indices must be positive integers 1, 2, 3, …
 
 Examples:
-* `list` followed by `delete 2` deletes the 2nd person in the address book.
-* `find Betsy` followed by `delete 1` deletes the 1st person in the results of the `find` command.
+
+* `deletemt p=1 i=1` Deletes the 1st meeting of the 1st person in the displayed person list.
+
+---
+
+### Flag Person : `flag`
+
+Flags the specified person in the address book. A flagged person is prioritised in the displayed list.
+
+Format: `flag INDEX`
+
+* Flags the person at the specified `INDEX`.
+* The index refers to the index number shown in the displayed person list.
+* The index must be a positive integer 1, 2, 3, …
+* Attempting to flag an already flagged person will result in an error message.
+
+Examples:
+
+* `flag 1` Flags the 1st person in the displayed person list.
+  ![result for 'flag 1'](images/flagResult.png)
+---
+
+### Unflagging a person : `unflag`
+
+Removes the flagged status from the specified person in the address book. Once unflagged, the person is treated as a normal (non-prioritised) contact in the displayed list.
+
+Format: `unflag INDEX`
+
+* Unflags the person at the specified `INDEX`.
+* The index refers to the index number shown in the displayed person list.
+* The index **must be a positive integer** 1, 2, 3, …
+* Attempting to unflag a person who is not flagged will result in an error message.
+
+**Examples:**
+* `unflag 1` Unflags the 1st person in the displayed person list.
+
+---
 
 ### Clearing all entries : `clear`
 
@@ -216,15 +299,21 @@ Clears all entries from the address book.
 
 Format: `clear`
 
+---
+
 ### Exiting the program : `exit`
 
 Exits the program.
 
 Format: `exit`
 
+---
+
 ### Saving the data
 
 FAContactsPro data are saved in the hard disk automatically after any command that changes the data. There is no need to save manually.
+
+---
 
 ### Editing the data file
 
@@ -236,6 +325,8 @@ FAContactsPro data are saved automatically as a JSON file `[JAR file location]/d
 If your changes to the data file makes its format invalid, FAContactsPro will discard all data and start with an empty data file at the next run.  Hence, it is recommended to take a backup of the file before editing it.<br>
 Furthermore, certain edits can cause FAContactsPro to behave in unexpected ways (e.g., if a value entered is outside the acceptable range). Therefore, edit the data file only if you are confident that you can update it correctly.
 </box>
+
+---
 
 ### Archiving data files `[coming in v2.0]`
 
@@ -259,15 +350,23 @@ _Details coming soon ..._
 
 ## Command summary
 
-| Action           | Format, Examples                                                                                                                                                      |
-|------------------|-----------------------------------------------------------------------------------------------------------------------------------------------------------------------|
-| **Add**          | `add n/NAME p/PHONE_NUMBER e/EMAIL a/ADDRESS [t/TAG]…​` <br> e.g., `add n/James Ho p/22224444 e/jamesho@example.com a/123, Clementi Rd, 1234665 t/friend t/colleague` |
-| **Add Meeting**  | `addmt p=INDEX m=MEETING v=VENUE w=WHEN` <br> e.g. `addmt p=1 m=Financial advice sharing v=AMK Hub w=2025-11-01 1600`                                                 |
-| **Clear**        | `clear`                                                                                                                                                               |
-| **Delete**       | `delete INDEX`<br> e.g., `delete 3`                                                                                                                                   |
-| **Edit**         | `edit INDEX [n/NAME] [p/PHONE_NUMBER] [e/EMAIL] [a/ADDRESS] [t/TAG]…​`<br> e.g.,`edit 2 n/James Lee e/jameslee@example.com`                                           |
-| **Edit Meeting** | `editmt p=INDEX i=MEETING_INDEX [m=MEETING] [v=VENUE] [w=WHEN]` <br> e.g. `editmt p=1 i=2 v=Starbucks at J8 w=2025-10-05 1600`                                        |
-| **Find**         | `find KEYWORD [MORE_KEYWORDS]`<br> e.g., `find James Jake`                                                                                                            |
-| **Find Meeting** | `findmt KEYWORD [MORE_KEYWORDS]`<br> e.g., `findmt meet discuss`                                                                                                          |
-| **List**         | `list`                                                                                                                                                                |
-| **Help**         | `help`                                                                                                                                                                |
+| Action             | Format, Examples                                                                                                                                                        |
+|--------------------|-------------------------------------------------------------------------------------------------------------------------------------------------------------------------|
+| **Help**           | `help`                                                                                                                                                                  |
+| **Add**            | `add n=NAME mn=PHONE_NUMBER e=EMAIL a=ADDRESS [t=TAG]…​` <br> e.g., `add n=James Ho mn=22224444 e=jamesho@example.com a=123, Clementi Rd, 1234665 t=friend t=colleague` |
+| **List**           | `list`                                                                                                                                                                  |
+| **Edit**           | `edit INDEX [n=NAME] [mn=MAIN_NUMBER] [e=EMAIL] [a=ADDRESS] [t=TAG]…​`<br> e.g.,`edit 2 n=James Lee e=jameslee@example.com`                                             |
+| **Find**           | `find KEYWORD [MORE_KEYWORDS]`<br> e.g., `find James Jake`                                                                                                              |
+| **Delete**         | `delete INDEX`<br> e.g., `delete 3`                                                                                                                                     |
+| **Add Meeting**    | `addmt p=PERSON_INDEX m=MEETING v=VENUE w=WHEN` <br> e.g. `addmt p=1 m=Financial advice sharing v=AMK Hub w=2025-11-01 1600`                                            |
+| **Find Meeting**   | `findmt KEYWORD [MORE_KEYWORDS]`<br> e.g., `findmt meet discuss`                                                                                                        |
+| **Edit Meeting**   | `editmt p=PERSON_INDEX i=MEETING_INDEX [m=MEETING] [v=VENUE] [w=WHEN]` <br> e.g. `editmt p=1 i=2 v=Starbucks at J8 w=2025-10-05 1600`                                   |
+| **Delete Meeting** | `deletemt p=PERSON_INDEX i=MEETING_INDEX` <br> e.g. `deletemt p=1 i=1`                                                                                                  |
+| **Flag Person**    | `flag INDEX` <br> e.g. `flag 1`                                                                                                                                         |
+| **Unflag Person**  | `unflag INDEX` <br> e.g. `unflag 1`                                                                                                                                     |
+| **Clear**          | `clear`                                                                                                                                                                 |
+| **Exit**           | `exit`                                                                                                                                                                  |
+
+
+
+
