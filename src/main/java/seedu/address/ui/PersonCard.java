@@ -1,6 +1,7 @@
 package seedu.address.ui;
 
 import java.util.Comparator;
+import java.util.stream.IntStream;
 
 import javafx.fxml.FXML;
 import javafx.scene.control.Label;
@@ -58,17 +59,22 @@ public class PersonCard extends UiPart<Region> {
     public PersonCard(Person person, int displayedIndex) {
         super(FXML);
         this.person = person;
+
         id.setText(displayedIndex + ". ");
         name.setText(person.getName().fullName);
         phone.setText(person.getPhone().value);
         otherphones.setText(person.getOtherPhones().numbers);
         address.setText(person.getAddress().value);
         email.setText(person.getEmail().value);
+
         person.getTags().stream()
                 .sorted(Comparator.comparing(tag -> tag.tagName))
                 .forEach(tag -> tags.getChildren().add(new Label(tag.tagName)));
-        person.getMeetings().stream()
-                .forEach(meeting -> meetings.getChildren().add(new Label(meeting.toString())));
+
+        IntStream.range(0, person.getMeetingCount())
+                .forEach(i -> meetings.getChildren()
+                        .add(new Label(String.format("%d. " + person.getMeetings().get(i).toString(),
+                                i + 1))));
 
         toggleFlagUI(person);
     }
