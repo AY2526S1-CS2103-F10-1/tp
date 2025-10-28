@@ -75,6 +75,46 @@ public class PersonCard extends UiPart<Region> {
         toggleFlagUI(person);
     }
 
+    public HBox getCardPane() {
+        return cardPane;
+    }
+
+    public Circle getFlag() {
+        return flag;
+    }
+
+    public FlowPane getMeetings() {
+        return meetings;
+    }
+
+    public FlowPane getTags() {
+        return tags;
+    }
+
+    public Label getId() {
+        return id;
+    }
+
+    public Label getName() {
+        return name;
+    }
+
+    public Label getPhone() {
+        return phone;
+    }
+
+    public Label getOtherphones() {
+        return otherphones;
+    }
+
+    public Label getAddress() {
+        return address;
+    }
+
+    public Label getEmail() {
+        return email;
+    }
+
     /**
      * Populates the tags panel in the UI with the person's tags.
      */
@@ -98,14 +138,6 @@ public class PersonCard extends UiPart<Region> {
 
                     meetings.getChildren().add(meetingLabel);
                 });
-    }
-
-    public HBox getCardPane() {
-        return cardPane;
-    }
-
-    public Circle getFlag() {
-        return flag;
     }
 
     /**
