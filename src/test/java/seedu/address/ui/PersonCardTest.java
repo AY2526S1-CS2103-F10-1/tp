@@ -145,14 +145,14 @@ public class PersonCardTest {
         PersonCard card = new PersonCard(personWithMeeting, DISPLAY_INDEX_STUB);
         showCardInStage(robot, card);
 
-        Label meetingOneLabel = (Label) card.
-                getMeetings().
-                getChildren().
-                get(INDEX_FIRST_MEETING.getZeroBased());
-        Label meetingTwoLabel = (Label) card.
-                getMeetings().
-                getChildren().
-                get(INDEX_SECOND_MEETING.getZeroBased());
+        Label meetingOneLabel = (Label) card
+                .getMeetings()
+                .getChildren()
+                .get(INDEX_FIRST_MEETING.getZeroBased());
+        Label meetingTwoLabel = (Label) card
+                .getMeetings()
+                .getChildren()
+                .get(INDEX_SECOND_MEETING.getZeroBased());
 
         assertEquals(String.format("%d. %s", INDEX_FIRST_MEETING.getOneBased(), meetingOne),
                 meetingOneLabel.getText());
