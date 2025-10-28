@@ -34,9 +34,9 @@ public class DeleteMeetingCommand extends Command {
             + "Example: " + COMMAND_WORD + " " + PREFIX_PERSON_INDEX + "1 " + PREFIX_MEETING_INDEX + "1";
 
     public static final String MESSAGE_INVALID_MEETING_DISPLAYED_INDEX = "The meeting index provided is invalid.\n"
-            + "Please enter an index within the displayed meeting list.";
+            + "Either the person has no meetings, or the index is out of range of the displayed meeting list.";
     public static final String MESSAGE_INVALID_PERSON_DISPLAYED_INDEX = "The person index provided is invalid.\n"
-            + "Please enter an index within the displayed person list.";
+            + "Either the person list is empty, or the index is out of range of the displayed person list.";
     public static final String MESSAGE_INVALID_BLANK = "Please provide arguments after the command word.\n"
             + MESSAGE_FORMAT;
     public static final String MESSAGE_INVALID_BLANK_MEETING_INDEX = "Please provide the meeting index.\n"
