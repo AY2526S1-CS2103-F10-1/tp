@@ -20,6 +20,7 @@ import seedu.address.model.meeting.When;
 import seedu.address.model.person.Address;
 import seedu.address.model.person.Email;
 import seedu.address.model.person.Name;
+import seedu.address.model.person.OtherPhones;
 import seedu.address.model.person.Phone;
 import seedu.address.model.tag.Tag;
 
@@ -270,5 +271,21 @@ public class ParserUtilTest {
         String whenWithWhitespace = WHITESPACE + VALID_WHEN + WHITESPACE;
         When expectedWhen = new When(VALID_WHEN);
         assertEquals(expectedWhen, ParserUtil.parseWhen(whenWithWhitespace));
+    }
+
+    @Test
+    public void parseOtherPhone_validValue() throws Exception {
+        OtherPhones expectedPhone = new OtherPhones(VALID_PHONE);
+        assertEquals(expectedPhone, ParserUtil.parseEditOtherPhones(VALID_PHONE));
+    }
+
+    @Test
+    public void parseOtherPhones_null_throwsNullPointerException() throws Exception {
+        assertThrows(NullPointerException.class, () -> ParserUtil.parseEditOtherPhones(null));
+    }
+
+    @Test
+    public void parseOtherPhones_invalidPhone_throwsParserException() throws Exception {
+        assertThrows(ParseException.class, () -> ParserUtil.parseEditOtherPhones("abc"));
     }
 }
