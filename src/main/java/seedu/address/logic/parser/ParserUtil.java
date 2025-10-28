@@ -91,6 +91,21 @@ public class ParserUtil {
     }
 
     /**
+     * Parses a {@code String otherPhones} into a {@code OtherPhones}.
+     * Leading and trailing whitespaces will be trimmed.
+     *
+     * @throws ParseException if the given {@code otherPhones} is invalid.
+     */
+    public static OtherPhones parseEditOtherPhones(String otherPhones) throws ParseException {
+        requireNonNull(otherPhones);
+        if (!otherPhones.equals("") && !OtherPhones.isValidPhone(otherPhones)) {
+            throw new ParseException(OtherPhones.MESSAGE_CONSTRAINTS);
+        }
+
+        return new OtherPhones(otherPhones);
+    }
+
+    /**
      * Parses a {@code String address} into an {@code Address}.
      * Leading and trailing whitespaces will be trimmed.
      *
