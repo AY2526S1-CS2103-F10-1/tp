@@ -36,8 +36,8 @@ public class AddMeetingCommand extends Command {
             + PREFIX_VENUE + "AMK Hub "
             + PREFIX_WHEN + "2025-11-01 1600";
 
-    public static final String MESSAGE_ADD_MEETING_SUCCESS = "Added meeting to Person: %1$s";
-    public static final String MESSAGE_ADD_MEETING_FAILURE = "Failed to add meeting to Person: %1$s";
+    public static final String MESSAGE_ADD_MEETING_SUCCESS = "Added Meeting: %1$s to Person: %2$s";
+    public static final String MESSAGE_ADD_MEETING_FAILURE = "Failed to add Meeting: %1$s to Person: %2$s";
     public static final String MESSAGE_BLANK_MEETING_NAME = "Name of meeting is missing";
     public static final String MESSAGE_BLANK_VENUE = "Venue of meeting is missing";
     public static final String MESSAGE_BLANK_DATETIME = "Date and time of meeting is missing";
@@ -87,13 +87,15 @@ public class AddMeetingCommand extends Command {
                 editedMeetings, personToEdit.getFlagStatus());
         model.setPerson(personToEdit, editedPerson);
 
-        return new CommandResult(generateSuccessMessage(editedPerson));
+        return new CommandResult(generateSuccessMessage(editedPerson, meeting));
     }
 
-    private String generateSuccessMessage(Person personToEdit) {
-        String successMessage = String.format(MESSAGE_ADD_MEETING_SUCCESS, Messages.format(personToEdit));
+    private String generateSuccessMessage(Person personToEdit, Meeting meetingToEdit) {
+        String successMessage = String.format(MESSAGE_ADD_MEETING_SUCCESS, Messages.format(meetingToEdit),
+                Messages.format(personToEdit));
 
-        String failureMessage = String.format(MESSAGE_ADD_MEETING_FAILURE, Messages.format(personToEdit));
+        String failureMessage = String.format(MESSAGE_ADD_MEETING_FAILURE, Messages.format(meetingToEdit),
+                Messages.format(personToEdit));
 
         if (meeting.isMeetingNameBlank()) {
             return failureMessage;
