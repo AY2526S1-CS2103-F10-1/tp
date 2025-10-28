@@ -22,7 +22,7 @@ public class Name {
             "Names should not start or end with a hyphen, apostrophe, accented character, period or slash\n";
     public static final String MESSAGE_CONSTRAINTS_NO_CONSECUTIVE_SPECIAL_CHAR =
             "Names should not contain consecutive spaces, hyphens, apostrophes, accented characters,"
-                    + "periods or slashes\n";
+                    + " periods or slashes\n";
 
     /*
      * The first character of the address must not be a whitespace,
