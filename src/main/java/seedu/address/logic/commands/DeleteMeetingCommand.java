@@ -1,5 +1,6 @@
 package seedu.address.logic.commands;
 
+import static java.util.Objects.requireNonNull;
 import static seedu.address.commons.util.CollectionUtil.requireAllNonNull;
 import static seedu.address.logic.parser.CliSyntax.PREFIX_MEETING_INDEX;
 import static seedu.address.logic.parser.CliSyntax.PREFIX_PERSON_INDEX;
@@ -70,6 +71,8 @@ public class DeleteMeetingCommand extends Command {
 
     @Override
     public CommandResult execute(Model model) throws CommandException {
+        requireNonNull(model);
+
         Person personToEdit = validateAndGetPerson(model);
         Meeting meetingToDelete = personToEdit
                 .getMeetings().get(meetingIndex.getZeroBased());
@@ -79,7 +82,9 @@ public class DeleteMeetingCommand extends Command {
         logger.info(String.format("Successfully deleted meeting %s from Person %s",
                 Messages.format(meetingToDelete), personToEdit.getName()));
 
-        return buildCommandResult(meetingToDelete, personToEdit);
+        return new CommandResult(String.format(MESSAGE_DELETE_MEETING_SUCCESS,
+                Messages.format(meetingToDelete),
+                Messages.format(personToEdit)));
     }
 
     /**
@@ -124,15 +129,6 @@ public class DeleteMeetingCommand extends Command {
                 personToEdit.getMeetings(), personToEdit.getFlagStatus());
 
         model.setPerson(personToEdit, editedPerson);
-    }
-
-    /**
-     * Builds the success message after a meeting is deleted.
-     */
-    private CommandResult buildCommandResult(Meeting meetingToDelete, Person personToEdit) {
-        return new CommandResult(String.format(MESSAGE_DELETE_MEETING_SUCCESS,
-                Messages.format(meetingToDelete),
-                Messages.format(personToEdit)));
     }
 
     @Override
