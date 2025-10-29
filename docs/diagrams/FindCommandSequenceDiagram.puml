@@ -1,0 +1,30 @@
+@startuml
+!include style.puml
+skinparam ArrowFontStyle plain
+
+Participant ":ModelManager" as modelManager MODEL_COLOR
+Participant ":PersonList" as personList STORAGE_COLOR
+Participant ":FilteredList" as sortedList STORAGE_COLOR_T2
+
+[-> modelManager :
+
+
+modelManager -> personList : updatePersonListFilter(Predicate<Person>...)
+activate personList STORAGE_COLOR
+
+personList -[STORAGE_COLOR]> personList : andAll(Predicate<Person>...)
+activate personList STORAGE_COLOR_T1
+personList --[STORAGE_COLOR]> personList : Predicate<Person>
+deactivate personList
+
+personList -> sortedList : setPredicate(Predicate<Person>)
+activate sortedList STORAGE_COLOR_T2
+
+sortedList --> personList
+deactivate sortedList
+
+personList --> modelManager
+deactivate personList
+
+
+@enduml
