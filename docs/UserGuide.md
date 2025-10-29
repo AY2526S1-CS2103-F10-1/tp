@@ -215,12 +215,43 @@ Format: `addmt p=PERSON_INDEX m=MEETING v=VENUE w=WHEN`
 
 * Adds a meeting for the person identified by the `PERSON_INDEX` number used in the displayed person list.
 * A new meeting would be added to the person's list of current meetings.
+* The newly added meeting would be displayed automatically in the GUI as `MEETING at VENUE (WHEN)`:
+  * e.g. `Financial advice sharing at AMK Hub (Nov 01 2025 16:00)`
 * The person's index refers to the index number shown in the displayed person list.
 * The person's index **must be a positive integer** 1, 2, 3, …​
 * The `WHEN` value needs to be a valid datetime format of the form `yyyy/mm/dd HH[:]mm` or `dd-mm-yyyy HH[:]mm`.
 * `/` and `-` are interchangeable but the format needs to remain consistent (i.e. all `/` or all `-`)
 * The `:` in between `HH` and `mm` can be omitted i.e. (`1600` or `16:00`).
 * Adding in duplicate or overlapping meetings are allowed
+
+**Rules for `Meeting Name`**
+* The `Meeting Name` must contain at least one alphanumeric character.
+* Allowed characters are:
+    * Alphanumeric characters (a-z, A-Z, 0-9)
+    * Spaces
+    * Hyphens (-)
+    * Apostrophes (')
+    * Periods (.)
+    * Parentheses
+    * Slash (/)
+    * Ampersand (&)
+    * Commas (,)
+
+**Rules for `Venue`**
+* The `Venue` must contain at least one alphanumeric character.
+* Allowed characters are:
+    * Alphanumeric characters (a-z, A-Z, 0-9)
+    * Spaces
+    * Hyphens (-)
+    * Apostrophes (')
+    * Periods (.)
+    * Parentheses
+    * Slash (/)
+    * Ampersand (&)
+    * Commas (,)
+    * Hash (#)
+    * At sign (@)
+    * Colons (:)
 
 Examples:
 * `addmt p=1 m=Financial advice sharing v=AMK Hub w=2025-11-01 1600` Adds a new Financial advice sharing meeting to the
