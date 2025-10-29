@@ -19,6 +19,11 @@ public class MeetingNameTest {
     public void constructor_invalidName_throwsIllegalArgumentException() {
         String invalidName = "";
         assertThrows(IllegalArgumentException.class, () -> new MeetingName(invalidName));
+
+
+        String anotherInvalidMeetingName = "some very very very very very very very very very very very very very very"
+                + " ver long meeting name";
+        assertThrows(IllegalArgumentException.class, () -> new Venue(anotherInvalidMeetingName));
     }
 
     @Test

@@ -19,6 +19,10 @@ public class VenueTest {
     public void constructor_invalidVenue_throwsIllegalArgumentException() {
         String invalidVenue = "";
         assertThrows(IllegalArgumentException.class, () -> new Venue(invalidVenue));
+
+        String anotherInvalidVenue = "some very very very very very very very very very very very very very very very"
+                + " very v long venue";
+        assertThrows(IllegalArgumentException.class, () -> new Venue(anotherInvalidVenue));
     }
 
     @Test
