@@ -52,7 +52,6 @@
         "implementation": "Implementation",
         "multi-value-fields-for-contacts": "Multi-value fields for contacts",
         "sorting-filtered-contacts-by-flag": "Sorting Filtered Contacts By Flag",
-        "datetimeparser-util": "DateTimeParser Util",
         "proposed-undo-redo-feature": "[Proposed] Undo/redo feature",
         "proposed-data-archiving": "[Proposed] Data archiving",
         "documentation-logging-testing-configuration-dev-ops": "Documentation, logging, testing, configuration, dev-ops",
