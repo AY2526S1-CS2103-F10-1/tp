@@ -20,7 +20,6 @@ public class MeetingNameTest {
         String invalidName = "";
         assertThrows(IllegalArgumentException.class, () -> new MeetingName(invalidName));
 
-
         String anotherInvalidMeetingName = "some very very very very very very very very very very very very very very"
                 + " ver long meeting name";
         assertThrows(IllegalArgumentException.class, () -> new Venue(anotherInvalidMeetingName));
