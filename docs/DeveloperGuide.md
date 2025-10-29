@@ -182,14 +182,17 @@ Instead, we will now be focusing on the classes/objects for the validation of mu
 <puml src="diagrams/MultiValueFieldSequenceDiagram.puml" width="900" height="500"/>
 
 <box type="info" seamless>
+
 **Note:** The XYZField that is mentioned in the sequence diagram refers to a person's field which supports storing multiple values.
 </box>
 
 <box type="info" seamless>
+
 **Note:** The ... in parse refers to the arguments for the add command which for example would be: n=John Doe mn=98765432 on=9999 (Office) 6789 (School) e=johnd@example.com (Main) johnd@school.com (School) a=311, Clementi Ave 2, #02-25 (Home) Kent Ridge Drive Blk 2 (School) t=friends t=owesMoney
 </box>
 
 <box type="info" seamless>
+
 **Note:** This sequence diagram only focuses on one of the fields that support storing multiple values as an example.
 </box>
 
@@ -379,6 +382,7 @@ Priorities: High (must have) - `1`, Low (unlikely to have) - `4`
 |   `2`    | financial advisor      | search for contacts by phone                                                                     | retrieve the information of contacts that match my requirements                                                               |
 |   `2`    | financial advisor      | search for contacts by email                                                                     | retrieve the information of contacts that match my requirements                                                               |
 |   `2`    | financial advisor      | search for contacts by tags                                                                      | retrieve the information of contacts that match my requirements                                                               |
+|   `2`    | financial advisor      | search for meetings by meeting name                                                              | retrieve the information of meetings from contacts that match my requirements                                                 |
 |   `2`    | financial advisor      | edit a contact's information                                                                     | make modifications when my contact's details changes                                                                          |
 |   `2`    | financial advisor      | wipe out all of my contacts                                                                      | do a hard reset of the application                                                                                            |
 |   `2`    | financial advisor      | sort my contacts ascendingly/descendingly based on different conditions (name, phone, email...)  | look through my contacts easier                                                                                               |
@@ -1274,6 +1278,46 @@ Use case ends.
     * 1d2. User enters the command again.
 
       Steps 1d1 – 1d2 repeat until the data is successfully updated.
+
+      Use case resumes from Step 2.
+
+---
+
+**System: FAContactsPro**
+
+**Use case: UC21 - Search for contacts by Meeting Name**
+
+**Actor: User**
+
+**MSS**
+
+1. User types in command to search for contacts by Meeting Name.
+
+2. FAContactsPro app filters the list of contacts that has meetings matching the meeting name and lists all contacts.
+
+Use case ends.
+
+
+**Extensions**
+
+* 1a. FAContacts pro detects an error in the command entered.
+
+    * 1a1. FAContactsPro app displays an error message and requests the user to try again.
+
+    * 1a2. User enters a new command to search for contacts by meeting name.
+
+      Steps 1a1-1a2 are repeated until the command and details entered are correct.
+
+      Use case resumes from Step 2.
+
+
+* 1b. FAContactsPro is unable to retrieve the contacts from the storage.
+
+    * 1b1. FAContactsPro requests for the user to key in the search contact command again.
+
+    * 1b2. The user types in the new command.
+
+      Steps 1b1 - 1b2 is repeated until the system is able to retrieve the data from the storage without any errors.
 
       Use case resumes from Step 2.
 

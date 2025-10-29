@@ -102,12 +102,40 @@ Format: `add n=NAME mn=MAIN_NUMBER [on=OTHER_NUMBER] e=EMAIL a=ADDRESS [t/TAG]â€
 * The Name must not start or end with a hyphen, apostrophe, period, accented character, or slash.
 * The Name must not contain consecutive special characters (e.g., --, '', //, .., or double spaces).
 
+**Rules for `Email`**
+* `Email` is case-insensitive and are in the format of local-part@domain.
+*  For local-part, the allowed characters are:
+    * Alphanumeric characters (a-z, A-Z, 0-9)
+    * Only these special characters: + _ . -
+*  For local-part, the constraints are:
+    * It cannot start or end with any special characters
+*  For domain, the allowed characters are:
+    * Alphanumeric characters (a-z, A-Z, 0-9)
+    * Hyphens (-)
+    * Periods (.)
+*  For domain, the constraints are:
+    * It must be made up of domain labels separated by periods
+    * Each domain label consists of alphanumeric characters and can be separated only by hyphens, if any.
+    * Each domain label have to start and end with alphanumeric characters
+    * It must end with a domain label at least 2 characters long
+
+**Rules for `Address`**
+* `Address` is case-insensitive and can take on any value as long as it is not blank.
+
 **Rules for `OTHER_NUMBER, EMAIL, ADDRESS`**
 * You can store multiple of them inside by using labels. For example, `e=johnsmith@gmail.com (personal) johnwork@company.com.sg (work)`.
-  But, if you are just storing 1 of these parameters the label will be optional, else if you are storing multiple of these parameters the label is compulsory.
+* However, if you are just storing only 1 of these parameters the label will be optional, else if you are storing multiple of these parameters the label is compulsory.
+* Labels can be made up of alphanumerical characters, spaces, and hyphens. But cannot be made up of only spaces and/or hyphens only.
+* Duplicates of the parameters and labels are not allowed.
+* For labels, it must start with ( and end with ) and the allowed characters inside are:
+    * Alphanumeric characters (a-z, A-Z, 0-9)
+    * Spaces
+    * Hyphens (-)
+* For labels, inside of it the constraints are:
+    * It cannot be made up of only spaces and/or hyphens only.
 
 **Rules for `Tag`**
-* A person can have any number of tags (including 0)
+* A person can have any number of tags (including 0) and only alphanumeric characters are allowed.
 
 Examples:
 * `add n=George Lim mn=91113342 e=george@example.com a=Goldhill street, block 123, #01-01`
