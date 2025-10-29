@@ -15,7 +15,7 @@ public class MeetingName {
      * The first character of the meeting name must not be a whitespace,
      * otherwise " " (a blank string) becomes a valid input.
      */
-    public static final String VALIDATION_REGEX = "^(?=.*\\p{L}|\\d)[\\p{L}\\p{M}0-9 '\\s]+$";
+    public static final String VALIDATION_REGEX = "^(?=.*\\p{L}|\\d)[\\p{L}\\p{M}0-9 '\\s.()/&,-]+$";
 
     public final String meetingName;
 
