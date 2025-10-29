@@ -9,10 +9,10 @@ Participant ":SortedList" as sortedList STORAGE_COLOR_T2
 [-> modelManager :
 
 
-modelManager -[MODEL_COLOR]> personList : getPersonList()
+modelManager -> personList : getPersonList()
 activate personList STORAGE_COLOR
 
-personList -[STORAGE_COLOR]> sortedList : SortedList(filteredPersons, comparator)
+personList -> sortedList : SortedList(filteredPersons, comparator)
 activate sortedList STORAGE_COLOR_T2
 
 sortedList --> personList : ObservableList<Person>
