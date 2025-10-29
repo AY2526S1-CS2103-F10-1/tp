@@ -106,7 +106,7 @@ public class ParserUtil {
 
         if (trimmedAddress.length() > FIELD_MAXIMUM_LENGTH) {
             String exceptionMessage = String.format(EXCEED_FIELD_MAXIMUM_LENGTH_ERROR_MESSAGE,
-                    "address", FIELD_MAXIMUM_LENGTH);
+                    Address.ERROR_MESSAGE_DISPLAY_NAME, FIELD_MAXIMUM_LENGTH);
             throw new ParseException(exceptionMessage);
         }
 
@@ -129,7 +129,7 @@ public class ParserUtil {
 
         if (trimmedEmail.length() > FIELD_MAXIMUM_LENGTH) {
             String exceptionMessage = String.format(EXCEED_FIELD_MAXIMUM_LENGTH_ERROR_MESSAGE,
-                    "email", FIELD_MAXIMUM_LENGTH);
+                    Email.ERROR_MESSAGE_DISPLAY_NAME, FIELD_MAXIMUM_LENGTH);
             throw new ParseException(exceptionMessage);
         }
 

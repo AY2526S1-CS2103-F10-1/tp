@@ -31,8 +31,8 @@ public class Address {
      * otherwise " " (a blank string) becomes a valid input.
      */
     public static final String ADDRESS_VALIDATION_REGEX = "[^\\s].*";
+    public static final String ERROR_MESSAGE_DISPLAY_NAME = "address";
     private static final Logger logger = LogsCenter.getLogger(Address.class);
-    private static final String ERROR_MESSAGE_DISPLAY_NAME = "address";
     public final String value;
 
     /**
