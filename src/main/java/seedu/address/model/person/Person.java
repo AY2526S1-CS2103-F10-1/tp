@@ -140,6 +140,10 @@ public class Person {
         meetings.set(meetingToEdit, meeting);
     }
 
+    public boolean checkNumberContainsKeyword(String keyword) {
+        return phone.value.contains(keyword);
+    }
+
     /**
      * Returns true if both persons have the same identity and data fields.
      * This defines a stronger notion of equality between two persons.
