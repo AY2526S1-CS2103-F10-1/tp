@@ -1,0 +1,25 @@
+@startuml
+!include style.puml
+skinparam ArrowFontStyle plain
+
+Participant ":ModelManager" as modelManager MODEL_COLOR
+Participant ":PersonList" as personList STORAGE_COLOR
+Participant ":SortedList" as sortedList STORAGE_COLOR_T2
+
+[-> modelManager :
+
+
+modelManager -[MODEL_COLOR]> personList : getPersonList()
+activate personList STORAGE_COLOR
+
+personList -[STORAGE_COLOR]> sortedList : SortedList(filteredPersons, comparator)
+activate sortedList STORAGE_COLOR_T2
+
+sortedList --> personList : ObservableList<Person>
+deactivate sortedList
+
+personList --> modelManager : ObservableList<Person>
+deactivate personList
+
+
+@enduml

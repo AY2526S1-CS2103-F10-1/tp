@@ -29,6 +29,10 @@ import seedu.address.model.tag.Tag;
 public class ParserUtil {
     public static final String MESSAGE_INVALID_INDEX = "Index is not a non-zero unsigned integer.";
     private static final Logger logger = LogsCenter.getLogger(ParserUtil.class);
+    private static final int FIELD_MAXIMUM_LENGTH = 200;
+    private static final String EXCEED_FIELD_MAXIMUM_LENGTH_ERROR_MESSAGE = "Input for %s has exceeded "
+            + "the maximum length of %d characters!";
+
     /**
      * Parses {@code oneBasedIndex} into an {@code Index} and returns it. Leading and trailing whitespaces will be
      * trimmed.
@@ -91,6 +95,21 @@ public class ParserUtil {
     }
 
     /**
+     * Parses a {@code String otherPhones} into a {@code OtherPhones}.
+     * Leading and trailing whitespaces will be trimmed.
+     *
+     * @throws ParseException if the given {@code otherPhones} is invalid.
+     */
+    public static OtherPhones parseEditOtherPhones(String otherPhones) throws ParseException {
+        requireNonNull(otherPhones);
+        if (!otherPhones.equals("") && !OtherPhones.isValidPhone(otherPhones)) {
+            throw new ParseException(OtherPhones.MESSAGE_CONSTRAINTS);
+        }
+
+        return new OtherPhones(otherPhones);
+    }
+
+    /**
      * Parses a {@code String address} into an {@code Address}.
      * Leading and trailing whitespaces will be trimmed.
      *
@@ -99,6 +118,12 @@ public class ParserUtil {
     public static Address parseAddress(String address) throws ParseException {
         requireNonNull(address);
         String trimmedAddress = address.trim();
+
+        if (trimmedAddress.length() > FIELD_MAXIMUM_LENGTH) {
+            String exceptionMessage = String.format(EXCEED_FIELD_MAXIMUM_LENGTH_ERROR_MESSAGE,
+                    Address.ERROR_MESSAGE_DISPLAY_NAME, FIELD_MAXIMUM_LENGTH);
+            throw new ParseException(exceptionMessage);
+        }
 
         if (!Address.isValidAddress(trimmedAddress)) {
             throw new ParseException(Address.MESSAGE_CONSTRAINTS);
@@ -116,6 +141,12 @@ public class ParserUtil {
     public static Email parseEmail(String email) throws ParseException {
         requireNonNull(email);
         String trimmedEmail = email.trim();
+
+        if (trimmedEmail.length() > FIELD_MAXIMUM_LENGTH) {
+            String exceptionMessage = String.format(EXCEED_FIELD_MAXIMUM_LENGTH_ERROR_MESSAGE,
+                    Email.ERROR_MESSAGE_DISPLAY_NAME, FIELD_MAXIMUM_LENGTH);
+            throw new ParseException(exceptionMessage);
+        }
 
         if (!Email.isValidEmail(trimmedEmail)) {
             throw new ParseException(Email.MESSAGE_CONSTRAINTS);
@@ -314,8 +345,8 @@ public class ParserUtil {
 
         // Check if the size of the list is correct
         if (list.size() >= listMinSize && list.size() % 2 == 1) {
-            exceptionMessage = String.format("Every %1$s must be accompanied by a label"
-                    + " . For example %1$s1 (label1) %1$s2 (label2).", parameterName);
+            exceptionMessage = String.format("Every %1$s must be accompanied by a label."
+                    + " For example %1$s1 (label1) %1$s2 (label2).", parameterName);
             throw new ParseException(exceptionMessage);
         }
     }

@@ -17,7 +17,9 @@ import seedu.address.logic.parser.exceptions.ParseException;
  * Guarantees: immutable; is valid as declared in {@link #isValidAddress(String)}
  */
 public class Address {
-    public static final String MESSAGE_CONSTRAINTS = "Addresses can take any values, and it should not be blank\n"
+    public static final String MESSAGE_CONSTRAINTS = "For address, one or more addresses/labels are invalid!\n\n"
+            + "Addresses are case-insensitive and "
+            + "can take any values, and it should not be blank.\n\n"
             + LABEL_MESSAGE
             + "\n\n"
             + "Multiple addresses are allowed but must adhere to the following conditions: \n"
@@ -29,8 +31,8 @@ public class Address {
      * otherwise " " (a blank string) becomes a valid input.
      */
     public static final String ADDRESS_VALIDATION_REGEX = "[^\\s].*";
+    public static final String ERROR_MESSAGE_DISPLAY_NAME = "address";
     private static final Logger logger = LogsCenter.getLogger(Address.class);
-    private static final String ERROR_MESSAGE_DISPLAY_NAME = "address";
     public final String value;
 
     /**
