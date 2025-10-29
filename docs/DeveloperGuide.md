@@ -270,6 +270,30 @@ DateTimeParser.parse("2025-02-30 1000");
 
 --- 
 
+### Multi-value parameters for find
+The `find` command is a command that allows users to find their desired contacts using different parameters. The current implementation
+allows for easier finding of contacts by specifying name, number or tag.
+
+However, this search only displays a match to all specified parameters and not the individual parameters.
+
+Below is a sequence diagram to illustrate how `find` retrieves the list of persons.
+
+<puml src="diagrams/GetPersonListSequenceDiagram.puml" width="900" height="500"/>
+
+When `getPersonList()` is called, `PersonList` constructs a `SortedList` using:
+
+1. `filteredPersons`: a `FilteredList<Person>` representing the current filter results.
+
+2. A comparator that ensures:
+    - Flagged persons appear before unflagged persons.
+    - Within each group, the original order from `filteredPersons` is preserved by comparing their indices in the source list.
+
+This design allows `PersonList` to preserve filtering functionality while also enforcing the flag-priority ordering, keeping `ModelManager` unaware of these details.
+Future extensions (e.g. different sorting criteria) can be added cleanly within `PersonList`.
+
+**Note**: The constructor details of SortedList are omitted as they are not essential to understanding the interaction.
+
+
 ### \[Proposed\] Undo/redo feature
 
 #### Proposed Implementation
