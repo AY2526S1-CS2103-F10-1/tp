@@ -1,5 +1,6 @@
 package seedu.address.logic.parser;
 
+import static seedu.address.logic.Messages.MESSAGE_FLAGS_CANNOT_BE_EMPTY;
 import static seedu.address.logic.Messages.MESSAGE_INVALID_COMMAND_FORMAT;
 import static seedu.address.logic.parser.CliSyntax.PREFIX_MAIN_PHONE;
 import static seedu.address.logic.parser.CliSyntax.PREFIX_NAME;
@@ -9,6 +10,7 @@ import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
 import java.util.function.Predicate;
+import java.util.stream.Stream;
 
 import seedu.address.logic.commands.FindCommand;
 import seedu.address.logic.parser.exceptions.ParseException;
@@ -45,15 +47,32 @@ public class FindCommandParser implements Parser<FindCommand> {
             predicates.add(
                     new NameContainsKeywordsPredicate(Arrays.asList(nameKeywords.split("\\s+"))));
         }
+
+        if (arePrefixesPresent(argMultimap, PREFIX_NAME) && nameKeywords.equals("")) {
+            throw new ParseException(
+                    String.format(MESSAGE_FLAGS_CANNOT_BE_EMPTY, FindCommand.MESSAGE_USAGE));
+        }
+
         String phoneKeywords = argMultimap.getValue(PREFIX_MAIN_PHONE).orElse("");
         if (!phoneKeywords.equals("")) {
             predicates.add(
                     new NumberContainsKeywordPredicate(phoneKeywords));
         }
+
+        if (arePrefixesPresent(argMultimap, PREFIX_MAIN_PHONE) && phoneKeywords.equals("")) {
+            throw new ParseException(
+                    String.format(MESSAGE_FLAGS_CANNOT_BE_EMPTY, FindCommand.MESSAGE_USAGE));
+        }
+
         String tagKeywords = argMultimap.getValue(PREFIX_TAG).orElse("");
         if (!tagKeywords.equals("")) {
             predicates.add(
                     new TagContainsKeywordPredicate(Arrays.asList(tagKeywords.split("\\s+"))));
+        }
+
+        if (arePrefixesPresent(argMultimap, PREFIX_TAG) && tagKeywords.equals("")) {
+            throw new ParseException(
+                    String.format(MESSAGE_FLAGS_CANNOT_BE_EMPTY, FindCommand.MESSAGE_USAGE));
         }
 
         if (predicates.isEmpty()) {
@@ -62,6 +81,14 @@ public class FindCommandParser implements Parser<FindCommand> {
         }
 
         return new FindCommand(predicates);
+    }
+
+    /**
+     * Returns true if none of the prefixes contains empty {@code Optional} values in the given
+     * {@code ArgumentMultimap}.
+     */
+    private static boolean arePrefixesPresent(ArgumentMultimap argumentMultimap, Prefix... prefixes) {
+        return Stream.of(prefixes).allMatch(prefix -> argumentMultimap.getValue(prefix).isPresent());
     }
 
 }

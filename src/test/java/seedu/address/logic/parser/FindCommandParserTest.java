@@ -1,5 +1,6 @@
 package seedu.address.logic.parser;
 
+import static seedu.address.logic.Messages.MESSAGE_FLAGS_CANNOT_BE_EMPTY;
 import static seedu.address.logic.Messages.MESSAGE_INVALID_COMMAND_FORMAT;
 import static seedu.address.logic.parser.CommandParserTestUtil.assertParseFailure;
 import static seedu.address.logic.parser.CommandParserTestUtil.assertParseSuccess;
@@ -29,18 +30,18 @@ public class FindCommandParserTest {
     @Test
     public void parse_emptyNameArg_throwsParseException() {
         assertParseFailure(parser, "find n=", String.format(
-                MESSAGE_INVALID_COMMAND_FORMAT, FindCommand.MESSAGE_USAGE));
+                MESSAGE_FLAGS_CANNOT_BE_EMPTY, FindCommand.MESSAGE_USAGE));
     }
 
     @Test
     public void parse_emptyNumberArg_throwsParseException() {
         assertParseFailure(parser, "find mn=",
-                String.format(MESSAGE_INVALID_COMMAND_FORMAT, FindCommand.MESSAGE_USAGE));
+                String.format(MESSAGE_FLAGS_CANNOT_BE_EMPTY, FindCommand.MESSAGE_USAGE));
     }
 
     @Test
     public void parse_emptyTagArg_throwsParseException() {
-        assertParseFailure(parser, "find t=", String.format(MESSAGE_INVALID_COMMAND_FORMAT, FindCommand.MESSAGE_USAGE));
+        assertParseFailure(parser, "find t=", String.format(MESSAGE_FLAGS_CANNOT_BE_EMPTY, FindCommand.MESSAGE_USAGE));
     }
 
     @Test

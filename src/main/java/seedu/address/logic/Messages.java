@@ -25,6 +25,7 @@ public class Messages {
             + "Accepted formats: dd/MM/yyyy HH[:]mm, yyyy-MM-dd HH[:]mm";
     public static final String MESSAGE_INVALID_YEAR = "Invalid datetime value. Year value must at least be 1";
     public static final String MESSAGE_INVALID_MEETING_DISPLAYED_INDEX = "The meeting index provided is invalid";
+    public static final String MESSAGE_FLAGS_CANNOT_BE_EMPTY = "The prefix flags cannot be empty";
     /**
      * Returns an error message indicating the duplicate prefixes.
      */
