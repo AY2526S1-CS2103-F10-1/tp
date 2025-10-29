@@ -2,9 +2,12 @@ package seedu.address.model.meeting;
 
 import static org.junit.jupiter.api.Assertions.assertFalse;
 import static org.junit.jupiter.api.Assertions.assertTrue;
+import static org.junit.jupiter.api.Assertions.fail;
 import static seedu.address.testutil.Assert.assertThrows;
 
 import org.junit.jupiter.api.Test;
+
+import seedu.address.logic.parser.exceptions.ParseException;
 
 public class MeetingNameTest {
     @Test
@@ -24,17 +27,39 @@ public class MeetingNameTest {
         assertThrows(NullPointerException.class, () -> MeetingName.isValidMeetingName(null));
 
         // invalid name
-        assertFalse(MeetingName.isValidMeetingName("")); // empty string
-        assertFalse(MeetingName.isValidMeetingName(" ")); // spaces only
-        assertFalse(MeetingName.isValidMeetingName("^")); // only non-alphanumeric characters
-        assertFalse(MeetingName.isValidMeetingName("peter*")); // contains non-alphanumeric characters
+        try {
+            assertFalse(MeetingName.isValidMeetingName("")); // empty string
+            assertFalse(MeetingName.isValidMeetingName(" ")); // spaces only
 
-        // valid name
-        assertTrue(MeetingName.isValidMeetingName("financial sharing")); // alphabets only
-        assertTrue(MeetingName.isValidMeetingName("12345")); // numbers only
-        assertTrue(MeetingName.isValidMeetingName("financial sharing session 2")); // alphanumeric characters
-        assertTrue(MeetingName.isValidMeetingName("Financial Sharing Session 2")); // with capital letters
-        assertTrue(MeetingName.isValidMeetingName("Financial Sharing with Some Company Session 3")); // long names
+            // only non-alphanumeric characters
+            assertFalse(MeetingName.isValidMeetingName("^"));
+
+            // contains non-alphanumeric characters
+            assertFalse(MeetingName.isValidMeetingName("peter*"));
+
+            // boundary value (96 characters)
+            assertThrows(ParseException.class, () -> MeetingName.isValidMeetingName(
+                    "some very very very very very very very very very very very very very very ver"
+                            + " long meeting name"));
+
+            // valid name
+            assertTrue(MeetingName.isValidMeetingName("financial sharing")); // alphabets only
+            assertTrue(MeetingName.isValidMeetingName("12345")); // numbers only
+            assertTrue(MeetingName.isValidMeetingName("financial sharing session 2")); // alphanumeric characters
+            assertTrue(MeetingName.isValidMeetingName("Financial Sharing Session 2")); // with capital letters
+
+            // long names
+            assertTrue(MeetingName.isValidMeetingName("Financial Sharing with Some Company Session 3"));
+
+            // boundary value (95 characters)
+            assertTrue(MeetingName.isValidMeetingName(
+                    "some very very very very very very very very very very very very very very ve"
+                    + " long meeting name"));
+        } catch (ParseException e) {
+            // This block should not be reached
+            fail();
+        }
+
     }
 
     @Test
