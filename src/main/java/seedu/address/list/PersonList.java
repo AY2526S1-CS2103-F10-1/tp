@@ -65,12 +65,21 @@ public class PersonList {
      * @return sorted observable list of persons
      */
     public ObservableList<Person> getPersonList() {
-        logger.info(filteredPersons.stream().map(p -> p.getName()).toList().toString());
+        logger.fine(() -> "Person list (pre-sort, sample): " + filteredPersons.stream()
+                .limit(5)
+                .map(p -> p.getName().toString())
+                .toList());
+
         ObservableList<Person> result = new SortedList<>(filteredPersons,
                 Comparator.comparing(Person::getFlagStatus)
                         .thenComparing(p -> filteredPersons.getSource().indexOf(p))
         );
-        logger.info(result.stream().map(p -> p.getName()).toList().toString());
+
+        logger.fine(() -> "Person list (post-sort, sample): " + result.stream()
+                .limit(5)
+                .map(p -> p.getName().toString())
+                .toList());
+
         return result;
     }
 

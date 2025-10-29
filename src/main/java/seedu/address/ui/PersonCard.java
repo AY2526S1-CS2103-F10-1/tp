@@ -1,6 +1,7 @@
 package seedu.address.ui;
 
 import java.util.Comparator;
+import java.util.stream.IntStream;
 
 import javafx.fxml.FXML;
 import javafx.scene.control.Label;
@@ -19,11 +20,14 @@ import seedu.address.model.person.Person;
 public class PersonCard extends UiPart<Region> {
 
     private static final String FXML = "PersonListCard.fxml";
-    private static final String FLAG_IMAGE_PATH = "/images/flag.png";
+
     private static final String PHONE_DISPLAY_NAME = "Main number:  ";
     private static final String OTHER_PHONES_DISPLAY_NAME = "Other numbers:  ";
     private static final String ADDRESSES_DISPLAY_NAME = "Addresses:  ";
     private static final String EMAILS_DISPLAY_NAME = "Emails:  ";
+
+    private static final String FLAG_IMAGE_PATH = "/images/flag.png";
+    private static final String FLAGGED_STYLE_CLASS = "flagged";
 
     /**
      * Note: Certain keywords such as "location" and "resources" are reserved keywords in JavaFX.
@@ -57,22 +61,21 @@ public class PersonCard extends UiPart<Region> {
     private Circle flag;
 
     /**
-     * Creates a {@code PersonCode} with the given {@code Person} and index to display.
+     * Creates a {@code PersonCard} with the given {@code Person} and index to display.
      */
     public PersonCard(Person person, int displayedIndex) {
         super(FXML);
         this.person = person;
+
         id.setText(displayedIndex + ". ");
         name.setText(person.getName().fullName);
         phone.setText(PHONE_DISPLAY_NAME + person.getPhone().value);
         otherphones.setText(OTHER_PHONES_DISPLAY_NAME + person.getOtherPhones().numbers);
         address.setText(ADDRESSES_DISPLAY_NAME + person.getAddress().value);
         email.setText(EMAILS_DISPLAY_NAME + person.getEmail().value);
-        person.getTags().stream()
-                .sorted(Comparator.comparing(tag -> tag.tagName))
-                .forEach(tag -> tags.getChildren().add(new Label(tag.tagName)));
-        person.getMeetings().stream()
-                .forEach(meeting -> meetings.getChildren().add(new Label(meeting.toString())));
+
+        setTagsUI();
+        setMeetingsUI();
 
         toggleFlagUI(person);
     }
@@ -85,18 +88,78 @@ public class PersonCard extends UiPart<Region> {
         return flag;
     }
 
+    public FlowPane getMeetings() {
+        return meetings;
+    }
+
+    public FlowPane getTags() {
+        return tags;
+    }
+
+    public Label getId() {
+        return id;
+    }
+
+    public Label getName() {
+        return name;
+    }
+
+    public Label getPhone() {
+        return phone;
+    }
+
+    public Label getOtherphones() {
+        return otherphones;
+    }
+
+    public Label getAddress() {
+        return address;
+    }
+
+    public Label getEmail() {
+        return email;
+    }
+
+    /**
+     * Populates the tags panel in the UI with the person's tags.
+     */
+    public void setTagsUI() {
+        person.getTags().stream()
+                .sorted(Comparator.comparing(tag -> tag.tagName))
+                .forEach(tag -> tags.getChildren().add(new Label(tag.tagName)));
+    }
+
+    /**
+     * Populates the meetings panel in the UI with the person's meetings.
+     * Each meeting is prefixed with its one-based index number.
+     */
+    public void setMeetingsUI() {
+        IntStream.range(0, person.getMeetingCount())
+                .forEach(i -> {
+                    int oneBasedMeetingIndex = i + 1;
+                    String meetingText = person.getMeetings().get(i).toString();
+                    Label meetingLabel = new Label(String.format("%d. %s",
+                            oneBasedMeetingIndex, meetingText));
+
+                    meetings.getChildren().add(meetingLabel);
+                });
+    }
+
     /**
      * Toggles the flag UI based on the person's flag status.
+     *
+     * @param person The person whose flag status is used to update the UI.
      */
     public void toggleFlagUI(Person person) {
         if (person.isFlagged()) {
             Image image = new Image(MainApp.class.getResourceAsStream(FLAG_IMAGE_PATH));
             flag.setFill(new ImagePattern(image));
             flag.setVisible(true);
-            cardPane.getStyleClass().add("flagged");
+
+            cardPane.getStyleClass().add(FLAGGED_STYLE_CLASS);
         } else {
             flag.setVisible(false);
-            cardPane.getStyleClass().removeAll("flagged");
+            cardPane.getStyleClass().removeAll(FLAGGED_STYLE_CLASS);
         }
     }
 

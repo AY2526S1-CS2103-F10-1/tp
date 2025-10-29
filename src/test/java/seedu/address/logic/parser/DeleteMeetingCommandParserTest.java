@@ -1,6 +1,7 @@
 package seedu.address.logic.parser;
 
 import static seedu.address.logic.Messages.MESSAGE_INVALID_COMMAND_FORMAT;
+import static seedu.address.logic.Messages.MESSAGE_NO_PREAMBLE_BEFORE_PREFIX;
 import static seedu.address.logic.parser.CliSyntax.PREFIX_MEETING_INDEX;
 import static seedu.address.logic.parser.CliSyntax.PREFIX_PERSON_INDEX;
 import static seedu.address.logic.parser.CommandParserTestUtil.assertParseFailure;
@@ -81,8 +82,15 @@ public class DeleteMeetingCommandParserTest {
 
     @Test
     public void parse_extraPrefix_throwsParseException() {
-        assertParseFailure(parser, " p=1 i=b c=1", String.format(
+        assertParseFailure(parser, " p=1 i=1 c=1", String.format(
                 MESSAGE_INVALID_COMMAND_FORMAT,
+                DeleteMeetingCommand.MESSAGE_USAGE));
+    }
+
+    @Test
+    public void parse_nonEmptyPreambleBeforePrefix_throwsParseException() {
+        assertParseFailure(parser, "a;dlkfja;sldkjf p=1 i=1", String.format(
+                MESSAGE_NO_PREAMBLE_BEFORE_PREFIX,
                 DeleteMeetingCommand.MESSAGE_USAGE));
     }
 }

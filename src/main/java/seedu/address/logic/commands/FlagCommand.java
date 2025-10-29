@@ -17,7 +17,7 @@ import seedu.address.model.person.FlagStatus;
 import seedu.address.model.person.Person;
 
 /**
- * Flags a person identified using it's displayed index from the address book.
+ * Flags a person identified using its displayed index from the address book.
  */
 public class FlagCommand extends Command {
     public static final String COMMAND_WORD = "flag";
@@ -28,6 +28,8 @@ public class FlagCommand extends Command {
             + "Example: " + COMMAND_WORD + " 1";
 
     public static final String MESSAGE_FLAG_PERSON_SUCCESS = "Flagged Person: %1$s";
+    public static final String MESSAGE_INVALID_INDEX = "The index given is invalid.\n"
+            + "Either the person list is empty, or the index is out of range of the displayed person list.";
     public static final String MESSAGE_ALREADY_FLAGGED = "This person is already flagged.";
     private static final Boolean FLAGGED_STATUS = true;
 
@@ -36,11 +38,17 @@ public class FlagCommand extends Command {
     private final Index targetIndex;
 
     /**
-     * Creates a FlagCommand to flag the person at the specified {@code targetIndex}.
+     * Constructs a {@code FlagCommand} to flag the person at the given index.
+     * <p>
+     * The {@code targetIndex} is guaranteed to be valid and non-negative,
+     * as input validation is handled by {@code FlagCommandParser}.
+     *
+     * @param targetIndex Index of the person in the displayed list to flag.
      */
     public FlagCommand(Index targetIndex) {
         requireNonNull(targetIndex);
-        assert(targetIndex.getZeroBased() >= 0);
+        assert(targetIndex.getZeroBased() >= 0) : ": Index in FlagCommand "
+                + "is supposed to be non-negative!";
 
         this.targetIndex = targetIndex;
     }
@@ -49,36 +57,56 @@ public class FlagCommand extends Command {
     @Override
     public CommandResult execute(Model model) throws CommandException {
         requireNonNull(model);
-        assert(targetIndex.getZeroBased() >= 0);
 
-        List<Person> lastShownList = model.getPersonList();
-
-        // zero-based index is longer than list size
-        if (targetIndex.getZeroBased() >= lastShownList.size()) {
-            throw new CommandException(Messages.MESSAGE_INVALID_PERSON_DISPLAYED_INDEX);
-        }
-
-        Person personToFlag = lastShownList.get(targetIndex.getZeroBased());
-
-        // check if person is already flagged
-        if (personToFlag.isFlagged()) {
-            throw new CommandException(MESSAGE_ALREADY_FLAGGED);
-        }
-
-        // create an edited person descriptor with flagged status set to true
-        EditPersonDescriptor editPersonDescriptor = new EditPersonDescriptor();
-        editPersonDescriptor.setFlagStatus(new FlagStatus(FLAGGED_STATUS));
-        Person flaggedPerson = createEditedPerson(personToFlag, editPersonDescriptor);
-
-        model.setPerson(personToFlag, flaggedPerson);
+        Person personToFlag = validateAndGetPerson(model);
+        Person flaggedPerson = flagPerson(personToFlag, model);
 
         // log the flagging transition to ensure flagging took place
-        logger.info(String.format("%s was flagged (%b -> %b)",
-                flaggedPerson.getName().toString(),
+        logger.info(String.format("%s flag status changed (%b -> %b)",
+                flaggedPerson.getName(),
                 personToFlag.isFlagged(),
                 flaggedPerson.isFlagged()));
 
         return new CommandResult(String.format(MESSAGE_FLAG_PERSON_SUCCESS, Messages.format(flaggedPerson)));
+    }
+
+    /**
+     * Validates the target index and returns the corresponding {@code Person}.
+     * <p>
+     * Ensures the index is valid and that the person is not flagged already.
+     *
+     * @return The {@code Person} to flag.
+     * @throws CommandException If the index is invalid.
+     */
+    private Person validateAndGetPerson(Model model) throws CommandException {
+        List<Person> lastShownList = model.getPersonList();
+
+        if (targetIndex.getZeroBased() >= lastShownList.size()) {
+            throw new CommandException(MESSAGE_INVALID_INDEX);
+        }
+
+        Person personToFlag = lastShownList.get(targetIndex.getZeroBased());
+
+        if (personToFlag.isFlagged()) {
+            throw new CommandException(MESSAGE_ALREADY_FLAGGED);
+        }
+
+        return personToFlag;
+    }
+
+    /**
+     * Creates a flagged copy of the given person and updates the model.
+     *
+     * @return The flagged {@code Person}.
+     */
+    private Person flagPerson(Person personToFlag, Model model) {
+        EditPersonDescriptor descriptor = new EditPersonDescriptor();
+        descriptor.setFlagStatus(new FlagStatus(FLAGGED_STATUS));
+        Person flaggedPerson = createEditedPerson(personToFlag, descriptor);
+
+        model.setPerson(personToFlag, flaggedPerson);
+
+        return flaggedPerson;
     }
 
     @Override

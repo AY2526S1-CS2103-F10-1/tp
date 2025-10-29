@@ -38,7 +38,7 @@ public class UnflagCommandTest {
         Person personToUnflag = model.getPersonList().get(INDEX_FIRST_PERSON.getZeroBased());
         UnflagCommand unflagCommand = new UnflagCommand(INDEX_FIRST_PERSON);
 
-        String expectedMessage = String.format(UnflagCommand.MESSAGE_FLAG_PERSON_SUCCESS,
+        String expectedMessage = String.format(UnflagCommand.MESSAGE_UNFLAG_PERSON_SUCCESS,
                 Messages.format(personToUnflag));
 
         ModelManager expectedModel = new ModelManager(model.getAddressBook(), new UserPrefs());
@@ -56,14 +56,14 @@ public class UnflagCommandTest {
         Index outOfBoundIndex = Index.fromOneBased(model.getPersonList().size() + 1);
         UnflagCommand unflagCommand = new UnflagCommand(outOfBoundIndex);
 
-        assertCommandFailure(unflagCommand, model, Messages.MESSAGE_INVALID_PERSON_DISPLAYED_INDEX);
+        assertCommandFailure(unflagCommand, model, UnflagCommand.MESSAGE_INVALID_INDEX);
     }
 
     @Test
     public void execute_alreadyUnflaggedUnfilteredList_throwsCommandException() {
         UnflagCommand unflagCommand = new UnflagCommand(INDEX_SECOND_PERSON);
 
-        assertCommandFailure(unflagCommand, model, UnflagCommand.MESSAGE_ALREADY_FLAGGED);
+        assertCommandFailure(unflagCommand, model, UnflagCommand.MESSAGE_ALREADY_UNFLAGGED);
     }
 
     @Test
@@ -73,7 +73,7 @@ public class UnflagCommandTest {
         Person personToUnflag = model.getPersonList().get(INDEX_FIRST_PERSON.getZeroBased());
         UnflagCommand unflagCommand = new UnflagCommand(INDEX_FIRST_PERSON);
 
-        String expectedMessage = String.format(UnflagCommand.MESSAGE_FLAG_PERSON_SUCCESS,
+        String expectedMessage = String.format(UnflagCommand.MESSAGE_UNFLAG_PERSON_SUCCESS,
                 Messages.format(personToUnflag));
 
         Model expectedModel = new ModelManager(model.getAddressBook(), new UserPrefs());
@@ -93,7 +93,7 @@ public class UnflagCommandTest {
 
         UnflagCommand unflagCommand = new UnflagCommand(outOfBoundIndex);
 
-        assertCommandFailure(unflagCommand, model, Messages.MESSAGE_INVALID_PERSON_DISPLAYED_INDEX);
+        assertCommandFailure(unflagCommand, model, UnflagCommand.MESSAGE_INVALID_INDEX);
     }
 
     @Test

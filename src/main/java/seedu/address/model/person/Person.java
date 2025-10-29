@@ -114,6 +114,7 @@ public class Person {
 
     /**
      * Removes a meeting from the person's meeting list.
+     *
      * @param index The index of the meeting to be removed.
      */
     public void removeMeeting(int index) {
@@ -129,6 +130,7 @@ public class Person {
 
     /**
      * Edits a meeting from the person's meeting list.
+     *
      * @param meetingToEdit the index of the meeting to be edited.
      * @param meeting the updated meeting to replace the old meeting.
      */

@@ -5,6 +5,7 @@ import static org.junit.jupiter.api.Assertions.assertFalse;
 import static org.junit.jupiter.api.Assertions.assertTrue;
 import static seedu.address.logic.commands.CommandTestUtil.assertCommandFailure;
 import static seedu.address.logic.commands.CommandTestUtil.assertCommandSuccess;
+import static seedu.address.logic.commands.CommandTestUtil.showPersonAtIndex;
 import static seedu.address.testutil.TypicalIndexes.INDEX_FIRST_MEETING;
 import static seedu.address.testutil.TypicalIndexes.INDEX_FIRST_PERSON;
 import static seedu.address.testutil.TypicalIndexes.INDEX_SECOND_MEETING;
@@ -47,11 +48,13 @@ public class DeleteMeetingCommandTest {
         } catch (ParseException ignored) {
             // This exception is expected and can be safely ignored
         }
+
         Person firstPerson = model.getPersonList()
                 .get(INDEX_FIRST_PERSON.getZeroBased());
         Person editedPerson = new PersonBuilder(firstPerson)
                 .withMeetings(firstMeetingStub, secondMeetingStub2)
                 .build();
+
         model.setPerson(firstPerson, editedPerson);
     }
 
@@ -59,14 +62,59 @@ public class DeleteMeetingCommandTest {
     public void execute_validIndexUnfilteredList_success() {
         Person firstPerson = model.getPersonList().get(INDEX_FIRST_PERSON.getZeroBased());
 
+        Meeting meetingToDelete = firstPerson
+                .getMeetings()
+                .get(INDEX_FIRST_MEETING.getZeroBased());
+        Meeting secondMeeting = firstPerson
+                .getMeetings()
+                .get(INDEX_SECOND_MEETING.getZeroBased());
+
+        Person editedPerson = new PersonBuilder(firstPerson)
+                .withMeetings(secondMeeting)
+                .build();
+
         DeleteMeetingCommand deleteMeetingCommand = new DeleteMeetingCommand(
                 INDEX_FIRST_PERSON, INDEX_FIRST_MEETING);
 
-        String expectedMessage = String.format(DeleteMeetingCommand.MESSAGE_DELETE_MEETING_SUCCESS,
+        String expectedMessage = String.format(
+                DeleteMeetingCommand.MESSAGE_DELETE_MEETING_SUCCESS,
+                Messages.format(meetingToDelete),
                 Messages.format(firstPerson));
 
         ModelManager expectedModel = new ModelManager(model.getAddressBook(), new UserPrefs());
-        expectedModel.deleteMeetingFromPerson(firstPerson, INDEX_FIRST_MEETING.getZeroBased());
+        expectedModel.setPerson(firstPerson, editedPerson);
+
+        assertCommandSuccess(deleteMeetingCommand, model, expectedMessage, expectedModel);
+    }
+
+    @Test
+    public void execute_validIndexFilteredList_success() {
+        showPersonAtIndex(model, INDEX_FIRST_PERSON);
+
+        Person firstPerson = model.getPersonList().get(INDEX_FIRST_PERSON.getZeroBased());
+
+        Meeting meetingToDelete = firstPerson
+                .getMeetings()
+                .get(INDEX_FIRST_MEETING.getZeroBased());
+        Meeting secondMeeting = firstPerson
+                .getMeetings()
+                .get(INDEX_SECOND_MEETING.getZeroBased());
+
+        Person editedPerson = new PersonBuilder(firstPerson)
+                .withMeetings(secondMeeting)
+                .build();
+
+        DeleteMeetingCommand deleteMeetingCommand = new DeleteMeetingCommand(
+                INDEX_FIRST_PERSON, INDEX_FIRST_MEETING);
+
+        String expectedMessage = String.format(
+                DeleteMeetingCommand.MESSAGE_DELETE_MEETING_SUCCESS,
+                Messages.format(meetingToDelete),
+                Messages.format(firstPerson));
+
+        ModelManager expectedModel = new ModelManager(model.getAddressBook(), new UserPrefs());
+        expectedModel.setPerson(firstPerson, editedPerson);
+        showPersonAtIndex(expectedModel, INDEX_FIRST_PERSON);
 
         assertCommandSuccess(deleteMeetingCommand, model, expectedMessage, expectedModel);
     }
@@ -76,7 +124,8 @@ public class DeleteMeetingCommandTest {
         Index outOfBoundIndex = Index.fromOneBased(model.getPersonList().size() + 1);
         DeleteMeetingCommand deleteMeetingCommand = new DeleteMeetingCommand(outOfBoundIndex, INDEX_FIRST_MEETING);
 
-        assertCommandFailure(deleteMeetingCommand, model, Messages.MESSAGE_INVALID_PERSON_DISPLAYED_INDEX);
+        assertCommandFailure(deleteMeetingCommand, model,
+                DeleteMeetingCommand.MESSAGE_INVALID_PERSON_DISPLAYED_INDEX);
     }
 
     @Test
@@ -85,7 +134,8 @@ public class DeleteMeetingCommandTest {
                 .get(INDEX_FIRST_PERSON.getZeroBased()).getMeetingCount() + 1);
         DeleteMeetingCommand deleteMeetingCommand = new DeleteMeetingCommand(INDEX_FIRST_PERSON, outOfBoundIndex);
 
-        assertCommandFailure(deleteMeetingCommand, model, DeleteMeetingCommand.MESSAGE_INVALID_MEETING_DISPLAYED_INDEX);
+        assertCommandFailure(deleteMeetingCommand, model,
+                DeleteMeetingCommand.MESSAGE_INVALID_MEETING_DISPLAYED_INDEX);
     }
 
     @Test

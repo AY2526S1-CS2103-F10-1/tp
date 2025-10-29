@@ -15,5 +15,4 @@ public class TypicalIndexes {
     public static final Index INDEX_SEVENTH_PERSON = Index.fromOneBased(7);
     public static final Index INDEX_FIRST_MEETING = Index.fromOneBased(1);
     public static final Index INDEX_SECOND_MEETING = Index.fromOneBased(2);
-    public static final Index INDEX_THIRD_MEETING = Index.fromOneBased(3);
 }

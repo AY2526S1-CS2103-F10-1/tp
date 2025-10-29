@@ -14,11 +14,9 @@ public class UnflagCommandParser implements Parser<UnflagCommand> {
     @Override
     public UnflagCommand parse(String args) throws ParseException {
         try {
-
-            // try to parse the index
             Index index = ParserUtil.parseIndex(args);
 
-            assert(index.getZeroBased() >= 0);
+            assert(index.getZeroBased() >= 0) : "Index should be non-negative";
 
             return new UnflagCommand(index);
         } catch (ParseException e) {
@@ -27,6 +25,5 @@ public class UnflagCommandParser implements Parser<UnflagCommand> {
             );
         }
     }
-
 }
 

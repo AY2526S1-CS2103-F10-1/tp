@@ -354,16 +354,17 @@ _{Explain here how the data archiving feature will be implemented}_
 * Deals with a significant number of contacts everyday
 * Frequently searches, filters and updates client contact information
 * Values efficiency and speed in desktop apps over GUI interactions
-* Needs to stay on top of a packed schedule and cannot afford to forget meetings or follow-ups with clients
-* Needs to efficiently categorise and segment clients for targeted follow-ups e.g. tagging a customer as “priority-client”
+* Needs to keep track of meetings with clients and easily see past/upcoming ones
+* Needs to efficiently categorise and segment important clients for targeted or prioritised follow-ups 
 
 **Pain Points**:
 * High workload from organising, editing and sieving through contacts
-* Needs constant reminders for client-related events
+* Forgetfulness when juggling client meetings without proper tracking
 * Struggles to maintain a single source of truth for all client contact information
+* Difficulty categorising and prioritising clients without consistent tools
 
 **Value proposition**:
-As financial advisors deal with multitudinous leads every single day, our desktop application offers value by allowing advisors to efficiently manage large client databases, stay on top of a hectic schedule and streamline follow-ups through reminders and customisable client tagging. We help financial advisors save precious time spent on tedious administrative workload, so they can focus on building client relationships, making informed decisions and growing their business.
+FAContactsPro helps financial advisors efficiently manage large client databases, stay organised with meetings, and streamline follow-ups through client tagging and flagging. By providing a fast, keyboard-driven desktop application, our product reduces tedious administrative work, keeps client information consistent, and lets advisors focus on building client relationships and making informed decisions.
 
 ---
 
