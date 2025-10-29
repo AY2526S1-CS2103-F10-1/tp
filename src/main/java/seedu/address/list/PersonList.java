@@ -34,9 +34,28 @@ public class PersonList {
      *
      * @param predicate The predicate to filter the persons.
      */
-    public void updatePersonListFilter(Predicate<Person> predicate) {
+    public void updatePersonListFilter(Predicate<Person>... predicate) {
         requireNonNull(predicate);
-        filteredPersons.setPredicate(predicate);
+        filteredPersons.setPredicate(andAll(predicate));
+    }
+
+    /**
+     * @param predicates a list of predicates
+     * @return predicate combining all predicates into a single statement
+     */
+    @SafeVarargs
+    public static Predicate<Person> andAll(Predicate<Person>... predicates) {
+        Predicate<Person> acc = t -> true;
+
+        if (predicates == null) {
+            return acc;
+        }
+        for (Predicate<Person> p : predicates) {
+            if (p != null) {
+                acc = acc.and(p::test);
+            }
+        }
+        return acc;
     }
 
     /**

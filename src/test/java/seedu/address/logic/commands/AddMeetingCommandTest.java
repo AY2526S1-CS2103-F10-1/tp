@@ -37,16 +37,17 @@ public class AddMeetingCommandTest {
         MeetingName meetingName = new MeetingName(MEETING_NAME_STUB);
         Venue venue = new Venue(MEETING_VENUE_STUB);
         When when = new When(MEETING_WHEN_STUB);
+        Meeting newMeeting = new Meeting(meetingName, venue, when);
 
         Person firstPerson = model.getPersonList().get(INDEX_FIRST_PERSON.getZeroBased());
         Person editedPerson = new PersonBuilder(firstPerson).withMeetings(
-                new Meeting(meetingName, venue, when)).build();
+                newMeeting).build();
 
         AddMeetingCommand addMeetingCommand = new AddMeetingCommand(INDEX_FIRST_PERSON,
-                new Meeting(meetingName, venue, when));
+                newMeeting);
 
         String expectedMessage = String.format(AddMeetingCommand.MESSAGE_ADD_MEETING_SUCCESS,
-                Messages.format(editedPerson));
+                Messages.format(newMeeting), Messages.format(editedPerson));
 
         Model expectedModel = new ModelManager(model.getAddressBook(), new UserPrefs());
         expectedModel.setPerson(firstPerson, editedPerson);
@@ -62,15 +63,17 @@ public class AddMeetingCommandTest {
         Venue venue = new Venue(MEETING_VENUE_STUB);
         When when = new When(MEETING_WHEN_STUB);
 
+        Meeting newMeeting = new Meeting(meetingName, venue, when);
+
         Person firstPerson = model.getPersonList().get(INDEX_FIRST_PERSON.getZeroBased());
         Person editedPerson = new PersonBuilder(model.getPersonList().get(INDEX_FIRST_PERSON.getZeroBased()))
-                .withMeetings(new Meeting(meetingName, venue, when)).build();
+                .withMeetings(newMeeting).build();
 
         AddMeetingCommand addMeetingCommand = new AddMeetingCommand(INDEX_FIRST_PERSON,
-                new Meeting(meetingName, venue, when));
+                newMeeting);
 
         String expectedMessage = String.format(AddMeetingCommand.MESSAGE_ADD_MEETING_SUCCESS,
-                Messages.format(editedPerson));
+                Messages.format(newMeeting), Messages.format(editedPerson));
 
         Model expectedModel = new ModelManager(model.getAddressBook(), new UserPrefs());
         expectedModel.setPerson(firstPerson, editedPerson);

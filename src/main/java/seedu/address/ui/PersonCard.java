@@ -21,6 +21,11 @@ public class PersonCard extends UiPart<Region> {
 
     private static final String FXML = "PersonListCard.fxml";
 
+    private static final String PHONE_DISPLAY_NAME = "Main number:  ";
+    private static final String OTHER_PHONES_DISPLAY_NAME = "Other numbers:  ";
+    private static final String ADDRESSES_DISPLAY_NAME = "Addresses:  ";
+    private static final String EMAILS_DISPLAY_NAME = "Emails:  ";
+
     private static final String FLAG_IMAGE_PATH = "/images/flag.png";
     private static final String FLAGGED_STYLE_CLASS = "flagged";
 
@@ -64,10 +69,10 @@ public class PersonCard extends UiPart<Region> {
 
         id.setText(displayedIndex + ". ");
         name.setText(person.getName().fullName);
-        phone.setText(person.getPhone().value);
-        otherphones.setText(person.getOtherPhones().numbers);
-        address.setText(person.getAddress().value);
-        email.setText(person.getEmail().value);
+        phone.setText(PHONE_DISPLAY_NAME + person.getPhone().value);
+        otherphones.setText(OTHER_PHONES_DISPLAY_NAME + person.getOtherPhones().numbers);
+        address.setText(ADDRESSES_DISPLAY_NAME + person.getAddress().value);
+        email.setText(EMAILS_DISPLAY_NAME + person.getEmail().value);
 
         setTagsUI();
         setMeetingsUI();
@@ -142,9 +147,6 @@ public class PersonCard extends UiPart<Region> {
 
     /**
      * Toggles the flag UI based on the person's flag status.
-     * If the person is flagged, shows the flag icon and applies
-     * the "flagged" CSS style class; otherwise, hides the icon
-     * and removes the style class.
      *
      * @param person The person whose flag status is used to update the UI.
      */

@@ -30,32 +30,35 @@ public class AddressTest {
     }
 
     @Test
-    public void isValidAddress() {
-        // null address
-        assertThrows(NullPointerException.class, () -> Address.isValidAddress(null));
+    public void isValidAddress_invalidAddressOrLabels_throwParseException() {
+        assertThrows(NullPointerException.class, () -> Address.isValidAddress(null)); // null address
 
         assertThrows(ParseException.class, () ->
                 Address.isValidAddress("Kent Ridge (School) Jurong East(Home)")); // Label together with address
 
         assertThrows(ParseException.class, () ->
                 Address.isValidAddress("Kent Ridge (home) (school)")); // Another address missing
+
         assertThrows(ParseException.class, () ->
                 Address.isValidAddress("Kent Ridge (home) "
                         + "Jurong (home)")); // duplicate labels
+
         assertThrows(ParseException.class, () ->
                 Address.isValidAddress("Kent Ridge (home) "
                         + "Kent Ridge (school)")); // duplicate addresses
-        try {
-            // invalid addresses
-            assertFalse(Address.isValidAddress("")); // empty string
-            assertFalse(Address.isValidAddress(" ")); // spaces only
-            assertFalse(Address.isValidAddress("Kent Ridge ()")); // Empty label
-            assertFalse(Address.isValidAddress("Kent Ridge (  )")); // Label with spaces only
-            assertFalse(Address.isValidAddress("Kent Ridge (--)")); // Label with hyphen only
-            assertFalse(Address.isValidAddress("Kent Ridge ( -- - )")); // Label with spaces and hyphens only
-            assertFalse(Address.isValidAddress("Kent Ridge (Test / No)")); // Label other characters
 
-            // valid addresses
+        assertThrows(ParseException.class, () ->
+                Address.isValidAddress("Kent Ridge (home) "
+                        + "Jurong (hOMe)")); // duplicate labels to test case-insensitivity
+
+        assertThrows(ParseException.class, () ->
+                Address.isValidAddress("Kent Ridge (home) "
+                        + "kEnT RIDge (school)")); // duplicate addresses to test case-insensitivity
+    }
+
+    @Test
+    public void isValidAddress_validAddressAndLabels_returnTrue() {
+        try {
             assertTrue(Address.isValidAddress("Blk 456, Den Road, #01-355"));
             assertTrue(Address.isValidAddress("-")); // one character
             assertTrue(Address.isValidAddress("Leng Inc; 1234 Market St; "
@@ -67,6 +70,21 @@ public class AddressTest {
                     + "#01-355 (House) ")); // Trailing spaces allowed
             assertTrue(Address.isValidAddress(" Blk 456, Den Road, "
                     + "#01-355 (House 2) ")); // Space allowed in label
+        } catch (ParseException e) {
+            fail();
+        }
+    }
+
+    @Test
+    public void isValidAddress_invalidAddressOrLabels_returnFalse() {
+        try {
+            assertFalse(Address.isValidAddress("")); // empty string
+            assertFalse(Address.isValidAddress(" ")); // spaces only
+            assertFalse(Address.isValidAddress("Kent Ridge ()")); // Empty label
+            assertFalse(Address.isValidAddress("Kent Ridge (  )")); // Label with spaces only
+            assertFalse(Address.isValidAddress("Kent Ridge (--)")); // Label with hyphen only
+            assertFalse(Address.isValidAddress("Kent Ridge ( -- - )")); // Label with spaces and hyphens only
+            assertFalse(Address.isValidAddress("Kent Ridge (Test / No)")); // Label other characters
         } catch (ParseException e) {
             fail();
         }

@@ -30,20 +30,62 @@ public class EmailTest {
     }
 
     @Test
-    public void isValidEmail() {
-        // null email
-        assertThrows(NullPointerException.class, () -> Email.isValidEmail(null));
+    public void isValidEmail_invalidEmailOrLabels_throwParseException() {
+        assertThrows(NullPointerException.class, () -> Email.isValidEmail(null)); // null email
 
         assertThrows(ParseException.class, () ->
                 Email.isValidEmail("peterjack@example.c(Work)")); // missing space in between label
+
         assertThrows(ParseException.class, () ->
                 Email.isValidEmail("test@gmail.com (test) (work)")); // Another email missing
+
         assertThrows(ParseException.class, () ->
                 Email.isValidEmail("test@gmail.com (main) "
                         + "e1234567@u.nus.edu (main)")); // Duplicate labels
+
         assertThrows(ParseException.class, () ->
                 Email.isValidEmail("test@gmail.com (main) "
                         + "test@gmail.com (school)")); // Duplicate emails
+
+        assertThrows(ParseException.class, () ->
+                Email.isValidEmail("test@gmail.com (personal) "
+                        + "e1234567@u.nus.edu (pERSOnal)")); // Duplicate labels to test case-insensitivity
+
+        assertThrows(ParseException.class, () ->
+                Email.isValidEmail("test@gmail.com (main) "
+                        + "TEst@GmAIL.com (school)")); // Duplicate emails to test case-insensitivity
+    }
+
+    @Test
+    public void isValidEmail_validEmailAndLabels_returnTrue() {
+        try {
+            // valid email
+            assertTrue(Email.isValidEmail("PeterJack_1190@example.com")); // underscore in local part
+            assertTrue(Email.isValidEmail("PeterJack.1190@example.com")); // period in local part
+            assertTrue(Email.isValidEmail("PeterJack+1190@example.com")); // '+' symbol in local part
+            assertTrue(Email.isValidEmail("PeterJack-1190@example.com")); // hyphen in local part
+            assertTrue(Email.isValidEmail("a@bc")); // minimal
+            assertTrue(Email.isValidEmail("test@localhost")); // alphabets only
+            assertTrue(Email.isValidEmail("123@145")); // numeric local part and domain name
+            assertTrue(Email.isValidEmail("a1+be.d@example1.com")); // mixture of alphanumeric and special characters
+            assertTrue(Email.isValidEmail("peter_jack@very-very-very-long-example.com")); // long domain name
+            assertTrue(Email.isValidEmail("if.you.dream.it_you.can.do.it@example.com")); // long local part
+            assertTrue(Email.isValidEmail("e1234567@u.nus.edu")); // more than one period in domain
+            assertTrue(Email.isValidEmail(" e1234567@u.nus.edu ")); // Trailing spaces are allowed
+            assertTrue(Email.isValidEmail("e1234567@u.nus.edu (school)")); // Label allowed with 1 email
+            assertTrue(Email.isValidEmail("test@gmail.com (main) "
+                    + "e1234567@u.nus.edu (school)")); // Multiple emails with labels allowed
+            assertTrue(Email.isValidEmail("test@gmail.com (main) "
+                    + "e1234567@u.nus.edu (school-work)")); // Label allowed with space inside
+            assertTrue(Email.isValidEmail(" peterjack@example.com")); // leading space is allowed
+            assertTrue(Email.isValidEmail("peterjack@example.com ")); // trailing space is allowed
+        } catch (ParseException e) {
+            fail();
+        }
+    }
+
+    @Test
+    public void isValidEmail_invalidEmailOrLabels_returnFalse() {
         try {
             // blank email
             assertFalse(Email.isValidEmail("")); // empty string
@@ -76,27 +118,6 @@ public class EmailTest {
             assertFalse(Email.isValidEmail("test@gmail.com ( -- - )")); // Label with spaces and hyphens only
             assertFalse(Email.isValidEmail("test@gmail.com (Test / No)")); // Label other characters
             assertFalse(Email.isValidEmail("test@gmail.com e1234567@u.nus.edu")); // Multiple emails missing labels
-
-            // valid email
-            assertTrue(Email.isValidEmail("PeterJack_1190@example.com")); // underscore in local part
-            assertTrue(Email.isValidEmail("PeterJack.1190@example.com")); // period in local part
-            assertTrue(Email.isValidEmail("PeterJack+1190@example.com")); // '+' symbol in local part
-            assertTrue(Email.isValidEmail("PeterJack-1190@example.com")); // hyphen in local part
-            assertTrue(Email.isValidEmail("a@bc")); // minimal
-            assertTrue(Email.isValidEmail("test@localhost")); // alphabets only
-            assertTrue(Email.isValidEmail("123@145")); // numeric local part and domain name
-            assertTrue(Email.isValidEmail("a1+be.d@example1.com")); // mixture of alphanumeric and special characters
-            assertTrue(Email.isValidEmail("peter_jack@very-very-very-long-example.com")); // long domain name
-            assertTrue(Email.isValidEmail("if.you.dream.it_you.can.do.it@example.com")); // long local part
-            assertTrue(Email.isValidEmail("e1234567@u.nus.edu")); // more than one period in domain
-            assertTrue(Email.isValidEmail(" e1234567@u.nus.edu ")); // Trailing spaces are allowed
-            assertTrue(Email.isValidEmail("e1234567@u.nus.edu (school)")); // Label allowed with 1 email
-            assertTrue(Email.isValidEmail("test@gmail.com (main) "
-                    + "e1234567@u.nus.edu (school)")); // Multiple emails with labels allowed
-            assertTrue(Email.isValidEmail("test@gmail.com (main) "
-                    + "e1234567@u.nus.edu (school-work)")); // Label allowed with space inside
-            assertTrue(Email.isValidEmail(" peterjack@example.com")); // leading space is allowed
-            assertTrue(Email.isValidEmail("peterjack@example.com ")); // trailing space is allowed
         } catch (ParseException e) {
             fail();
         }

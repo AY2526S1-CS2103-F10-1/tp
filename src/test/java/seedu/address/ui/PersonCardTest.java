@@ -48,6 +48,11 @@ public class PersonCardTest {
     private static final String TAG_TWO = "alpha";
     private static final String TAG_THREE = "beta";
 
+    private static final String PHONE_DISPLAY_NAME = "Main number:  ";
+    private static final String OTHER_PHONES_DISPLAY_NAME = "Other numbers:  ";
+    private static final String ADDRESSES_DISPLAY_NAME = "Addresses:  ";
+    private static final String EMAILS_DISPLAY_NAME = "Emails:  ";
+
     private Meeting meetingOne;
     private Meeting meetingTwo;
 
@@ -85,13 +90,13 @@ public class PersonCardTest {
                 card.getId().getText());
         assertEquals(TypicalPersons.AMY.getName().fullName,
                 card.getName().getText());
-        assertEquals(TypicalPersons.AMY.getPhone().value,
+        assertEquals(PHONE_DISPLAY_NAME + TypicalPersons.AMY.getPhone().value,
                 card.getPhone().getText());
-        assertEquals(TypicalPersons.AMY.getOtherPhones().numbers,
+        assertEquals(OTHER_PHONES_DISPLAY_NAME + TypicalPersons.AMY.getOtherPhones().numbers,
                 card.getOtherphones().getText());
-        assertEquals(TypicalPersons.AMY.getEmail().value,
+        assertEquals(EMAILS_DISPLAY_NAME + TypicalPersons.AMY.getEmail().value,
                 card.getEmail().getText());
-        assertEquals(TypicalPersons.AMY.getAddress().value,
+        assertEquals(ADDRESSES_DISPLAY_NAME + TypicalPersons.AMY.getAddress().value,
                 card.getAddress().getText());
     }
 

@@ -3,6 +3,7 @@ package seedu.address.model.person;
 import static java.util.Objects.requireNonNull;
 import static seedu.address.commons.util.AppUtil.checkArgument;
 import static seedu.address.logic.parser.ParserUtil.parseParametersAndLabels;
+import static seedu.address.model.person.Person.LABEL_MESSAGE;
 import static seedu.address.model.util.ValidationUtil.isParameterAndLabelsValid;
 
 import java.util.List;
@@ -15,11 +16,15 @@ import seedu.address.logic.parser.exceptions.ParseException;
  */
 public class OtherPhones {
     public static final String MESSAGE_DUPLICATE_CONSTRAINTS =
-            "The main number already exists. Do not key in duplicate numbers";
+            "The other numbers should not be a duplicate of the main number.";
 
     public static final String MESSAGE_CONSTRAINTS =
             "Phone numbers should only contain numbers, and it should be at "
-                   + "least 3 digits long and numbers should be separared by a tag e.g. 9999 (work) 8888 (office)";
+            + "least 3 digits long and numbers should be separared by a label e.g. 9999 (work) 8888 (office) \n"
+            + "Multiple phone numbers are allowed but must adhere to the following constraints: \n"
+            + "1. For 1 phone number, the label is optional, so PHONE or PHONE (LABEL). \n"
+            + "2. For multiple phone numbers, the label is compulsory so: PHONE1 (LABEL1) PHONE2 (LABEL2) ... \n"
+            + LABEL_MESSAGE;
 
     // Single phone number pattern
     private static final String SINGLE_PHONE_REGEX =

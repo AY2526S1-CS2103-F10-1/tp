@@ -21,6 +21,7 @@ import seedu.address.commons.util.CollectionUtil;
 import seedu.address.commons.util.ToStringBuilder;
 import seedu.address.logic.Messages;
 import seedu.address.logic.commands.exceptions.CommandException;
+import seedu.address.logic.parser.exceptions.ParseException;
 import seedu.address.model.Model;
 import seedu.address.model.meeting.Meeting;
 import seedu.address.model.person.Address;
@@ -82,6 +83,18 @@ public class EditCommand extends Command {
         }
 
         Person personToEdit = lastShownList.get(index.getZeroBased());
+        if (!editPersonDescriptor.getOtherPhones().isEmpty()) {
+            try {
+                if (OtherPhones.mainPhoneExists(
+                        editPersonDescriptor.getOtherPhones().get().toString(),
+                        personToEdit.getPhone())) {
+                    throw new CommandException(OtherPhones.MESSAGE_DUPLICATE_CONSTRAINTS);
+                }
+            } catch (ParseException e) {
+                throw new CommandException(e.getMessage());
+            }
+
+        }
         Person editedPerson = createEditedPerson(personToEdit, editPersonDescriptor);
 
         if (!personToEdit.isSamePerson(editedPerson) && model.hasPerson(editedPerson)) {

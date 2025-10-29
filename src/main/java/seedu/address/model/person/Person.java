@@ -21,7 +21,7 @@ import seedu.address.model.tag.Tag;
 public class Person {
     // Label message used for other identity/data fields
     public static final String LABEL_MESSAGE =
-            "Labels can be made up of alphanumerical characters, spaces, and hyphens. "
+            "Labels are case-insensitive and can be made up of alphanumerical characters, spaces, and hyphens. "
                     + "It must adhere to the following constraints:\n"
                     + "1. The label cannot be made up of only spaces and/or hyphens only.";
     // Common label regex used for other identity/data fields
@@ -140,6 +140,10 @@ public class Person {
         requireNonNull(meeting);
 
         meetings.set(meetingToEdit, meeting);
+    }
+
+    public boolean checkNumberContainsKeyword(String keyword) {
+        return phone.value.contains(keyword);
     }
 
     /**
