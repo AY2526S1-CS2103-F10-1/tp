@@ -31,6 +31,9 @@ public class ValidationUtil {
         String exceptionMessage = null;
 
         for (String currString : list) {
+            // Parameters and labels are case-insensitive
+            currString = currString.toLowerCase();
+
             // Check for duplicate parameter/label
             if (checkParameter && currParameters.contains(currString)) {
                 exceptionMessage = String.format("One or more of the %ss you "
