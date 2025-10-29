@@ -122,6 +122,30 @@ public class ParserUtilTest {
     }
 
     @Test
+    public void parseAddress_emptyString_throwsParseException() {
+        assertThrows(ParseException.class, () -> ParserUtil.parseAddress(INVALID_ADDRESS));
+    }
+
+    @Test
+    public void parseAddress_invalidLength_throwsParseException() {
+        String invalidAddressLength = "15, 29a Upper Paya Lebar Road, Singapore 533015 (Home 1) "
+                + "Blk 742, 04-187, Yishun Avenue 5, Singapore 760742 (Home 2) 290, 03-22, Orchard Road, "
+                + "Singapore 238801 (Home 3) Jurong West Street 2112 (Home 4)";
+
+        assertThrows(ParseException.class, () -> ParserUtil.parseAddress(invalidAddressLength));
+    }
+
+    @Test
+    public void parseAddress_validValueLengthJustNice_returnsAddress() throws Exception {
+        String validAddressLengthJustNice = "15, 29a Upper Paya Lebar Road, Singapore 533015 (Home 1) "
+                + "Blk 742, 04-187, Yishun Avenue 5, Singapore 760742 (Home 2) 290, 03-22, Orchard Road, "
+                + "Singapore 238801 (Home 3) Jurong West Street 211 (Home 4)";
+
+        Address expectedAddress = new Address(validAddressLengthJustNice);
+        assertEquals(expectedAddress, ParserUtil.parseAddress(validAddressLengthJustNice));
+    }
+
+    @Test
     public void parseAddress_validValueWithoutWhitespace_returnsAddress() throws Exception {
         Address expectedAddress = new Address(VALID_ADDRESS);
         assertEquals(expectedAddress, ParserUtil.parseAddress(VALID_ADDRESS));
@@ -142,6 +166,25 @@ public class ParserUtilTest {
     @Test
     public void parseEmail_invalidValue_throwsParseException() {
         assertThrows(ParseException.class, () -> ParserUtil.parseEmail(INVALID_EMAIL));
+    }
+
+    @Test
+    public void parseEmail_invalidLength_throwsParseException() {
+        String invalidEmailLength = "test1@gmail.com (work1) test2@gmail.com (work2) "
+                + "test3@gmail.com (work3) test4@gmail.com (work4) test5@gmail.com (work5) test6@gmail.com "
+                + "(work6) test7@gmail.com (work7) test8@gmail.com (work8) test9@gmail.com (work9) "
+                + "test10@gmail.com (work10) test11@gmail.com (work11) test12@gmail.com (work12)";
+
+        assertThrows(ParseException.class, () -> ParserUtil.parseEmail(invalidEmailLength));
+    }
+
+    @Test
+    public void parseEmail_validValueLengthJustNice_returnsEmail() throws Exception {
+        String validEmailLengthJustNice = "test1@gmail.com (work 1) test2@gmail.com (work 2) "
+                + "test3@gmail.com (work 3) test4@gmail.com (work 4) test5@gmail.com (work 5) "
+                + "test6@gmail.com (work 6) test7@gmail.com (work 7) test8@gmail.com (work 8)";
+        Email expectedEmail = new Email(validEmailLengthJustNice);
+        assertEquals(expectedEmail, ParserUtil.parseEmail(validEmailLengthJustNice));
     }
 
     @Test
