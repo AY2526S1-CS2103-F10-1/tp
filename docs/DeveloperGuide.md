@@ -229,6 +229,47 @@ Future extensions (e.g. different sorting criteria) can be added cleanly within 
 
 ---
 
+### DateTimeParser Util
+**Overview**<br>
+The `DateTimeParser` class is a utility component that handles the conversion between `String` representations of
+date-time values and Java's `LocalDateTime` objects.<br>
+It is primarily used by meeting-related commands such as `addmt` and `editmt` to ensure user-specified meeting timings
+follow valid and consistent formats.
+
+This class enforces strict validation rules and rejects non-existent dates (e.g `2024-02-30`) and datetime formats that
+do not follow the list of accepted format patterns, ensuring that all stored meeting times are meaningful and
+unambiguous.
+
+**Design and Rationale**<br>
+Unlike `LocalDateTime.parse()` which only accepts a single format, `DateTimeParser` supports multiple user-friendly
+input patterns (e.g. `2025-10-30 1600`, `30/10/2025 16:00`, etc.). The list of allowed format can be easily updated to
+support other formats as developers see fit. This improves usability while maintaining data integrity.
+
+The parser uses a **list of allowed `DateTimeFormatter`s** with the `ResolverStyle.STRICT` option, ensuring that
+* The date exists in the Gregorian calendar (no autocorrection of invalid dates).
+* Year is four digits (rejects truncated or zero-padded invalid values).
+* Time is valid in 24-hour format.
+
+**Core Logic**<br>
+When parsing a user input, `DateTimeParser` attempts to parse sequentially using the allowed formatters. If all attempts
+fail, it raises a `ParseException` with a descriptive message (e.g. `Invalid datetime format`). This approach provides
+flexibility in user input while maintaining a single source of truth for datetime validation across commands.
+
+**Example Usage**<br>
+Example 1: Valid meeting creation
+```
+DateTimeParser.parse("2025-11-01 1600");
+```
+* `DateTimeParser` parses `"2025-11-01 1600"` into `LocalDateTime.of(2025, 11, 1, 16, 0)`.
+
+Example 2: Invalid input
+```
+DateTimeParser.parse("2025-02-30 1000");
+```
+* Throws `ParseException` with message `Invalid datetime value...`
+
+--- 
+
 ### \[Proposed\] Undo/redo feature
 
 #### Proposed Implementation
