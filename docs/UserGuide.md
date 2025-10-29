@@ -221,10 +221,26 @@ Format: `addmt p=PERSON_INDEX m=MEETING v=VENUE w=WHEN`
     * Hyphens (-)
     * Apostrophes (')
     * Periods (.)
-    * Brackets
+    * Parentheses
     * Slash (/)
     * Ampersand (&)
     * Commas (,)
+
+**Rules for `Venue`**
+* The `Venue` must contain at least one alphanumeric character.
+* Allowed characters are:
+    * Alphanumeric characters (a-z, A-Z, 0-9)
+    * Spaces
+    * Hyphens (-)
+    * Apostrophes (')
+    * Periods (.)
+    * Parentheses
+    * Slash (/)
+    * Ampersand (&)
+    * Commas (,)
+    * Hash (#)
+    * At sign (@)
+    * Colons (:)
 
 * Adds a meeting for the person identified by the `PERSON_INDEX` number used in the displayed person list.
 * A new meeting would be added to the person's list of current meetings.
