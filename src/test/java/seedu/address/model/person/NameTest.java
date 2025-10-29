@@ -3,6 +3,7 @@ package seedu.address.model.person;
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertFalse;
 import static org.junit.jupiter.api.Assertions.assertTrue;
+import static org.junit.jupiter.api.Assertions.fail;
 import static seedu.address.testutil.Assert.assertThrows;
 
 import org.junit.jupiter.api.Test;
@@ -38,6 +39,7 @@ public class NameTest {
         try {
             String blankName = "";
             Name.isValidName(blankName);
+            fail();
         } catch (ParseException e) {
             assertEquals(Name.MESSAGE_CONSTRAINTS_NO_BLANK_NAME, e.getMessage());
         }
@@ -54,6 +56,7 @@ public class NameTest {
         try {
             String nonValidCharacter = "^";
             Name.isValidName(nonValidCharacter);
+            fail();
         } catch (ParseException e) {
             assertEquals(Name.MESSAGE_CONSTRAINTS_AT_LEAST_ONE_ALPHANUMERIC, e.getMessage());
         }
@@ -70,6 +73,7 @@ public class NameTest {
         try {
             String containsNonValidCharacter = "bobby^";
             Name.isValidName(containsNonValidCharacter);
+            fail();
         } catch (ParseException e) {
             assertEquals(e.getMessage(), Name.MESSAGE_CONSTRAINTS);
         }
@@ -89,6 +93,7 @@ public class NameTest {
         try {
             String startsWithNonAlphabet = "-bobby";
             Name.isValidName(startsWithNonAlphabet);
+            fail();
         } catch (ParseException e) {
             assertEquals(e.getMessage(), Name.MESSAGE_CONSTRAINTS_INVALID_START_END);
         }
@@ -106,8 +111,9 @@ public class NameTest {
     @Test
     public void isValidName_endsWithNonAlphabet_throwsInvalidStartEndParseException() {
         try {
-            String endsWithNonAlphabet = "bobby ";
+            String endsWithNonAlphabet = "bobby-";
             Name.isValidName(endsWithNonAlphabet);
+            fail();
         } catch (ParseException e) {
             assertEquals(e.getMessage(), Name.MESSAGE_CONSTRAINTS_INVALID_START_END);
         }
@@ -128,8 +134,20 @@ public class NameTest {
         try {
             String consecutiveSpecialCharacter = "bob----------by";
             Name.isValidName(consecutiveSpecialCharacter);
+            fail();
         } catch (ParseException e) {
             assertEquals(e.getMessage(), Name.MESSAGE_CONSTRAINTS_NO_CONSECUTIVE_SPECIAL_CHAR);
+        }
+    }
+
+    @Test public void isValidName_over95Characters_throwsOver95CharsParseException() {
+        try {
+            String namewithNinetySixChars = "Sundararajan Venkatachalam Krishnamachari "
+                    + "Ramanathan Subramanian Narayanaswamy Iyer Kumar Singhh";
+            Name.isValidName(namewithNinetySixChars);
+            fail();
+        } catch (ParseException e) {
+            assertEquals(e.getMessage(), Name.MESSAGE_CONSTRAINTS_NAME_OVER_95_CHARS);
         }
     }
 
@@ -152,6 +170,8 @@ public class NameTest {
             assertTrue(Name.isValidName("A")); // single character
             assertTrue(Name.isValidName("7")); // single digit
             assertTrue(Name.isValidName("Élise-Marie O’Neill/Smith Jr.")); // multiple valid special characters
+            assertTrue(Name.isValidName("Sundararajan Venkatachalam Krishnamachari "
+                    + "Ramanathan Subramanian Narayanaswamy Iyer Kumar Singh")); // boundary value (95 characters)
         } catch (ParseException e) {
             // This block should not be reached
         }

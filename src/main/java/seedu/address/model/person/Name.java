@@ -10,19 +10,6 @@ import seedu.address.logic.parser.exceptions.ParseException;
  */
 public class Name {
 
-    public static final String MESSAGE_CONSTRAINTS_NO_BLANK_NAME =
-            "Names should not be blank\n";
-    public static final String MESSAGE_CONSTRAINTS_AT_LEAST_ONE_ALPHANUMERIC =
-            "Names should contain at least one alphabetic character\n";
-    public static final String MESSAGE_CONSTRAINTS =
-            "Names can only contain alphanumeric characters, spaces, hyphens, apostrophes, accented characters,"
-                    + " periods, digits and slashes\n";
-    public static final String MESSAGE_CONSTRAINTS_INVALID_START_END =
-            "Names should not start or end with a hyphen, apostrophe, accented character, period or slash\n";
-    public static final String MESSAGE_CONSTRAINTS_NO_CONSECUTIVE_SPECIAL_CHAR =
-            "Names should not contain consecutive spaces, hyphens, apostrophes, accented characters,"
-                    + " periods or slashes\n";
-
     /*
      * The first character of the address must not be a whitespace,
      * otherwise " " (a blank string) becomes a valid input.
@@ -32,6 +19,25 @@ public class Name {
     public static final String VALIDATION_REGEX_NO_SPECIAL_CHAR_START = "^[\\-'’./].*$";
     public static final String VALIDATION_REGEX_NO_SPECIAL_CHAR_END = "^.*[\\-'’./]$";
     public static final String VALIDATION_REGEX_NO_CONSECUTIVE_SPECIAL_CHAR = ".*([ \\-'’./])\\1.*";
+
+    public static final int MAX_NAME_CHAR_LENGTH = 95;
+
+    public static final String MESSAGE_CONSTRAINTS_NO_BLANK_NAME =
+            "Names should not be blank\n";
+    public static final String MESSAGE_CONSTRAINTS_AT_LEAST_ONE_ALPHANUMERIC =
+            "Names should contain at least one alphanumeric character\n";
+    public static final String MESSAGE_CONSTRAINTS =
+            "Names can only contain alphanumeric characters, spaces, hyphens, apostrophes, accented characters,"
+                    + " periods and slashes\n";
+    public static final String MESSAGE_CONSTRAINTS_INVALID_START_END =
+            "Names should not start or end with a hyphen, apostrophe, period or slash\n";
+    public static final String MESSAGE_CONSTRAINTS_NO_CONSECUTIVE_SPECIAL_CHAR =
+            "Names should not contain consecutive spaces, hyphens, apostrophes,"
+                    + " periods or slashes\n";
+    public static final String MESSAGE_CONSTRAINTS_NAME_OVER_95_CHARS = String.format(
+            "Names should not be longer than %d characters!\n",
+            MAX_NAME_CHAR_LENGTH
+    );
 
     public final String fullName;
 
@@ -80,6 +86,10 @@ public class Name {
 
         if (test.matches(VALIDATION_REGEX_NO_CONSECUTIVE_SPECIAL_CHAR)) {
             throw new ParseException(MESSAGE_CONSTRAINTS_NO_CONSECUTIVE_SPECIAL_CHAR);
+        }
+
+        if (test.trim().length() > MAX_NAME_CHAR_LENGTH) {
+            throw new ParseException(MESSAGE_CONSTRAINTS_NAME_OVER_95_CHARS);
         }
 
         return true;
