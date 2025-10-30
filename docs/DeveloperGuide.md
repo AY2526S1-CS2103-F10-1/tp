@@ -1395,7 +1395,7 @@ testers are expected to do more *exploratory* testing.
     1. Test case: `editmt p=1 i=1 m=updated discussion` <br>
         Expected: Meeting 1 of person at index 1 is updated. Details of updated meeting shown in the status message.
      
-    1. Test case: `editmt p=1 m=0 m=updated discussion` <br>
+    1. Test case: `editmt p=1 i=0 m=updated discussion` <br>
         Expected: No meeting is updated. Error details shown in the status message.
 
 ---
