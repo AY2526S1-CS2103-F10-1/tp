@@ -22,7 +22,7 @@ public class MeetingNameTest {
 
         String anotherInvalidMeetingName = "some very very very very very very very very very very very very very very"
                 + " ver long meeting name";
-        assertThrows(IllegalArgumentException.class, () -> new Venue(anotherInvalidMeetingName));
+        assertThrows(IllegalArgumentException.class, () -> new MeetingName(anotherInvalidMeetingName));
     }
 
     @Test
