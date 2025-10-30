@@ -32,6 +32,8 @@ Financial Advisor Contacts Pro (FAContactsPro) is a **desktop app tailored to fi
    * `list` : Lists all contacts.
 
    * `add n=John Doe mn=98765432 on=9999 (Office) 6789 (School) e=johnd@example.com (Main) johnd@work.com (Work) a=311, Clementi Ave 2, #02-25 (Home) Kent Ridge Drive Blk 2 (Office) t=colleague t=managers` : Adds a contact named `John Doe` to the Address Book.
+   
+   * `find n=John mn=98765432 t=colleague` : finds the person named `John` with a main number `98765432` and a tag `colleague`.
 
    * `addmt p=1 m=Financial advice sharing v=AMK Hub w=2025-11-01 1600` : Adds a new meeting called `Financial advice sharing` to the first contact displayed in the Address Book.
    
@@ -87,7 +89,7 @@ Format: `help`
 
 Adds a person to the address book.
 
-Format: `add n=NAME mn=MAIN_NUMBER [on=OTHER_NUMBER] e=EMAIL a=ADDRESS [t/TAG]…​`
+Format: `add n=NAME mn=MAIN_NUMBER [on=OTHER_NUMBER] e=EMAIL a=ADDRESS [t=TAG]…​`
 
 **Rules for `Name`**
 * The `Name` must contain at least one alphanumeric character.
@@ -155,7 +157,7 @@ Format: `list`
 
 Edits an existing person in the address book.
 
-Format: `edit INDEX [n=NAME] [mn=PHONE] [on=OTHER_NUMBER] [e=EMAIL] [a=ADDRESS] [t/TAG]…​`
+Format: `edit INDEX [n=NAME] [mn=PHONE] [on=OTHER_NUMBER] [e=EMAIL] [a=ADDRESS] [t=TAG]…​`
 
 * Edits the person at the specified `INDEX`. The index refers to the index number shown in the displayed person list. The index **must be a positive integer** 1, 2, 3, …​
 * At least one of the optional fields must be provided.
@@ -171,23 +173,36 @@ Examples:
 
 ---
 
-### Locating persons by name: `find`
+### Locating persons: `find`
 
-Finds persons whose names contain any of the given keywords.
+Finds persons who match all the given keywords.
 
-Format: `find KEYWORD [MORE_KEYWORDS]`
+Format: `find [n=NAME] [mn=PHONE] [t=TAG]`
 
+**Rules**
+* Each condition is optional but the presence of the tag and absent keywords is not accepted
+* The search will return an AND of all the specified tags
+
+**Rules for `NAME`**
 * The search is case-insensitive. e.g `hans` will match `Hans`
 * The order of the keywords does not matter. e.g. `Hans Bo` will match `Bo Hans`
-* Only the name is searched.
 * Only full words will be matched e.g. `Han` will not match `Hans`
 * Persons matching at least one keyword will be returned (i.e. `OR` search).
   e.g. `Hans Bo` will return `Hans Gruber`, `Bo Yang`
 
+**Rules for `PHONE`**
+* The keyword will match if it exist in the substring of the main number 
+  e.g. `999` will return `9998999`
+
+**Rules for `TAG`**
+* The search is case-insensitive.
+* Tags matching at least on keyword will be returned 
+    e.g. Finding `Best Friend` will return the tag `friend`
+
 Examples:
-* `find John` returns `john` and `John Doe`
-* `find alex david` returns `Alex Yeoh`, `David Li`<br>
-  ![result for 'find alex david'](images/findAlexDavidResult.png)
+* `find n=John mn=999` returns `john` and `John Doe` with `999` as a substring of the main number.
+* `find n=alex david` returns `Alex Yeoh`, `David Li`<br>
+  ![result for 'find n=tom t=friend'](images/findTomTagResult.png)
 
 ---
 
@@ -385,12 +400,6 @@ If your changes to the data file makes its format invalid, FAContactsPro will di
 Furthermore, certain edits can cause FAContactsPro to behave in unexpected ways (e.g., if a value entered is outside the acceptable range). Therefore, edit the data file only if you are confident that you can update it correctly.
 </box>
 
----
-
-### Archiving data files `[coming in v2.0]`
-
-_Details coming soon ..._
-
 --------------------------------------------------------------------------------------------------------------------
 
 ## FAQ
@@ -415,7 +424,7 @@ _Details coming soon ..._
 | **Add**            | `add n=NAME mn=PHONE_NUMBER e=EMAIL a=ADDRESS [t=TAG]…​` <br> e.g., `add n=James Ho mn=22224444 e=jamesho@example.com a=123, Clementi Rd, 1234665 t=friend t=colleague` |
 | **List**           | `list`                                                                                                                                                                  |
 | **Edit**           | `edit INDEX [n=NAME] [mn=MAIN_NUMBER] [e=EMAIL] [a=ADDRESS] [t=TAG]…​`<br> e.g.,`edit 2 n=James Lee e=jameslee@example.com`                                             |
-| **Find**           | `find KEYWORD [MORE_KEYWORDS]`<br> e.g., `find James Jake`                                                                                                              |
+| **Find**           | `find [n=NAME] [mn=MAIN_NUMBER] [t=TAG]`<br> e.g., `find n=tom mn=999 t=friend`                                                                                         |
 | **Delete**         | `delete INDEX`<br> e.g., `delete 3`                                                                                                                                     |
 | **Add Meeting**    | `addmt p=PERSON_INDEX m=MEETING v=VENUE w=WHEN` <br> e.g. `addmt p=1 m=Financial advice sharing v=AMK Hub w=2025-11-01 1600`                                            |
 | **Find Meeting**   | `findmt KEYWORD [MORE_KEYWORDS]`<br> e.g., `findmt meet discuss`                                                                                                        |
