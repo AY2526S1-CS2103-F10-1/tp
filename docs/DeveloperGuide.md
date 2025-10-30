@@ -296,7 +296,7 @@ When `updatePersonListFilter(Predicate<Person>...)` is called, the sequence of u
 2. The combined predicate is then passed into `setPredicate(Predicate<Person>)` which filters the list of persons according to the specified predicate.
 
 This design allows more than one parameter to be passed as predicates, which is combined into a single predicate for the FilteredList to update. Future extensions 
-and more aprameters (e.g. sorting by other phones, address, email) can be added cleanly.
+and more parameters (e.g. sorting by other phones, address, email) can be added cleanly.
 
 <box type="info" seamless>
 
