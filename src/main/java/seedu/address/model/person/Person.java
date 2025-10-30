@@ -143,7 +143,7 @@ public class Person {
     }
 
     /**
-     * Returns a boolean     if the main number contains the keyword
+     * Returns a boolean if the main number contains the keyword
      *
      * @param keyword the keyword to check against
      */
