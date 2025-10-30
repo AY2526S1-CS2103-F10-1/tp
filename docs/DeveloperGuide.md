@@ -1493,7 +1493,7 @@ testers are expected to do more *exploratory* testing.
 
 4. Finding a person by Name, Phone, Tag
 
-    1. Prerequisite: At least on person with Name: `John`, Main Phone: `987654`, Tag: `friend`
+    1. Prerequisite: At least one person with Name: `John`, Main Phone: `987654`, Tag: `friend`
    
     2. Test case: `find n=John mn=987654 t=friend` <br>
         Expected: Only person with name: `John`, main phone: `987654` and tag: `friend` is displayed
