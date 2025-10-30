@@ -116,7 +116,7 @@ public class OtherPhones {
                 continue;
             }
 
-            //Checks if the main phone has the same number as any other phones
+            // Checks if the main phone has the same number as any other phones
             if (mainPhone.equals(new Phone(currPhone))) {
                 return true;
             }
