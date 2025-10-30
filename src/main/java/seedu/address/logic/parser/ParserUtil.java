@@ -113,7 +113,7 @@ public class ParserUtil {
      * Parses a {@code String address} into an {@code Address}.
      * Leading and trailing whitespaces will be trimmed.
      *
-     * @throws ParseException if the given {@code address} is invalid.
+     * @throws ParseException If the given {@code address} is invalid.
      */
     public static Address parseAddress(String address) throws ParseException {
         requireNonNull(address);
@@ -136,10 +136,11 @@ public class ParserUtil {
      * Parses a {@code String email} into an {@code Email}.
      * Leading and trailing whitespaces will be trimmed.
      *
-     * @throws ParseException if the given {@code email} is invalid.
+     * @throws ParseException If the given {@code email} is invalid.
      */
     public static Email parseEmail(String email) throws ParseException {
         requireNonNull(email);
+
         String trimmedEmail = email.trim();
 
         if (trimmedEmail.length() > FIELD_MAXIMUM_LENGTH) {
@@ -158,10 +159,12 @@ public class ParserUtil {
     /**
      * Parses a {@code String text} into an {@code List<String>} of parameters and labels.
      * For example: some parameter (label) some parameter2 (label2).
+     * The {@code List<String>} of parameters and labels should not be empty.
      * @param parameterName Name of the parameter.
      * @param text The text that we are trying to split into parameters and labels.
      * @param isLabelAlwaysCompulsory Indicates if for 1 parameter if the label is compulsory.
-     * @return A list of parameters and labels or empty list if incorrect format.
+     * @return A list of parameters and labels.
+     * @throws ParseException If the format of the parameter and/or labels are invalid.
      */
     public static List<String> parseParametersAndLabels(String parameterName,
             String text, boolean isLabelAlwaysCompulsory) throws ParseException {
@@ -180,9 +183,11 @@ public class ParserUtil {
 
     /**
      * Extracts parameters and labels from a {@code String text}.
+     * At any point 0 <= i < end.
      * @param parameterName Name of the parameter.
      * @param text The text that we are trying to extract parameters and labels from.
      * @return The list which contains the extracted parameters and labels.
+     * @throws ParseException If the parameters and/or labels are invalid.
      */
     public static List<String> extractParametersAndLabels(String parameterName, String text) throws ParseException {
         // True means we are extracting parameter, false means we are extracting label
@@ -195,10 +200,12 @@ public class ParserUtil {
             int end = getEndIndexOfParameterOrLabel(parameterName, text, textLength, i, extractParameter);
 
             assert i <= end : "Issue with splitParametersAndLabels: end value < i";
+            assert i >= 0 : "Issue with splitParametersAndLabels: i < 0";
 
             String currString = text.substring(i, end);
             list.add(currString);
             i = end + 1;
+
             // Switch between extracting parameter and label
             extractParameter = !extractParameter;
         }
@@ -208,6 +215,7 @@ public class ParserUtil {
 
     /**
      * Deals with getting the end index of the current parameter or label from a {@code String text}.
+     * Value of end should always be 0 <= end <= textLength.
      * @param parameterName Name of the parameter.
      * @param text The text that we are trying to get the end index of the current parameter or label from.
      * @param textLength The length of the text.
@@ -215,24 +223,32 @@ public class ParserUtil {
      * @param extractParameter Boolean which indicates if we are extracting a parameter or label, true means
      *     we are extracting a parameter and false means we are extracting a label.
      * @return The list which contains the extracted parameters and labels.
+     * @throws ParseException If the parameters and/or labels are invalid.
      */
     private static int getEndIndexOfParameterOrLabel(String parameterName, String text, int textLength,
             int currIndex, boolean extractParameter) throws ParseException {
         int end = 0;
 
         if (extractParameter) {
+            // extract parameter
+
             end = text.indexOf("(", currIndex);
 
             checkForParameterSpacingIssue(parameterName, currIndex, end, text);
 
             end = end != -1 ? end - 1 : textLength;
         } else {
+            // extract label
+
             end = text.indexOf(")", currIndex);
 
             checkForLabelSpacingIssue(parameterName, end, text, textLength);
 
             end = end != -1 ? end + 1 : textLength;
         }
+
+        assert end >= 0 : "end value returned is < 0";
+        assert end <= textLength : "end value returned is > textLength";
 
         return end;
     }
@@ -243,6 +259,7 @@ public class ParserUtil {
      * @param parameterStartIndex The start index of our current parameter.
      * @param openBracketIndex The index of the first open bracket after {@code parameterStartIndex}.
      * @param text The string that we are checking on.
+     * @throws ParseException If the parameters are invalid.
      */
     private static void checkForParameterSpacingIssue(String parameterName, int parameterStartIndex,
             int openBracketIndex, String text) throws ParseException {
@@ -260,6 +277,7 @@ public class ParserUtil {
             throw new ParseException(exceptionMessage);
         }
 
+        // Check if f the open bracket that we found is the start index of the parameter
         if (parameterStartIndex == openBracketIndex) {
             exceptionMessage = String.format("One or more of your %1$ss are missing."
                     + " Each %1$s should be accompanied by a label.", parameterName);
@@ -285,7 +303,7 @@ public class ParserUtil {
      * Checks for spacing issues like missing/extra spaces between the label and parameter.
      * @param parameterName Name of the parameter.
      * @param closeBracketIndex The index of the first close bracket after.
-     * @param text The string that we are checking on.
+     * @throws ParseException If the labels are invalid.
      */
     private static void checkForLabelSpacingIssue(String parameterName, int closeBracketIndex,
             String text, int textLength) throws ParseException {
@@ -308,12 +326,14 @@ public class ParserUtil {
             throw new ParseException(exceptionMessage);
         }
 
+        // Check if there is a missing space with current label and next parameter
         if (text.charAt(closeBracketIndex + 1) != ' ') {
             exceptionMessage = String.format("One or more of your labels are missing a space"
                     + " to separate it from the next %1$s.", parameterName);
             throw new ParseException(exceptionMessage);
         }
 
+        // Check if there are extra spaces with current label and next parameter
         if (text.charAt(closeBracketIndex + 2) == ' ') {
             exceptionMessage = String.format("One or more of your labels have extra spaces in between it"
                     + " and the next %1$s.", parameterName);
@@ -326,6 +346,7 @@ public class ParserUtil {
      * @param parameterName Name of the parameter.
      * @param list The list containing parameters and labels.
      * @param isLabelAlwaysCompulsory Indicates if for 1 parameter if the label is compulsory.
+     * @throws ParseException If the size of the list containing the extracted parameter and labels are invalid.
      */
     private static void checkForIncorrectListSize(String parameterName, List<String> list,
             boolean isLabelAlwaysCompulsory) throws ParseException {
