@@ -142,9 +142,14 @@ public class Person {
         meetings.set(meetingToEdit, meeting);
     }
 
+    /**
+     * Returns a boolean     if the main number contains the keyword
+     *
+     * @param keyword the keyword to check against
+     */
     public boolean checkNumberContainsKeyword(String keyword) {
 
-        assert keyword != null: "Keyword should not be null";
+        assert keyword != null : "Keyword should not be null";
 
         return phone.value.contains(keyword);
     }
