@@ -1395,7 +1395,7 @@ testers are expected to do more *exploratory* testing.
     1. Test case: `editmt p=1 i=1 m=updated discussion` <br>
         Expected: Meeting 1 of person at index 1 is updated. Details of updated meeting shown in the status message.
      
-    1. Test case: `editmt p=1 m=0 m=updated discussion` <br>
+    1. Test case: `editmt p=1 i=0 m=updated discussion` <br>
         Expected: No meeting is updated. Error details shown in the status message.
 
 ---
@@ -1493,7 +1493,7 @@ testers are expected to do more *exploratory* testing.
 
 4. Finding a person by Name, Phone, Tag
 
-    1. Prerequisite: At least on person with Name: `John`, Main Phone: `987654`, Tag: `friend`
+    1. Prerequisite: At least one person with Name: `John`, Main Phone: `987654`, Tag: `friend`
    
     2. Test case: `find n=John mn=987654 t=friend` <br>
         Expected: Only person with name: `John`, main phone: `987654` and tag: `friend` is displayed

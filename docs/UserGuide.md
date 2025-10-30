@@ -191,12 +191,12 @@ Format: `find [n=NAME] [mn=PHONE] [t=TAG]`
   e.g. `Hans Bo` will return `Hans Gruber`, `Bo Yang`
 
 **Rules for `PHONE`**
-* The keyword will match if it exist in the substring of the main number 
+* The keyword will match if it exists in the substring of the main number 
   e.g. `999` will return `9998999`
 
 **Rules for `TAG`**
 * The search is case-insensitive.
-* Tags matching at least on keyword will be returned 
+* Tags matching at least one keyword will be returned 
     e.g. Finding `Best Friend` will return the tag `friend`
 
 Examples:
