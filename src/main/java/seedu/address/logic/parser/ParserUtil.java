@@ -277,7 +277,7 @@ public class ParserUtil {
             throw new ParseException(exceptionMessage);
         }
 
-        // Check if f the open bracket that we found is the start index of the parameter
+        // Check if the open bracket that we found is the start index of the parameter
         if (parameterStartIndex == openBracketIndex) {
             exceptionMessage = String.format("One or more of your %1$ss are missing."
                     + " Each %1$s should be accompanied by a label.", parameterName);
