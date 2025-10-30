@@ -143,6 +143,9 @@ public class Person {
     }
 
     public boolean checkNumberContainsKeyword(String keyword) {
+
+        assert keyword != null: "Keyword should not be null";
+
         return phone.value.contains(keyword);
     }
 
