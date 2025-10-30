@@ -32,7 +32,7 @@ public class PersonList {
     /**
      * Updates the filter of the person list.
      *
-     * @param predicate The predicate to filter the persons.
+     * @param predicate A vararg of predicates to filter the persons.
      */
     public void updatePersonListFilter(Predicate<Person>... predicate) {
         requireNonNull(predicate);
@@ -40,16 +40,16 @@ public class PersonList {
     }
 
     /**
-     * @param predicates a list of predicates
+     * Returns a predicate after combining all the predicates using the and operator.
+     * @param predicates a vararg of predicates
      * @return predicate combining all predicates into a single statement
      */
     @SafeVarargs
     public static Predicate<Person> andAll(Predicate<Person>... predicates) {
         Predicate<Person> acc = t -> true;
 
-        if (predicates == null) {
-            return acc;
-        }
+        assert predicates != null : "Predicates should not be null";
+
         for (Predicate<Person> p : predicates) {
             if (p != null) {
                 acc = acc.and(p::test);

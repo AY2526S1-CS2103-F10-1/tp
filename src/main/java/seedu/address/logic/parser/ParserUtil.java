@@ -80,7 +80,7 @@ public class ParserUtil {
      * Parses a {@code String otherPhones} into a {@code OtherPhones}.
      * Leading and trailing whitespaces will be trimmed.
      *
-     * @throws ParseException if the given {@code otherPhones} is invalid.
+     * @throws ParseException if the given {@code otherPhones} is invalid or if main phone is found in other phones.
      */
     public static OtherPhones parseOtherPhones(String otherPhones, Phone mainPhone) throws ParseException {
         requireNonNull(otherPhones);
