@@ -84,7 +84,7 @@ public class EditCommand extends Command {
 
         Person personToEdit = lastShownList.get(index.getZeroBased());
 
-        //Check if main phone exists in the other phones
+        // Check if main phone exists in the other phones
         if (!editPersonDescriptor.getOtherPhones().isEmpty()) {
             try {
                 if (OtherPhones.mainPhoneExists(
