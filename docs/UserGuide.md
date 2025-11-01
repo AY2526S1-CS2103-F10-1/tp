@@ -266,7 +266,7 @@ Format: `addmt p=PERSON_INDEX m=MEETING v=VENUE w=WHEN`
     * Commas (,)
     * Hash (#)
     * At sign (@)
-    * Colons (:)
+    * Colons (`:`)
 
 Examples:
 * `addmt p=1 m=Financial advice sharing v=AMK Hub w=2025-11-01 1600` Adds a new Financial advice sharing meeting to the
