@@ -242,7 +242,8 @@ Format: `addmt p=PERSON_INDEX m=MEETING v=VENUE w=WHEN`
 **Rules for `Meeting Name`**
 * The `Meeting Name` must contain at least one alphanumeric character.
 * Allowed characters are:
-    * Alphanumeric characters (a-z, A-Z, 0-9)
+    * Letters (including accented and others such as Chinese etc.)
+    * Digits
     * Spaces
     * Hyphens (-)
     * Apostrophes (')
