@@ -240,7 +240,7 @@ Format: `addmt p=PERSON_INDEX m=MEETING v=VENUE w=WHEN`
 * Adding in duplicate or overlapping meetings are allowed
 
 **Rules for `Meeting Name`**
-* The `Meeting Name` must contain at least one alphanumeric character.
+* The `Meeting Name` must contain at least one character.
 * Allowed characters are:
     * Letters (including accented and others such as Chinese etc.)
     * Digits
@@ -258,7 +258,7 @@ accepted depending on the language or character set support of the system.
 
 
 **Rules for `Venue`**
-* The `Venue` must contain at least one alphanumeric character.
+* The `Venue` must contain at least one character.
 * Allowed characters are:
     * Letters (including accented and others such as Chinese etc.)
     * Digits
