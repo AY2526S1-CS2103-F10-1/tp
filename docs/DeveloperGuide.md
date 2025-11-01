@@ -1509,7 +1509,7 @@ testers are expected to do more *exploratory* testing.
 
 ### Unflagging a person
 
-1. Flagging a person being shown
+1. Unflagging a person being shown
 
    1. Prerequisites: At least one person listed in the address book who is flagged.
 
