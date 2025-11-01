@@ -11,8 +11,8 @@ import seedu.address.logic.parser.exceptions.ParseException;
  */
 public class Venue {
     public static final String MESSAGE_CONSTRAINTS =
-            "Venue should only contain alphanumeric characters and spaces, and it should not be blank and not contain"
-                    + " weird symbols (!, $ etc.)";
+            "Venue should only contain letters, digits, spaces, hyphens, apostrophes, periods, parentheses, slashes, "
+                    + "ampersands, commas, hashes, @ signs, colons, and must contain at least one letter or digit.";
     public static final int MAX_VENUE_CHAR_LENGTH = 95;
 
     /*
