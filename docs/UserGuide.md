@@ -252,21 +252,29 @@ Format: `addmt p=PERSON_INDEX m=MEETING v=VENUE w=WHEN`
     * Ampersand (&)
     * Commas (,)
 
+    **Note:** The above list is representative of commonly used characters. Other valid Unicode letters may also be 
+accepted depending on the language or character set support of the system.
+
+
 **Rules for `Venue`**
 * The `Venue` must contain at least one alphanumeric character.
 * Allowed characters are:
-    * Alphanumeric characters (a-z, A-Z, 0-9)
+    * Letters (including accented and others such as Chinese etc.)
+    * Digits
     * Spaces
     * Hyphens (-)
     * Apostrophes (')
     * Periods (.)
     * Parentheses
-    * Slash (/)
-    * Ampersand (&)
+    * Slashes (/)
+    * Ampersands (&)
     * Commas (,)
-    * Hash (#)
-    * At sign (@)
+    * Hashes (#)
+    * At signs (@)
     * Colons (`:`)
+  
+    **Note:** The above list is representative of commonly used characters. Other valid Unicode letters may also be 
+accepted depending on the language or character set support of the system.
 
 Examples:
 * `addmt p=1 m=Financial advice sharing v=AMK Hub w=2025-11-01 1600` Adds a new Financial advice sharing meeting to the
