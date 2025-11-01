@@ -11,7 +11,8 @@ import seedu.address.logic.parser.exceptions.ParseException;
  */
 public class MeetingName {
     public static final String MESSAGE_CONSTRAINTS =
-            "Meeting names should only contain alphanumeric characters and spaces, and it should not be blank";
+            "Meeting names should only contain letters, digits, spaces, hyphens, apostrophes, periods, parentheses, "
+                    + "slashes, ampersands, commas, and must contain at least one letter or digit.";
     public static final int MAX_MEETING_NAME_CHAR_LENGTH = 95;
 
     /*
