@@ -99,8 +99,8 @@ Format: `add n=NAME mn=MAIN_NUMBER [on=OTHER_NUMBER] e=EMAIL a=ADDRESS [t/TAG]â€
   * Apostrophes (')
   * Periods (.)
   * Slashes (/)
-* The Name must not start or end with a hyphen, apostrophe, period, accented character, or slash.
-* The Name must not contain consecutive special characters (e.g., --, '', //, .., or double spaces).
+* The Name must not start or end with a hyphen, apostrophe, period or slash.
+* The Name must not contain consecutive special characters (--, '', //, .., or double spaces).
 
 **Rules for `Email`**
 * `Email` is case-insensitive and are in the format of local-part@domain.
