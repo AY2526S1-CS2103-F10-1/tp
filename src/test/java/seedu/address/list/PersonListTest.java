@@ -57,6 +57,15 @@ public class PersonListTest {
     }
 
     @Test
+    public void updatePersonListFilter_nonMatchingPredicate_personListUpdated() {
+        // Update the person list filter to show only flagged persons
+        model.updatePersonListFilter(p -> p.isFlagged());
+
+        // Check that the person list is empty
+        assertEquals(model.getPersonList().size(), 0);
+    }
+
+    @Test
     public void getPersonList_withFlaggedStatus_orderPreserved() {
 
         Person firstPerson = model.getPersonList().get(INDEX_FIRST_PERSON.getZeroBased());
