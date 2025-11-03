@@ -13,6 +13,7 @@
 
 ## **Acknowledgements**
 
+This project was based on AddressBook Level 3 created by [SE-EDU](https://se-education.org/). 
 Our team did not reuse/adapt any ideas, code, documentation, and third-party libraries
 
 --------------------------------------------------------------------------------------------------------------------
