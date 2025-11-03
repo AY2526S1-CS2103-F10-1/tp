@@ -5,7 +5,7 @@
 <br>
 <br>
 
-![Ui](docs/images/Ui.png)  
+![Ui](docs/images/SampleData.png)  
 
 <br>
 <br>
