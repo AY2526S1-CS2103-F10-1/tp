@@ -115,6 +115,7 @@ Format: `add n=NAME mn=MAIN_NUMBER [on=OTHER_NUMBER] e=EMAIL a=ADDRESS [t=TAG]�
     * Only these special characters: + _ . -
 *  For local-part, the constraints are:
     * It cannot start or end with any special characters
+    * Consecutive special characters are not allowed
 *  For domain, the allowed characters are:
     * Alphanumeric characters (a-z, A-Z, 0-9)
     * Hyphens (-)
@@ -171,7 +172,7 @@ Format: `edit INDEX [n=NAME] [mn=MAIN_NUMBER] [on=OTHER_NUMBER] [e=EMAIL] [a=ADD
     specifying any tags after it.
 
 Examples:
-*  `edit 1 p=91234567 e=johndoe@example.com` Edits the phone number and email address of the 1st person to be `91234567` and `johndoe@example.com` respectively.
+*  `edit 1 mn=91234567 e=johndoe@example.com` Edits the main number and email address of the 1st person to be `91234567` and `johndoe@example.com` respectively.
 *  `edit 2 n=Betsy Crower t=` Edits the name of the 2nd person to be `Betsy Crower` and clears all existing tags.
    ![result for 'edit 2 n=Betsy Crower t='](images/editToBestyCrower.png)
 
@@ -181,7 +182,7 @@ Examples:
 
 Finds persons who match all the given keywords.
 
-Format: `find [n=NAME] [mn=PHONE] [t=TAG]`
+Format: `find [n=NAME] [mn=MAIN_NUMBER] [t=TAG]`
 
 **Rules**
 * Each condition is optional but the presence of the tag and absent keywords is not accepted
@@ -436,7 +437,7 @@ Furthermore, certain edits can cause FAContactsPro to behave in unexpected ways 
 | **Help**           | `help`                                                                                                                                                                                   |
 | **Add**            | `add n=NAME mn=MAIN_NUMBER [on=OTHER_NUMBER] e=EMAIL a=ADDRESS [t=TAG]…​` <br> e.g., `add n=James Ho mn=22224444 e=jamesho@example.com a=123, Clementi Rd, 1234665 t=friend t=colleague` |
 | **List**           | `list`                                                                                                                                                                                   |
-| **Edit**           | `edit INDEX [n=NAME] [mn=MAIN_NUMBER] [e=EMAIL] [a=ADDRESS] [t=TAG]…​`<br> e.g.,`edit 2 n=James Lee e=jameslee@example.com`                                                              |
+| **Edit**           | `edit INDEX [n=NAME] [mn=MAIN_NUMBER] [on=OTHER_NUMBER] [e=EMAIL] [a=ADDRESS] [t=TAG]…​`<br> e.g.,`edit 2 n=James Lee e=jameslee@example.com`                                            |
 | **Find**           | `find [n=NAME] [mn=MAIN_NUMBER] [t=TAG]`<br> e.g., `find n=tom mn=999 t=friend`                                                                                                          |
 | **Delete**         | `delete INDEX`<br> e.g., `delete 3`                                                                                                                                                      |
 | **Add Meeting**    | `addmt p=PERSON_INDEX m=MEETING v=VENUE w=WHEN` <br> e.g. `addmt p=1 m=Financial advice sharing v=AMK Hub w=2025-11-01 1600`                                                             |
