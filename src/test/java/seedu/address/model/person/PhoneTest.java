@@ -32,13 +32,15 @@ public class PhoneTest {
         assertFalse(Phone.isValidPhone("9011p041")); // alphabets within digits
         assertFalse(Phone.isValidPhone("9312 1534")); // spaces within digits
         assertFalse(Phone.isValidPhone("9999999999999999999999999")); //26 digits
-        assertFalse(Phone.isValidPhone("+65 999999999999999999999 x1")); //26 characters with country code and extensions
+        //26 characters with country code and extensions
+        assertFalse(Phone.isValidPhone("+65 999999999999999999999 x1"));
 
         // valid phone numbers
         assertTrue(Phone.isValidPhone("911")); // exactly 3 numbers
         assertTrue(Phone.isValidPhone("93121534"));
         assertTrue(Phone.isValidPhone("124293842033123"));
-        assertTrue(Phone.isValidPhone("1242938420331231111111111"));// 25 digits (maximum length)
+        // 25 digits (maximum length)
+        assertTrue(Phone.isValidPhone("1242938420331231111111111"));
     }
 
     @Test
