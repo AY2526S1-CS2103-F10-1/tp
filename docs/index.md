@@ -9,7 +9,7 @@
 [![codecov](https://codecov.io/gh/AY2526S1-CS2103-F10-1/tP/graph/badge.svg?token=23EFUFXTIN)](https://codecov.io/gh/AY2526S1-CS2103-F10-1/tP)
 
 
-![Ui](images/Ui.png)
+![Ui](images/homepage.png)
 
 **FAContactsPro is a desktop application tailored to financial advisors in Singapore for managing their contact details.** <br>While it has a GUI, most of the user interactions happen using a CLI (Command Line Interface).
 
