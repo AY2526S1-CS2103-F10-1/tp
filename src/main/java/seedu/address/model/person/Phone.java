@@ -11,7 +11,12 @@ public class Phone {
 
 
     public static final String MESSAGE_CONSTRAINTS =
-            "Phone numbers should only contain numbers, and it should be at least 3 digits long";
+            "Phone numbers should only contain numbers, and it should be at least 3 digits long. \n"
+            + "It should also satisy these constraints: \n"
+            + "1) Country codes are optional but if specified should start with a + then at least 2 digits,"
+            + " followed by a space then the main number. \n"
+            + "2) The main number should at least be 3 digits long with no spaces. \n"
+            + "3) The extension is optional but if present, there should be a space then an x then at least one digit.";
     public static final String VALIDATION_REGEX = "^(?:\\+\\d{2,} )?\\d{3,}(?: x\\d+)?$";
     public final String value;
 
