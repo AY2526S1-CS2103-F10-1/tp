@@ -31,7 +31,7 @@ public class PhoneTest {
         assertFalse(Phone.isValidPhone("phone")); // non-numeric
         assertFalse(Phone.isValidPhone("9011p041")); // alphabets within digits
         assertFalse(Phone.isValidPhone("9312 1534")); // spaces within digits
-        assertFalse(Phone.isValidPhone("9999999999999999999999999")); //26 digits
+        assertFalse(Phone.isValidPhone("99999999999999999999999999")); //26 digits
         //26 characters with country code and extensions
         assertFalse(Phone.isValidPhone("+65 999999999999999999999 x1"));
 
