@@ -141,7 +141,7 @@ The `Model` component,
 
 **Note:** An alternative (arguably, a more OOP) model is given below. It has a `Tag` list in the `AddressBook`, which `Person` references. This allows `AddressBook` to only require one `Tag` object per unique tag, instead of each `Person` needing their own `Tag` objects.<br>
 
-<puml src="diagrams/BetterModelClassDiagram.puml" width="450" />
+<puml src="diagrams/BetterModelClassDiagram.puml" width="550" />
 
 </box>
 
@@ -1445,7 +1445,7 @@ testers are expected to do more *exploratory* testing.
 
 ### Unflagging a person
 
-1. Flagging a person being shown
+1. Unflagging a person being shown
 
    1. Prerequisites: At least one person listed in the address book who is flagged.
 
@@ -1507,6 +1507,19 @@ testers are expected to do more *exploratory* testing.
 
    1. Go to the data folder and access addressbook.json. Change its contents to an invalid format (e.g. Set a person as `"tag": true`).
       Expected: The app should still launch however with an empty list of persons.
+
+--------------------------------------------------------------------------------------------------------------------
+
+## **Appendix: Planned Enhancements**
+**Team size:** 4
+
+1. **Disallow creation of completely identical meetings:**
+Currently, the application allows multiple meetings with the same name, venue, and date time to be added for the same
+contact. While this was previously permitted to allow flexibility, it can lead to user confusion and cluttered meeting
+lists. Hence, we plan to modify the meeting creation logic to reject meetings that are identical across all fields. This
+enhancement prevents unintentional duplicate meetings that serve no distinct purpose, improving data integrity and user
+experience.
+
 
 
 
