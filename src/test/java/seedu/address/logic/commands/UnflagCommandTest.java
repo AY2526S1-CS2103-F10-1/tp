@@ -27,10 +27,10 @@ public class UnflagCommandTest {
 
     @BeforeEach
     public void setUp() {
-        // Flag the first person for testing unflag functionality
-        Person personToFlag = model.getPersonList().get(INDEX_THIRD_PERSON.getZeroBased());
-        model.setPerson(personToFlag,
-                new PersonBuilder(personToFlag).withFlagStatus(true).build());
+        // Unflag the first person for testing unflag functionality
+        Person personToUnflag = model.getPersonList().get(INDEX_THIRD_PERSON.getZeroBased());
+        model.setPerson(personToUnflag,
+                new PersonBuilder(personToUnflag).withFlagStatus(true).build());
     }
 
     @Test
@@ -98,24 +98,24 @@ public class UnflagCommandTest {
 
     @Test
     public void equals() {
-        FlagCommand flagFirstCommand = new FlagCommand(INDEX_FIRST_PERSON);
-        FlagCommand flagSecondCommand = new FlagCommand(INDEX_SECOND_PERSON);
+        UnflagCommand unflagFirstCommand = new UnflagCommand(INDEX_FIRST_PERSON);
+        UnflagCommand unflagSecondCommand = new UnflagCommand(INDEX_SECOND_PERSON);
 
         // same object -> returns true
-        assertTrue(flagFirstCommand.equals(flagFirstCommand));
+        assertTrue(unflagFirstCommand.equals(unflagFirstCommand));
 
         // same values -> returns true
-        FlagCommand flagFirstCommandCopy = new FlagCommand(INDEX_FIRST_PERSON);
-        assertTrue(flagFirstCommand.equals(flagFirstCommandCopy));
+        UnflagCommand unflagFirstCommandCopy = new UnflagCommand(INDEX_FIRST_PERSON);
+        assertTrue(unflagFirstCommand.equals(unflagFirstCommandCopy));
 
         // different types -> returns false
-        assertFalse(flagFirstCommand.equals(1));
+        assertFalse(unflagFirstCommand.equals(1));
 
         // null -> returns false
-        assertFalse(flagFirstCommand.equals(null));
+        assertFalse(unflagFirstCommand.equals(null));
 
         // different person -> returns false
-        assertFalse(flagFirstCommand.equals(flagSecondCommand));
+        assertFalse(unflagFirstCommand.equals(unflagSecondCommand));
     }
 
     @Test
