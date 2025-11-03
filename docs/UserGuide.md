@@ -101,8 +101,8 @@ Format: `add n=NAME mn=MAIN_NUMBER [on=OTHER_NUMBER] e=EMAIL a=ADDRESS [t=TAG]â€
   * Apostrophes (')
   * Periods (.)
   * Slashes (/)
-* The Name must not start or end with a hyphen, apostrophe, period or slash.
-* The Name must not contain consecutive special characters (--, '', //, .., or double spaces).
+* Names must not start or end with a hyphen, apostrophe, period or slash.
+* Names must not contain consecutive special characters (--, '', //, .., or double spaces).
 
   **Note:** The above list is representative of commonly used characters. Other valid Unicode letters may also be
   accepted depending on the language or character set support of the system.
