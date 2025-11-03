@@ -33,8 +33,8 @@ public class Address {
     public static final String ADDRESS_VALIDATION_REGEX = "[^\\s].*";
     public static final String ERROR_MESSAGE_DISPLAY_NAME = "address";
     private static final Logger logger = LogsCenter.getLogger(Address.class);
+    private static final int FIELD_MAXIMUM_LENGTH = 200;
     public final String value;
-
     /**
      * Constructs an {@code Address}.
      *
@@ -66,6 +66,16 @@ public class Address {
 
         if (trimmedAddress.isEmpty()) {
             return false;
+        }
+
+        if (trimmedAddress.length() > FIELD_MAXIMUM_LENGTH) {
+            String exceptionMessage = "Input for %s has exceeded "
+                    + "the maximum length of %d characters!";
+
+            String exceptionMessageFormatted = String.format(exceptionMessage,
+                    Address.ERROR_MESSAGE_DISPLAY_NAME, FIELD_MAXIMUM_LENGTH);
+
+            throw new ParseException(exceptionMessageFormatted);
         }
 
         List<String> paramsAndLabels = parseParametersAndLabels(ERROR_MESSAGE_DISPLAY_NAME,

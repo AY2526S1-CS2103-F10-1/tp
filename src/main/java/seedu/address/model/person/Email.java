@@ -48,8 +48,8 @@ public class Email {
     private static final String DOMAIN_LAST_PART_REGEX = "(" + DOMAIN_PART_REGEX + "){2,}$"; // At least two chars
     private static final String DOMAIN_REGEX = "(" + DOMAIN_PART_REGEX + "\\.)*" + DOMAIN_LAST_PART_REGEX;
     public static final String EMAIL_VALIDATION_REGEX = LOCAL_PART_REGEX + "@" + DOMAIN_REGEX;
+    private static final int FIELD_MAXIMUM_LENGTH = 200;
     public final String value;
-
     /**
      * Constructs an {@code Email}.
      *
@@ -82,6 +82,16 @@ public class Email {
 
         if (trimmedEmail.isEmpty()) {
             return false;
+        }
+
+        if (trimmedEmail.length() > FIELD_MAXIMUM_LENGTH) {
+            String exceptionMessage = "Input for %s has exceeded "
+                    + "the maximum length of %d characters!";
+
+            String exceptionMessageFormatted = String.format(exceptionMessage,
+                    Email.ERROR_MESSAGE_DISPLAY_NAME, FIELD_MAXIMUM_LENGTH);
+
+            throw new ParseException(exceptionMessageFormatted);
         }
 
         List<String> paramsAndLabels = parseParametersAndLabels(ERROR_MESSAGE_DISPLAY_NAME,
