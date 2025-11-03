@@ -104,6 +104,16 @@ Format: `add n=NAME mn=MAIN_NUMBER [on=OTHER_NUMBER] e=EMAIL a=ADDRESS [t=TAG]â€
 * The Name must not start or end with a hyphen, apostrophe, period, accented character, or slash.
 * The Name must not contain consecutive special characters (e.g., --, '', //, .., or double spaces).
 
+**Rules for `Main Number`**
+* The `Main Number` should satisfy the following constraints:
+  * The main number should not exceed 25 characters, including country code and extensions.
+  * Country codes are optional but if specified, should start with `+` and have at least 2 digits,
+  followed by a space then the main number.
+  * The main number should be at least 3 digits long with no spaces.
+  * The extension is optional but if present should be a space after the main number then an `x` then at least on digit.
+  * The main number should not contain any labels.
+* Persons are uniquely identifed by main number, therefore, any main number can only occur once in the main number field.
+
 **Rules for `Email`**
 * `Email` is case-insensitive and are in the format of local-part@domain.
 *  For local-part, the allowed characters are:
@@ -136,6 +146,7 @@ Format: `add n=NAME mn=MAIN_NUMBER [on=OTHER_NUMBER] e=EMAIL a=ADDRESS [t=TAG]â€
     * Hyphens (-)
 * For labels, inside of it the constraints are:
     * It cannot be made up of only spaces and/or hyphens only.
+* For other numbers, it can contain other contacts main numbers but not the main number of the added contact.
 
 **Rules for `Tag`**
 * A person can have any number of tags (including 0) and only alphanumeric characters are allowed.
