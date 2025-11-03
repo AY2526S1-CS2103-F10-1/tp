@@ -12,6 +12,7 @@ Participant ":SortedList" as sortedList STORAGE_COLOR_T2
 modelManager -> personList : getPersonList()
 activate personList STORAGE_COLOR
 
+create sortedList
 personList -> sortedList : SortedList(filteredPersons, comparator)
 activate sortedList STORAGE_COLOR_T2
 
