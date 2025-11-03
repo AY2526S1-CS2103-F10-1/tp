@@ -452,7 +452,7 @@ Use case ends.
 
     * 1a1. FAContactsPro app displays an error message and requests user to try again
 
-    * 1a2. User enters a new command to add a new contact.
+    * 1a2. User enters a new command to delete a contact.
 
       Steps 1a1-1a2 are repeated until the command and details entered are correct.
 
