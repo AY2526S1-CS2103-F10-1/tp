@@ -25,7 +25,7 @@ Meeting *--> "1" MeetingName
 Meeting *--> "1" Venue
 Meeting *--> "1" When
 
+OtherPhones *--> "*" PhoneTag
 OtherPhones *--> "*" Number
-OtherPhones *--> "*" NumberTag
 
 @enduml
