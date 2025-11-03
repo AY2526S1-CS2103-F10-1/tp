@@ -190,6 +190,7 @@ public class Person {
         return new ToStringBuilder(this)
                 .add("name", name)
                 .add("phone", phone)
+                .add("other phones", otherPhones)
                 .add("email", email)
                 .add("address", address)
                 .add("tags", tags)

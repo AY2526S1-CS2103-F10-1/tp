@@ -107,6 +107,15 @@ Format: `add n=NAME mn=MAIN_NUMBER [on=OTHER_NUMBER] e=EMAIL a=ADDRESS [t=TAG]â€
   **Note:** The above list is representative of commonly used characters. Other valid Unicode letters may also be
   accepted depending on the language or character set support of the system.
 
+**Rules for `MAIN_NUMBER`**
+* The `MAIN_NUMBER` should satisfy the following constraints:
+  * The main number should not exceed 25 characters, including country code and extensions.
+  * Country codes are optional but if specified, should start with `+` and have at least 2 digits,
+  followed by a space then the main number.
+  * The main number should be at least 3 digits long with no spaces.
+  * The extension is optional, but if present, should have a space after the main number followed by an `x` then at least one digit.
+  * The main number should not contain any labels.
+* Persons are uniquely identifed by main number, therefore, any main number can only occur once in the main number field.
 
 **Rules for `EMAIL`**
 * `EMAIL` is case-insensitive and are in the format of local-part@domain.
@@ -129,7 +138,10 @@ Format: `add n=NAME mn=MAIN_NUMBER [on=OTHER_NUMBER] e=EMAIL a=ADDRESS [t=TAG]â€
 **Rules for `ADDRESS`**
 * `ADDRESS` is case-insensitive and can take on any value as long as it is not blank.
 
-**Rules for `OTHER_NUMBER, EMAIL, ADDRESS`**
+**Rules for `OTHER_NUMBER`**
+* It can contain other contacts' main numbers but not the main number of the added contact.
+
+**Common Rules for `OTHER_NUMBER, EMAIL, ADDRESS`**
 * You can store multiple of them inside by using labels. For example, `e=johnsmith@gmail.com (personal) johnwork@company.com.sg (work)`.
 * However, if you are just storing only 1 of these parameters the label will be optional, else if you are storing multiple of these parameters the label is compulsory.
 * Labels can be made up of alphanumerical characters, spaces, and hyphens. But cannot be made up of only spaces and/or hyphens only.
@@ -195,7 +207,7 @@ Format: `find [n=NAME] [mn=MAIN_NUMBER] [t=TAG]`
 * Persons matching at least one keyword will be returned (i.e. `OR` search).
   e.g. `Hans Bo` will return `Hans Gruber`, `Bo Yang`
 
-**Rules for `PHONE`**
+**Rules for `MAIN_NUMBER`**
 * The keyword will match if it exists in the substring of the main number 
   e.g. `999` will return `9998999`
 
@@ -262,8 +274,8 @@ Format: `addmt p=PERSON_INDEX m=MEETING v=VENUE w=WHEN`
 accepted depending on the language or character set support of the system.
 
 
-**Rules for `Venue`**
-* The `Venue` must contain at least one letter or digit.
+**Rules for `VENUE`**
+* The `VENUE` must contain at least one letter or digit.
 * Allowed characters are:
     * Letters (including accented and others such as Chinese etc.)
     * Digits
