@@ -1507,5 +1507,14 @@ testers are expected to do more *exploratory* testing.
    1. Go to the data folder and access addressbook.json. Change its contents to an invalid format (e.g. Set a person as `"tag": true`).
       Expected: The app should still launch however with an empty list of persons.
 
+--------------------------------------------------------------------------------------------------------------------
 
+## **Appendix: Planned Enhancements**
+**Team size:** 4
 
+1. **Disallow creation of completely identical meetings:**
+Currently, the application allows multiple meetings with the same name, venue, and date time to be added for the same
+contact. While this was previously permitted to allow flexibility, it can lead to user confusion and cluttered meeting
+lists. Hence, we plan to modify the meeting creation logic to reject meetings that are identical across all fields. This
+enhancement prevents unintentional duplicate meetings that serve no distinct purpose, improving data integrity and user
+experience.
