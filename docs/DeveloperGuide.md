@@ -127,7 +127,7 @@ How the parsing works:
 ### Model component
 **API** : [`Model.java`](https://github.com/se-edu/addressbook-level3/tree/master/src/main/java/seedu/address/model/Model.java)
 
-<puml src="diagrams/ModelClassDiagram.puml" width="450" />
+<puml src="diagrams/ModelClassDiagram.puml" width="550" />
 
 
 The `Model` component,
@@ -1433,7 +1433,7 @@ testers are expected to do more *exploratory* testing.
 
 1. Flagging a person being shown
 
-   1. Prerequisites: At least one person listed in the address book.
+   1. Prerequisites: First person listed is unflagged.
 
    1. Test case: `flag 1`<br>
       Expected: Person at index 1 is flagged. Details of the flagged person shown in the status message.
@@ -1447,7 +1447,7 @@ testers are expected to do more *exploratory* testing.
 
 1. Unflagging a person being shown
 
-   1. Prerequisites: At least one person listed in the address book who is flagged.
+   1. Prerequisites: First person listed is flagged.
 
    1. Test case: `unflag 1`<br>
       Expected: Person at index 1 is unflagged. Details of the unflagged person shown in the status message.
