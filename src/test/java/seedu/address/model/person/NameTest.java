@@ -46,16 +46,26 @@ public class NameTest {
     }
 
     @Test
-    public void isValidName_onlyNonValidCharacter_throwsParseException() {
-        String nonValidCharacter = "^";
-        assertThrows(ParseException.class, () -> Name.isValidName(nonValidCharacter));
-    }
-
-    @Test
     public void isValidName_onlyNonValidCharacter_throwsAtLeastOneAlphanumericParseException() {
         try {
-            String nonValidCharacter = "^";
-            Name.isValidName(nonValidCharacter);
+            String symbolCharacter = "^";
+            Name.isValidName(symbolCharacter);
+            fail();
+        } catch (ParseException e) {
+            assertEquals(Name.MESSAGE_CONSTRAINTS_AT_LEAST_ONE_ALPHANUMERIC, e.getMessage());
+        }
+
+        try {
+            String accentedCharacter = "é";
+            Name.isValidName(accentedCharacter);
+            fail();
+        } catch (ParseException e) {
+            assertEquals(Name.MESSAGE_CONSTRAINTS_AT_LEAST_ONE_ALPHANUMERIC, e.getMessage());
+        }
+
+        try {
+            String chineseCharacter = "中";
+            Name.isValidName(chineseCharacter);
             fail();
         } catch (ParseException e) {
             assertEquals(Name.MESSAGE_CONSTRAINTS_AT_LEAST_ONE_ALPHANUMERIC, e.getMessage());

@@ -14,7 +14,7 @@ public class Name {
      * The first character of the address must not be a whitespace,
      * otherwise " " (a blank string) becomes a valid input.
      */
-    public static final String VALIDATION_REGEX_AT_LEAST_ONE_ALPHANUMERIC = "(?=.*(\\p{L}|\\d)).*";
+    public static final String VALIDATION_REGEX_AT_LEAST_ONE_LETTER = "(?=.*(\\p{L})).*";
     public static final String VALIDATION_REGEX_NAME_CONSTRAINTS = "^[\\p{L}\\p{M}0-9 \\-'’./]+$";
     public static final String VALIDATION_REGEX_NO_SPECIAL_CHAR_START = "^[\\-'’./].*$";
     public static final String VALIDATION_REGEX_NO_SPECIAL_CHAR_END = "^.*[\\-'’./]$";
@@ -24,10 +24,10 @@ public class Name {
 
     public static final String MESSAGE_CONSTRAINTS_NO_BLANK_NAME =
             "Names should not be blank\n";
-    public static final String MESSAGE_CONSTRAINTS_AT_LEAST_ONE_ALPHANUMERIC =
-            "Names should contain at least one alphanumeric character\n";
+    public static final String MESSAGE_CONSTRAINTS_AT_LEAST_ONE_LETTER =
+            "Names should contain at least one letter\n";
     public static final String MESSAGE_CONSTRAINTS =
-            "Names can only contain alphanumeric characters, spaces, hyphens, apostrophes, accented characters,"
+            "Names can only contain letters, spaces, hyphens, apostrophes, accented characters,"
                     + " periods and slashes\n";
     public static final String MESSAGE_CONSTRAINTS_INVALID_START_END =
             "Names should not start or end with a hyphen, apostrophe, period or slash\n";
@@ -69,8 +69,8 @@ public class Name {
             throw new ParseException(MESSAGE_CONSTRAINTS_NO_BLANK_NAME);
         }
 
-        if (!test.matches(VALIDATION_REGEX_AT_LEAST_ONE_ALPHANUMERIC)) {
-            throw new ParseException(MESSAGE_CONSTRAINTS_AT_LEAST_ONE_ALPHANUMERIC);
+        if (!test.matches(VALIDATION_REGEX_AT_LEAST_ONE_LETTER)) {
+            throw new ParseException(MESSAGE_CONSTRAINTS_AT_LEAST_ONE_LETTER);
         }
 
         // If the name does not satisfy the basic constraints
