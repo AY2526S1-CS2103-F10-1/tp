@@ -91,10 +91,10 @@ Adds a person to the address book.
 
 Format: `add n=NAME mn=MAIN_NUMBER [on=OTHER_NUMBER] e=EMAIL a=ADDRESS [t=TAG]…​`
 
-**Rules for `Name`**
-* The `Name` must contain at least one alphanumeric character.
+**Rules for `NAME`**
+* The `NAME` must contain at least one letter.
 * Allowed characters are:
-  * Letters (including accented characters)
+  * Letters (including accented characters and others such as Chinese etc.)
   * Digits
   * Spaces
   * Hyphens (-)
@@ -104,8 +104,12 @@ Format: `add n=NAME mn=MAIN_NUMBER [on=OTHER_NUMBER] e=EMAIL a=ADDRESS [t=TAG]�
 * The Name must not start or end with a hyphen, apostrophe, period or slash.
 * The Name must not contain consecutive special characters (--, '', //, .., or double spaces).
 
-**Rules for `Email`**
-* `Email` is case-insensitive and are in the format of local-part@domain.
+  **Note:** The above list is representative of commonly used characters. Other valid Unicode letters may also be
+  accepted depending on the language or character set support of the system.
+
+
+**Rules for `EMAIL`**
+* `EMAIL` is case-insensitive and are in the format of local-part@domain.
 *  For local-part, the allowed characters are:
     * Alphanumeric characters (a-z, A-Z, 0-9)
     * Only these special characters: + _ . -
@@ -121,8 +125,8 @@ Format: `add n=NAME mn=MAIN_NUMBER [on=OTHER_NUMBER] e=EMAIL a=ADDRESS [t=TAG]�
     * Each domain label have to start and end with alphanumeric characters
     * It must end with a domain label at least 2 characters long
 
-**Rules for `Address`**
-* `Address` is case-insensitive and can take on any value as long as it is not blank.
+**Rules for `ADDRESS`**
+* `ADDRESS` is case-insensitive and can take on any value as long as it is not blank.
 
 **Rules for `OTHER_NUMBER, EMAIL, ADDRESS`**
 * You can store multiple of them inside by using labels. For example, `e=johnsmith@gmail.com (personal) johnwork@company.com.sg (work)`.
@@ -136,7 +140,7 @@ Format: `add n=NAME mn=MAIN_NUMBER [on=OTHER_NUMBER] e=EMAIL a=ADDRESS [t=TAG]�
 * For labels, inside of it the constraints are:
     * It cannot be made up of only spaces and/or hyphens only.
 
-**Rules for `Tag`**
+**Rules for `TAG`**
 * A person can have any number of tags (including 0) and only alphanumeric characters are allowed.
 
 Examples:
@@ -157,7 +161,7 @@ Format: `list`
 
 Edits an existing person in the address book.
 
-Format: `edit INDEX [n=NAME] [mn=PHONE] [on=OTHER_NUMBER] [e=EMAIL] [a=ADDRESS] [t=TAG]…​`
+Format: `edit INDEX [n=NAME] [mn=MAIN_NUMBER] [on=OTHER_NUMBER] [e=EMAIL] [a=ADDRESS] [t=TAG]…​`
 
 * Edits the person at the specified `INDEX`. The index refers to the index number shown in the displayed person list. The index **must be a positive integer** 1, 2, 3, …​
 * At least one of the optional fields must be provided.
@@ -218,7 +222,7 @@ Format: `delete INDEX`
 
 Examples:
 * `list` followed by `delete 2` deletes the 2nd person in the address book.
-* `find Betsy` followed by `delete 1` deletes the 1st person in the results of the `find` command.
+* `find n=Betsy` followed by `delete 1` deletes the 1st person in the results of the `find` command.
 
 ---
 
@@ -239,8 +243,8 @@ Format: `addmt p=PERSON_INDEX m=MEETING v=VENUE w=WHEN`
 * The `:` in between `HH` and `mm` can be omitted i.e. (`1600` or `16:00`).
 * Adding in duplicate or overlapping meetings are allowed
 
-**Rules for `Meeting Name`**
-* The `Meeting Name` must contain at least one letter or digit.
+**Rules for `MEETING` name**
+* The `MEETING` name must contain at least one letter or digit.
 * Allowed characters are:
     * Letters (including accented and others such as Chinese etc.)
     * Digits
@@ -286,7 +290,7 @@ Examples:
 
 ### Finding a meeting : `findmt`
 
-Finds persons who's any of their meeting names contain any of the given keywords.
+Finds persons whose any of their meeting names contain any of the given keywords.
 
 Format: `findmt KEYWORD [MORE_KEYWORDS]`
 
@@ -427,22 +431,22 @@ Furthermore, certain edits can cause FAContactsPro to behave in unexpected ways 
 
 ## Command summary
 
-| Action             | Format, Examples                                                                                                                                                        |
-|--------------------|-------------------------------------------------------------------------------------------------------------------------------------------------------------------------|
-| **Help**           | `help`                                                                                                                                                                  |
-| **Add**            | `add n=NAME mn=PHONE_NUMBER e=EMAIL a=ADDRESS [t=TAG]…​` <br> e.g., `add n=James Ho mn=22224444 e=jamesho@example.com a=123, Clementi Rd, 1234665 t=friend t=colleague` |
-| **List**           | `list`                                                                                                                                                                  |
-| **Edit**           | `edit INDEX [n=NAME] [mn=MAIN_NUMBER] [e=EMAIL] [a=ADDRESS] [t=TAG]…​`<br> e.g.,`edit 2 n=James Lee e=jameslee@example.com`                                             |
-| **Find**           | `find [n=NAME] [mn=MAIN_NUMBER] [t=TAG]`<br> e.g., `find n=tom mn=999 t=friend`                                                                                         |
-| **Delete**         | `delete INDEX`<br> e.g., `delete 3`                                                                                                                                     |
-| **Add Meeting**    | `addmt p=PERSON_INDEX m=MEETING v=VENUE w=WHEN` <br> e.g. `addmt p=1 m=Financial advice sharing v=AMK Hub w=2025-11-01 1600`                                            |
-| **Find Meeting**   | `findmt KEYWORD [MORE_KEYWORDS]`<br> e.g., `findmt meet discuss`                                                                                                        |
-| **Edit Meeting**   | `editmt p=PERSON_INDEX i=MEETING_INDEX [m=MEETING] [v=VENUE] [w=WHEN]` <br> e.g. `editmt p=1 i=2 v=Starbucks at J8 w=2025-10-05 1600`                                   |
-| **Delete Meeting** | `deletemt p=PERSON_INDEX i=MEETING_INDEX` <br> e.g. `deletemt p=1 i=1`                                                                                                  |
-| **Flag Person**    | `flag INDEX` <br> e.g. `flag 1`                                                                                                                                         |
-| **Unflag Person**  | `unflag INDEX` <br> e.g. `unflag 1`                                                                                                                                     |
-| **Clear**          | `clear`                                                                                                                                                                 |
-| **Exit**           | `exit`                                                                                                                                                                  |
+| Action             | Format, Examples                                                                                                                                                                         |
+|--------------------|------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------|
+| **Help**           | `help`                                                                                                                                                                                   |
+| **Add**            | `add n=NAME mn=MAIN_NUMBER [on=OTHER_NUMBER] e=EMAIL a=ADDRESS [t=TAG]…​` <br> e.g., `add n=James Ho mn=22224444 e=jamesho@example.com a=123, Clementi Rd, 1234665 t=friend t=colleague` |
+| **List**           | `list`                                                                                                                                                                                   |
+| **Edit**           | `edit INDEX [n=NAME] [mn=MAIN_NUMBER] [e=EMAIL] [a=ADDRESS] [t=TAG]…​`<br> e.g.,`edit 2 n=James Lee e=jameslee@example.com`                                                              |
+| **Find**           | `find [n=NAME] [mn=MAIN_NUMBER] [t=TAG]`<br> e.g., `find n=tom mn=999 t=friend`                                                                                                          |
+| **Delete**         | `delete INDEX`<br> e.g., `delete 3`                                                                                                                                                      |
+| **Add Meeting**    | `addmt p=PERSON_INDEX m=MEETING v=VENUE w=WHEN` <br> e.g. `addmt p=1 m=Financial advice sharing v=AMK Hub w=2025-11-01 1600`                                                             |
+| **Find Meeting**   | `findmt KEYWORD [MORE_KEYWORDS]`<br> e.g., `findmt meet discuss`                                                                                                                         |
+| **Edit Meeting**   | `editmt p=PERSON_INDEX i=MEETING_INDEX [m=MEETING] [v=VENUE] [w=WHEN]` <br> e.g. `editmt p=1 i=2 v=Starbucks at J8 w=2025-10-05 1600`                                                    |
+| **Delete Meeting** | `deletemt p=PERSON_INDEX i=MEETING_INDEX` <br> e.g. `deletemt p=1 i=1`                                                                                                                   |
+| **Flag Person**    | `flag INDEX` <br> e.g. `flag 1`                                                                                                                                                          |
+| **Unflag Person**  | `unflag INDEX` <br> e.g. `unflag 1`                                                                                                                                                      |
+| **Clear**          | `clear`                                                                                                                                                                                  |
+| **Exit**           | `exit`                                                                                                                                                                                   |
 
 
 
