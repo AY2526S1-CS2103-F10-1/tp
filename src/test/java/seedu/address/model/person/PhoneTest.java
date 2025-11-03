@@ -41,6 +41,8 @@ public class PhoneTest {
         assertTrue(Phone.isValidPhone("124293842033123"));
         // 25 digits (maximum length)
         assertTrue(Phone.isValidPhone("1242938420331231111111111"));
+        // 25 digits (maximum length with country code and extension
+        assertTrue(Phone.isValidPhone("+65 1242938420331231 x123"));
     }
 
     @Test
