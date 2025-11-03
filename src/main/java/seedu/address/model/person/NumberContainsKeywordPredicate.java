@@ -7,7 +7,7 @@ import seedu.address.commons.core.LogsCenter;
 import seedu.address.commons.util.ToStringBuilder;
 
 /**
- * Checks a {@code Person}'s {@code Phone} matches any of the keywords given.
+ * Checks a {@code Person}'s {@code Phone} contains the keywords given.
  */
 public class NumberContainsKeywordPredicate implements Predicate<Person> {
     private static final Logger logger = LogsCenter.getLogger(NameContainsKeywordsPredicate.class);
