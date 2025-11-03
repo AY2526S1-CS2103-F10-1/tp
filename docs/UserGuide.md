@@ -290,7 +290,7 @@ Examples:
 
 ### Finding a meeting : `findmt`
 
-Finds persons whose any of their meeting names contain any of the given keywords.
+Finds persons with meetings where any of their meeting names contain any of the given keywords.
 
 Format: `findmt KEYWORD [MORE_KEYWORDS]`
 
