@@ -138,7 +138,10 @@ Format: `add n=NAME mn=MAIN_NUMBER [on=OTHER_NUMBER] e=EMAIL a=ADDRESS [t=TAG]â€
 **Rules for `ADDRESS`**
 * `ADDRESS` is case-insensitive and can take on any value as long as it is not blank.
 
-**Rules for `OTHER_NUMBER, EMAIL, ADDRESS`**
+**Rules for `OTHER_NUMBER`**
+* It can contain other contacts' main numbers but not the main number of the added contact.
+
+**Common Rules for `OTHER_NUMBER, EMAIL, ADDRESS`**
 * You can store multiple of them inside by using labels. For example, `e=johnsmith@gmail.com (personal) johnwork@company.com.sg (work)`.
 * However, if you are just storing only 1 of these parameters the label will be optional, else if you are storing multiple of these parameters the label is compulsory.
 * Labels can be made up of alphanumerical characters, spaces, and hyphens. But cannot be made up of only spaces and/or hyphens only.
@@ -149,7 +152,6 @@ Format: `add n=NAME mn=MAIN_NUMBER [on=OTHER_NUMBER] e=EMAIL a=ADDRESS [t=TAG]â€
     * Hyphens (-)
 * For labels, inside of it the constraints are:
     * It cannot be made up of only spaces and/or hyphens only.
-* For `OTHER_NUMBER`, it can contain other contacts' main numbers but not the main number of the added contact.
 
 **Rules for `TAG`**
 * A person can have any number of tags (including 0) and only alphanumeric characters are allowed.
